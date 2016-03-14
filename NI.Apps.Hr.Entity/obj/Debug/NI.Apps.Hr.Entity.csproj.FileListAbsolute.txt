@@ -1,0 +1,7 @@
+D:\VS2010\old-version\2016-3-3\Demo1\NI.Apps.Hr.Entity\bin\Debug\NI.Apps.Hr.Entity.dll.config
+D:\VS2010\old-version\2016-3-3\Demo1\NI.Apps.Hr.Entity\bin\Debug\NI.Apps.Hr.Entity.dll
+D:\VS2010\old-version\2016-3-3\Demo1\NI.Apps.Hr.Entity\bin\Debug\NI.Apps.Hr.Entity.pdb
+D:\VS2010\old-version\2016-3-3\Demo1\NI.Apps.Hr.Entity\bin\Debug\EntityFramework.dll
+D:\VS2010\old-version\2016-3-3\Demo1\NI.Apps.Hr.Entity\bin\Debug\EntityFramework.xml
+D:\VS2010\old-version\2016-3-3\Demo1\NI.Apps.Hr.Entity\obj\Debug\NI.Apps.Hr.Entity.dll
+D:\VS2010\old-version\2016-3-3\Demo1\NI.Apps.Hr.Entity\obj\Debug\NI.Apps.Hr.Entity.pdb

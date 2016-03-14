@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CFD212B2-8D10-4EA2-8C90-2ED17F17FCD6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NI.Apps.Hr.Repository</RootNamespace>
+    <AssemblyName>NI.Apps.Hr.Repository</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddressBookRepository.cs" />
+    <Compile Include="ChildrenRepository.cs" />
+    <Compile Include="EducationRepository.cs" />
+    <Compile Include="EmployeeRepository.cs" />
+    <Compile Include="FamilyMembersRepository.cs" />
+    <Compile Include="HeadCountRepository.cs" />
+    <Compile Include="Interface\IAddressBookRepository.cs" />
+    <Compile Include="Interface\IChildrenRepository.cs" />
+    <Compile Include="Interface\IEducationRepository.cs" />
+    <Compile Include="Interface\IEmployeeRepository.cs" />
+    <Compile Include="Interface\IFamilyMembersRepository.cs" />
+    <Compile Include="Interface\IHeadCountRepository.cs" />
+    <Compile Include="Interface\IOfferRepository.cs" />
+    <Compile Include="Interface\IPersonelRepository.cs" />
+    <Compile Include="Interface\IReportRepository.cs" />
+    <Compile Include="Interface\ISalaryRepository.cs" />
+    <Compile Include="Interface\ISpinnerRepository.cs" />
+    <Compile Include="Interface\IWorkExperienceRepository.cs" />
+    <Compile Include="OfferRepository.cs" />
+    <Compile Include="PersonelRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportRepository.cs" />
+    <Compile Include="SalaryRepository.cs" />
+    <Compile Include="SpinnerRepository.cs" />
+    <Compile Include="WorkExperienceRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NI.Apps.Hr.Entity\NI.Apps.Hr.Entity.csproj">
+      <Project>{4a022356-e7c2-4942-a195-b52c7b8525ae}</Project>
+      <Name>NI.Apps.Hr.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

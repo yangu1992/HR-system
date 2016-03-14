@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4A022356-E7C2-4942-A195-B52C7B8525AE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NI.Apps.Hr.Entity</RootNamespace>
+    <AssemblyName>NI.Apps.Hr.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddressBookModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddressBookModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AddressBookModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AddressBookModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AddressBookModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="dtproperty.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dt_getpropertiesbyid_Result.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="dt_getpropertiesbyid_u_Result.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HrManagementPortalModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HrManagementPortalModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HrManagementPortalModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HrManagementPortalModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HrManagementPortalModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HeadCount.cs" />
+    <Compile Include="Models\Offer.cs" />
+    <Compile Include="Proc_GetContract_Result.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Proc_GetCostCenterList_Result.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Proc_GetDepartmentList_Result.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Proc_GetEmpDetailInformation_Result.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Proc_GetEmpInformation_Result.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Proc_GetEmpType_Result.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Proc_GetStatusList_Result.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Proc_GetSupervisorList_Result.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Proc_QueryEmpWithSortExactly_Result.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Proc_QueryEmpWithSort_Result.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_Account.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_AddressBook.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_Admin.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_ChildrenInfo.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_Contract.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_CostCenter.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_Department.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_EducationInfo.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_Employee.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_EmpType.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_FamilyMembersInfo.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_Headcount.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_InternalLevel.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_Offer.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_OfferCycle.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_PersonelInfo.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_ReportingInfo.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_Resignation.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_Role.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_SalaryInfo.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_Status.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_Survey.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_TypeRoleAccess.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_UserRole.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_WorkExperienceInfo.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="View_Account.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="View_EmpOverView.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="View_VacationContracts.cs">
+      <DependentUpon>AddressBookModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="xprcFile_Result.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="AddressBookModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AddressBookModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="AddressBookModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AddressBookModel.edmx</DependentUpon>
+      <LastGenOutput>AddressBookModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="AddressBookModel.edmx.diagram">
+      <DependentUpon>AddressBookModel.edmx</DependentUpon>
+    </None>
+    <None Include="AddressBookModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AddressBookModel.edmx</DependentUpon>
+      <LastGenOutput>AddressBookModel.cs</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+    <EntityDeploy Include="HrManagementPortalModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HrManagementPortalModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="HrManagementPortalModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HrManagementPortalModel.edmx</DependentUpon>
+      <LastGenOutput>HrManagementPortalModel.Context.cs</LastGenOutput>
+    </None>
+    <None Include="HrManagementPortalModel.edmx.diagram">
+      <DependentUpon>HrManagementPortalModel.edmx</DependentUpon>
+    </None>
+    <None Include="HrManagementPortalModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HrManagementPortalModel.edmx</DependentUpon>
+      <LastGenOutput>HrManagementPortalModel.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

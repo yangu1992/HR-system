@@ -1,0 +1,120 @@
+﻿body
+{
+    font-size:18px;
+    line-height:1.5;
+    color:Black;
+    font-family:Arial Narrow;
+    letter-spacing:1px;
+}
+
+div#tableContainer
+{
+    display:table;
+}
+
+div#tableRow
+{
+    display:table-row;
+}
+
+#main_content
+{
+    display:table-cell;
+    width:90%;
+}
+
+#sidebar
+{
+    display:table-cell;
+    background-image:url(../Images/leftbg.bmp);
+    background-repeat:repeat-y;
+    width:10%;
+}
+
+#title
+{
+    text-align:center;
+    vertical-align:middle;
+    font-size:large;
+    font-weight:bold;
+}
+
+input, textarea, select, button {
+    font-size:18px;
+    line-height:1.5;
+}
+
+ul, li
+{
+    list-style:none;
+    margin-left:0;
+    padding-left:8px;
+    padding-right:15px;
+}
+
+#navigation a
+{
+    display:block;
+    text-indent:0px;
+    color:#FFFFFF;
+}
+
+a:link
+{
+    text-decoration:none;
+    padding-left:0px;
+    color:#FFFFFF;
+    font-weight:bold;
+    font-size:20px;
+}
+
+tr td
+{
+    border:thin solid gray;
+    padding:2px;
+    white-space: nowrap
+}
+
+table tr th
+{
+    font-weight:normal;
+    text-align:center;
+    background-color:#87CEFA;
+}
+
+table tr td .box_for_create
+{
+    width:80%;
+    height:20px;
+}
+table tr td .box_for_detail
+{
+    width:80%;
+    height:20px;
+}
+
+table tr td select
+{
+    width:65%;
+}
+
+input.btn
+{
+    width:130px;
+    height:30px;
+}
+
+#headcounts_table tbody tr td
+{  
+    text-align:center;
+}
+
+#offers_table tbody tr td
+{  
+    text-align:center;
+}
+
+#personal_Form_table tr td
+{  
+    text-align:center;
+}

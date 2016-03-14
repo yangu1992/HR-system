@@ -1,0 +1,1199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Table_ChildrenInfo">
+          <Key>
+            <PropertyRef Name="ChildrenInfo_ID" />
+          </Key>
+          <Property Name="ChildrenInfo_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChildrenInfo_PersonelInfoID" Type="int" Nullable="false" />
+          <Property Name="ChildrenInfo_FullName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="ChildrenInfo_Gender" Type="nvarchar" MaxLength="64" />
+          <Property Name="ChildrenInfo_BirthDate" Type="nvarchar" MaxLength="64" />
+          <Property Name="ChildrenInfo_CreatedAt" Type="datetime" />
+          <Property Name="ChildrenInfo_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="ChildrenInfo_ModifiedAt" Type="datetime" />
+          <Property Name="ChildrenInfo_ModifiedBy" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Table_CostCenter">
+          <Key>
+            <PropertyRef Name="CostCenter_ID" />
+          </Key>
+          <Property Name="CostCenter_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CostCenter_Name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="CostCenter_Active" Type="bit" />
+          <Property Name="CostCenter_CreatedAt" Type="datetime" />
+          <Property Name="CostCenter_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="CostCenter_ModifiedAt" Type="datetime" />
+          <Property Name="CostCenter_ModifiedBy" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Table_Department">
+          <Key>
+            <PropertyRef Name="Department_ID" />
+          </Key>
+          <Property Name="Department_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Department_Name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Department_Active" Type="bit" />
+          <Property Name="Department_CreatedAt" Type="datetime" />
+          <Property Name="Department_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="Department_ModifiedAt" Type="datetime" />
+          <Property Name="Department_ModifiedBy" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Table_EducationInfo">
+          <Key>
+            <PropertyRef Name="EducationInfo_ID" />
+          </Key>
+          <Property Name="EducationInfo_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EducationInfo_PersonelInfoID" Type="int" Nullable="false" />
+          <Property Name="EducationInfo_StartDate" Type="nvarchar" MaxLength="64" />
+          <Property Name="EducationInfo_EndDate" Type="nvarchar" MaxLength="64" />
+          <Property Name="EducationInfo_School" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="EducationInfo_Major" Type="nvarchar" MaxLength="64" />
+          <Property Name="EducationInfo_Degree" Type="nvarchar" MaxLength="64" />
+          <Property Name="EducationInfo_CreatedAt" Type="datetime" />
+          <Property Name="EducationInfo_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="EducationInfo_ModifiedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Table_Employee">
+          <Key>
+            <PropertyRef Name="Employee_ID" />
+          </Key>
+          <Property Name="Employee_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Employee_EmployeeNo" Type="nvarchar" MaxLength="64" />
+          <Property Name="Employee_FullName" Type="nvarchar" MaxLength="64" />
+          <Property Name="Employee_LocalName" Type="nvarchar" MaxLength="64" />
+          <Property Name="Employee_Email" Type="nvarchar" MaxLength="64" />
+          <Property Name="Employee_CostCenter" Type="nvarchar" MaxLength="64" />
+          <Property Name="Employee_JobTitle" Type="nvarchar" MaxLength="64" />
+          <Property Name="Employee_BusinessUnit" Type="nvarchar" MaxLength="64" />
+          <Property Name="Employee_Department" Type="nvarchar" MaxLength="64" />
+          <Property Name="Employee_CreatedAt" Type="datetime" />
+          <Property Name="Employee_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="Employee_ModifiedAt" Type="datetime" />
+          <Property Name="Employee_ModifiedBy" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Table_FamilyMembersInfo">
+          <Key>
+            <PropertyRef Name="FamilyMembersInfo_ID" />
+          </Key>
+          <Property Name="FamilyMembersInfo_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FamilyMembersInfo_PersonelInfoID" Type="int" Nullable="false" />
+          <Property Name="FamilyMembersInfo_FullName" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="FamilyMembersInfo_Relations" Type="nvarchar" MaxLength="64" />
+          <Property Name="FamilyMembersInfo_Employer" Type="nvarchar" MaxLength="64" />
+          <Property Name="FamilyMembersInfo_Department" Type="nvarchar" MaxLength="64" />
+          <Property Name="FamilyMembersInfo_Position" Type="nvarchar" MaxLength="64" />
+          <Property Name="FamilyMembersInfo_CreatedAt" Type="datetime" />
+          <Property Name="FamilyMembersInfo_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="FamilyMembersInfo_ModifiedAt" Type="datetime" />
+          <Property Name="FamilyMembersInfo_ModifiedBy" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Table_Headcount">
+          <Key>
+            <PropertyRef Name="Headcount_ID" />
+          </Key>
+          <Property Name="Headcount_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Headcount_Code" Type="int" Nullable="false" />
+          <Property Name="Headcount_Position" Type="nvarchar" MaxLength="64" />
+          <Property Name="Headcount_Number" Type="int" />
+          <Property Name="Headcount_CostCenter" Type="nvarchar" MaxLength="64" />
+          <Property Name="Headcount_Department" Type="nvarchar" MaxLength="64" />
+          <Property Name="Headcount_InternalLevel" Type="nvarchar" MaxLength="64" />
+          <Property Name="Headcount_CreatedAt" Type="datetime" />
+          <Property Name="Headcount_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="Headcount_ModifiedAt" Type="datetime" />
+          <Property Name="Headcount_ModifiedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="Headcount_Status" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Table_InternalLevel">
+          <Key>
+            <PropertyRef Name="InternalLevel_ID" />
+          </Key>
+          <Property Name="InternalLevel_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InternalLevel_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="InternalLevel_Active" Type="bit" />
+          <Property Name="InternalLevel_CreatedAt" Type="datetime" />
+          <Property Name="InternalLevel_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="InternalLevel_ModifiedAt" Type="datetime" />
+          <Property Name="InternalLevel_ModifiedBy" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Table_Offer">
+          <Key>
+            <PropertyRef Name="Offer_ID" />
+          </Key>
+          <Property Name="Offer_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Offer_HCID" Type="int" Nullable="false" />
+          <Property Name="Offer_Status" Type="nvarchar" MaxLength="64" />
+          <Property Name="Offer_PersonelInfoID" Type="int" Nullable="false" />
+          <Property Name="Offer_SalaryInfoID" Type="int" />
+          <Property Name="Offer_ReportingInfoID" Type="int" />
+          <Property Name="Offer_RecruitType" Type="nvarchar" MaxLength="64" />
+          <Property Name="Offer_Position" Type="nvarchar" MaxLength="64" />
+          <Property Name="Offer_Location" Type="nvarchar" MaxLength="64" />
+          <Property Name="Offer_OnboardingDate" Type="datetime" />
+          <Property Name="Offer_RecruitChannel" Type="nvarchar" MaxLength="64" />
+          <Property Name="Offer_ProbationDuration" Type="int" />
+          <Property Name="Offer_Notes" Type="nvarchar" MaxLength="512" />
+          <Property Name="Offer_SignedFile" Type="nvarchar" MaxLength="512" />
+          <Property Name="Offer_CreatedAt" Type="datetime" />
+          <Property Name="Offer_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="Offer_ModifiedAt" Type="datetime" />
+          <Property Name="Offer_ModifiedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="Offer_EmailITCompleted" Type="bit" />
+          <Property Name="Offer_SyncDomainCompleted" Type="bit" />
+          <Property Name="Offer_WelcomeCandidateCompleted" Type="bit" />
+          <Property Name="Offer_WelcomeToMgrCompleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Table_OfferCycle">
+          <Key>
+            <PropertyRef Name="OfferCycle_ID" />
+          </Key>
+          <Property Name="OfferCycle_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OfferCycle_ProcessName" Type="nvarchar" MaxLength="64" />
+          <Property Name="OfferCycle_ProcessDescription" Type="nvarchar" MaxLength="128" />
+          <Property Name="OfferCycle_StartStatus" Type="nvarchar" MaxLength="64" />
+          <Property Name="OfferCycle_EndStatus" Type="nvarchar" MaxLength="64" />
+          <Property Name="OfferCycle_CreatedAt" Type="datetime" />
+          <Property Name="OfferCycle_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="OfferCycle_ModifiedAt" Type="datetime" />
+          <Property Name="OfferCycle_ModifiedBy" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Table_PersonelInfo">
+          <Key>
+            <PropertyRef Name="PersonelInfo_ID" />
+          </Key>
+          <Property Name="PersonelInfo_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonelInfo_RomanFName" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_RomanLName" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_FName" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_LName" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_Mobile" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_Email" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_Phone" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_Gender" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_MartialStatus" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_BirthDate" Type="datetime" />
+          <Property Name="PersonelInfo_IdentityID" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_Nationality" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_Hukou" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_HukouType" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_FileLocation" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_HomeAddress" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_PostCode" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_EmergencyContact" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_EmergencyContactPhone" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_CreatedAt" Type="datetime" />
+          <Property Name="PersonelInfo_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="PersonelInfo_ModifiedAt" Type="datetime" />
+          <Property Name="PersonelInfo_ModifiedBy" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Table_ReportingInfo">
+          <Key>
+            <PropertyRef Name="ReportingInfo_ID" />
+          </Key>
+          <Property Name="ReportingInfo_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReportingInfo_ReportLineEmpID" Type="int" />
+          <Property Name="ReportingInfo_ReportLineEmail" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReportingInfo_DeptMgrEmpID" Type="int" />
+          <Property Name="ReportingInfo_DeptMgrEmail" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReportingInfo_CreatedAt" Type="datetime" />
+          <Property Name="ReportingInfo_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="ReportingInfo_ModifiedAt" Type="datetime" />
+          <Property Name="ReportingInfo_ModifiedBy" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Table_Resignation">
+          <Key>
+            <PropertyRef Name="Resignation_ID" />
+          </Key>
+          <Property Name="Resignation_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Resignation_EmpID" Type="int" Nullable="false" />
+          <Property Name="Resignation_Status" Type="nvarchar" MaxLength="64" />
+          <Property Name="Resignation_ResignDate" Type="datetime" />
+          <Property Name="Resignation_LastWorkingDate" Type="datetime" />
+          <Property Name="Resignation_DomainEndDate" Type="datetime" />
+          <Property Name="Resignation_CreatedAt" Type="datetime" />
+          <Property Name="Resignation_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="Resignation_ModifiedAt" Type="datetime" />
+          <Property Name="Resignation_ModifiedBy" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Table_Role">
+          <Key>
+            <PropertyRef Name="Role_ID" />
+          </Key>
+          <Property Name="Role_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role_Name" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table_SalaryInfo">
+          <Key>
+            <PropertyRef Name="SalaryInfo_ID" />
+          </Key>
+          <Property Name="SalaryInfo_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SalaryInfo_Salary" Type="money" />
+          <Property Name="SalaryInfo_ReviewedSalary" Type="money" />
+          <Property Name="SalaryInfo_Bonus" Type="bit" />
+          <Property Name="SalaryInfo_BonusType" Type="nvarchar" MaxLength="64" />
+          <Property Name="SalaryInfo_BonusAmount" Type="money" />
+          <Property Name="SalaryInfo_CreatedAt" Type="datetime" />
+          <Property Name="SalaryInfo_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="SalaryInfo_ModifiedAt" Type="datetime" />
+          <Property Name="SalaryInfo_ModifiedBy" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <EntityType Name="Table_Survey">
+          <Key>
+            <PropertyRef Name="Survey_ID" />
+          </Key>
+          <Property Name="Survey_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Survey_SourceID" Type="int" />
+          <Property Name="Survey_SourceType" Type="nvarchar" MaxLength="64" />
+          <Property Name="Survey_Content" Type="nvarchar" MaxLength="512" />
+          <Property Name="Survey_CreatedAt" Type="datetime" />
+          <Property Name="Survey_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="Survey_ModifiedAt" Type="datetime" />
+          <Property Name="Survey_ModifiedBy" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HRManagementPortal.dbo.Table_TypeRoleAccess' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Table_TypeRoleAccess">
+          <Key>
+            <PropertyRef Name="TypeRoleAccess_ID" />
+            <PropertyRef Name="TypeRoleAccess_TypeFullName" />
+            <PropertyRef Name="TypeRoleAccess_Role" />
+            <PropertyRef Name="TypeRoleAccess_Permission" />
+            <PropertyRef Name="TypeRoleAccess_Active" />
+          </Key>
+          <Property Name="TypeRoleAccess_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TypeRoleAccess_TypeFullName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="TypeRoleAccess_Role" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TypeRoleAccess_Permission" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TypeRoleAccess_Active" Type="bit" Nullable="false" />
+          <Property Name="TypeRoleAccess_CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="TypeRoleAccess_CreatedAt" Type="datetime" />
+          <Property Name="TypeRoleAccess_ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="TypeRoleAccess_ModifiedAt" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HRManagementPortal.dbo.Table_UserRole' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Table_UserRole">
+          <Key>
+            <PropertyRef Name="UserRole_ID" />
+            <PropertyRef Name="Role_ID" />
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="UserRole_Active" />
+          </Key>
+          <Property Name="UserRole_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role_ID" Type="int" Nullable="false" />
+          <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="UserRole_Active" Type="bit" Nullable="false" />
+          <Property Name="CreatedAt" Type="datetime" />
+          <Property Name="CreatedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="ModifiedAt" Type="datetime" />
+          <Property Name="ModifiedBy" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Table_WorkExperienceInfo">
+          <Key>
+            <PropertyRef Name="WorkExperienceInfo_ID" />
+          </Key>
+          <Property Name="WorkExperienceInfo_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkExperienceInfo_PersonelInfoID" Type="int" Nullable="false" />
+          <Property Name="WorkExperienceInfo_StartDate" Type="nvarchar" MaxLength="64" />
+          <Property Name="WorkExperienceInfo_EndDate" Type="nvarchar" MaxLength="64" />
+          <Property Name="WorkExperienceInfo_Employer" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="WorkExperienceInfo_Department" Type="nvarchar" MaxLength="64" />
+          <Property Name="WorkExperienceInfo_Position" Type="nvarchar" MaxLength="64" />
+          <Property Name="WorkExperienceInfo_CreatedAt" Type="datetime" />
+          <Property Name="WorkExperienceInfo_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="WorkExperienceInfo_ModifiedAt" Type="datetime" />
+          <Property Name="WorkExperienceInfo_ModifiedBy" Type="nvarchar" MaxLength="64" />
+        </EntityType>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="Proc_InsertAddressBook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="OfferID" Type="int" Mode="In" />
+          <Parameter Name="SID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Proc_InsertNewAccount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="returnVal" Type="int" Mode="InOut" />
+          <Parameter Name="OfferID" Type="int" Mode="In" />
+          <Parameter Name="DomainLogin" Type="nvarchar" Mode="In" />
+          <Parameter Name="ContractStartDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="xprcFile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="txt" Type="ntext" Mode="In" />
+          <Parameter Name="hasTitle" Type="int" Mode="In" />
+          <Parameter Name="isShow" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_ChildrenInfo" EntityType="Self.Table_ChildrenInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_CostCenter" EntityType="Self.Table_CostCenter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Department" EntityType="Self.Table_Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_EducationInfo" EntityType="Self.Table_EducationInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Employee" EntityType="Self.Table_Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_FamilyMembersInfo" EntityType="Self.Table_FamilyMembersInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Headcount" EntityType="Self.Table_Headcount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_InternalLevel" EntityType="Self.Table_InternalLevel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Offer" EntityType="Self.Table_Offer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_OfferCycle" EntityType="Self.Table_OfferCycle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_PersonelInfo" EntityType="Self.Table_PersonelInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_ReportingInfo" EntityType="Self.Table_ReportingInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Resignation" EntityType="Self.Table_Resignation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Role" EntityType="Self.Table_Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_SalaryInfo" EntityType="Self.Table_SalaryInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Survey" EntityType="Self.Table_Survey" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_WorkExperienceInfo" EntityType="Self.Table_WorkExperienceInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_TypeRoleAccess" EntityType="Self.Table_TypeRoleAccess" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Table_TypeRoleAccess].[TypeRoleAccess_ID] AS [TypeRoleAccess_ID], 
+    [Table_TypeRoleAccess].[TypeRoleAccess_TypeFullName] AS [TypeRoleAccess_TypeFullName], 
+    [Table_TypeRoleAccess].[TypeRoleAccess_Role] AS [TypeRoleAccess_Role], 
+    [Table_TypeRoleAccess].[TypeRoleAccess_Permission] AS [TypeRoleAccess_Permission], 
+    [Table_TypeRoleAccess].[TypeRoleAccess_Active] AS [TypeRoleAccess_Active], 
+    [Table_TypeRoleAccess].[TypeRoleAccess_CreatedBy] AS [TypeRoleAccess_CreatedBy], 
+    [Table_TypeRoleAccess].[TypeRoleAccess_CreatedAt] AS [TypeRoleAccess_CreatedAt], 
+    [Table_TypeRoleAccess].[TypeRoleAccess_ModifiedBy] AS [TypeRoleAccess_ModifiedBy], 
+    [Table_TypeRoleAccess].[TypeRoleAccess_ModifiedAt] AS [TypeRoleAccess_ModifiedAt]
+    FROM [dbo].[Table_TypeRoleAccess] AS [Table_TypeRoleAccess]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Table_UserRole" EntityType="Self.Table_UserRole" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Table_UserRole].[UserRole_ID] AS [UserRole_ID], 
+    [Table_UserRole].[Role_ID] AS [Role_ID], 
+    [Table_UserRole].[User_ID] AS [User_ID], 
+    [Table_UserRole].[UserRole_Active] AS [UserRole_Active], 
+    [Table_UserRole].[CreatedAt] AS [CreatedAt], 
+    [Table_UserRole].[CreatedBy] AS [CreatedBy], 
+    [Table_UserRole].[ModifiedAt] AS [ModifiedAt], 
+    [Table_UserRole].[ModifiedBy] AS [ModifiedBy]
+    FROM [dbo].[Table_UserRole] AS [Table_UserRole]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Table_ChildrenInfo">
+          <Key>
+            <PropertyRef Name="ChildrenInfo_ID" />
+          </Key>
+          <Property Name="ChildrenInfo_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChildrenInfo_PersonelInfoID" Type="Int32" Nullable="false" />
+          <Property Name="ChildrenInfo_FullName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ChildrenInfo_Gender" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ChildrenInfo_BirthDate" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ChildrenInfo_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="ChildrenInfo_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ChildrenInfo_ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="ChildrenInfo_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Table_CostCenter">
+          <Key>
+            <PropertyRef Name="CostCenter_ID" />
+          </Key>
+          <Property Name="CostCenter_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CostCenter_Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CostCenter_Active" Type="Boolean" />
+          <Property Name="CostCenter_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="CostCenter_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="CostCenter_ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="CostCenter_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Table_Department">
+          <Key>
+            <PropertyRef Name="Department_ID" />
+          </Key>
+          <Property Name="Department_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Department_Name" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Department_Active" Type="Boolean" />
+          <Property Name="Department_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="Department_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Department_ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="Department_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Table_EducationInfo">
+          <Key>
+            <PropertyRef Name="EducationInfo_ID" />
+          </Key>
+          <Property Name="EducationInfo_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EducationInfo_PersonelInfoID" Type="Int32" Nullable="false" />
+          <Property Name="EducationInfo_StartDate" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="EducationInfo_EndDate" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="EducationInfo_School" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EducationInfo_Major" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="EducationInfo_Degree" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="EducationInfo_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="EducationInfo_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="EducationInfo_ModifiedAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Table_FamilyMembersInfo">
+          <Key>
+            <PropertyRef Name="FamilyMembersInfo_ID" />
+          </Key>
+          <Property Name="FamilyMembersInfo_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FamilyMembersInfo_PersonelInfoID" Type="Int32" Nullable="false" />
+          <Property Name="FamilyMembersInfo_FullName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FamilyMembersInfo_Relations" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="FamilyMembersInfo_Employer" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="FamilyMembersInfo_Department" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="FamilyMembersInfo_Position" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="FamilyMembersInfo_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="FamilyMembersInfo_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="FamilyMembersInfo_ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="FamilyMembersInfo_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Table_Headcount">
+          <Key>
+            <PropertyRef Name="Headcount_ID" />
+          </Key>
+          <Property Name="Headcount_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Headcount_Code" Type="Int32" Nullable="false" />
+          <Property Name="Headcount_Position" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Headcount_Number" Type="Int32" />
+          <Property Name="Headcount_CostCenter" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Headcount_Department" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Headcount_InternalLevel" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Headcount_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="Headcount_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Headcount_ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="Headcount_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Headcount_Status" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Table_Offer">
+          <Key>
+            <PropertyRef Name="Offer_ID" />
+          </Key>
+          <Property Name="Offer_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Offer_HCID" Type="Int32" Nullable="false" />
+          <Property Name="Offer_Status" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Offer_PersonelInfoID" Type="Int32" Nullable="false" />
+          <Property Name="Offer_SalaryInfoID" Type="Int32" />
+          <Property Name="Offer_ReportingInfoID" Type="Int32" />
+          <Property Name="Offer_RecruitType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Offer_Position" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Offer_Location" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Offer_OnboardingDate" Type="DateTime" Precision="3" />
+          <Property Name="Offer_RecruitChannel" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Offer_ProbationDuration" Type="Int32" />
+          <Property Name="Offer_Notes" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="Offer_SignedFile" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="Offer_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="Offer_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Offer_ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="Offer_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Offer_EmailITCompleted" Type="Boolean" />
+          <Property Name="Offer_SyncDomainCompleted" Type="Boolean" />
+          <Property Name="Offer_WelcomeCandidateCompleted" Type="Boolean" />
+          <Property Name="Offer_WelcomeToMgrCompleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Table_OfferCycle">
+          <Key>
+            <PropertyRef Name="OfferCycle_ID" />
+          </Key>
+          <Property Name="OfferCycle_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OfferCycle_ProcessName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="OfferCycle_ProcessDescription" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="OfferCycle_StartStatus" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="OfferCycle_EndStatus" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="OfferCycle_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="OfferCycle_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="OfferCycle_ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="OfferCycle_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Table_PersonelInfo">
+          <Key>
+            <PropertyRef Name="PersonelInfo_ID" />
+          </Key>
+          <Property Name="PersonelInfo_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonelInfo_RomanFName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_RomanLName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_FName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_LName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_Mobile" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_Email" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_Phone" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_Gender" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_MartialStatus" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_BirthDate" Type="DateTime" Precision="3" />
+          <Property Name="PersonelInfo_IdentityID" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_Nationality" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_Hukou" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_HukouType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_FileLocation" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_HomeAddress" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_PostCode" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_EmergencyContact" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_EmergencyContactPhone" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="PersonelInfo_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="PersonelInfo_ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="PersonelInfo_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Table_ReportingInfo">
+          <Key>
+            <PropertyRef Name="ReportingInfo_ID" />
+          </Key>
+          <Property Name="ReportingInfo_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReportingInfo_ReportLineEmpID" Type="Int32" />
+          <Property Name="ReportingInfo_ReportLineEmail" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReportingInfo_DeptMgrEmpID" Type="Int32" />
+          <Property Name="ReportingInfo_DeptMgrEmail" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReportingInfo_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="ReportingInfo_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="ReportingInfo_ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="ReportingInfo_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Table_Resignation">
+          <Key>
+            <PropertyRef Name="Resignation_ID" />
+          </Key>
+          <Property Name="Resignation_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Resignation_EmpID" Type="Int32" Nullable="false" />
+          <Property Name="Resignation_Status" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Resignation_ResignDate" Type="DateTime" Precision="3" />
+          <Property Name="Resignation_LastWorkingDate" Type="DateTime" Precision="3" />
+          <Property Name="Resignation_DomainEndDate" Type="DateTime" Precision="3" />
+          <Property Name="Resignation_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="Resignation_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Resignation_ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="Resignation_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Table_Role">
+          <Key>
+            <PropertyRef Name="Role_ID" />
+          </Key>
+          <Property Name="Role_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table_SalaryInfo">
+          <Key>
+            <PropertyRef Name="SalaryInfo_ID" />
+          </Key>
+          <Property Name="SalaryInfo_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SalaryInfo_Salary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalaryInfo_ReviewedSalary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalaryInfo_Bonus" Type="Boolean" />
+          <Property Name="SalaryInfo_BonusType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SalaryInfo_BonusAmount" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SalaryInfo_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="SalaryInfo_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="SalaryInfo_ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="SalaryInfo_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Table_Survey">
+          <Key>
+            <PropertyRef Name="Survey_ID" />
+          </Key>
+          <Property Name="Survey_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Survey_SourceID" Type="Int32" />
+          <Property Name="Survey_SourceType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Survey_Content" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Name="Survey_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="Survey_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Survey_ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="Survey_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Table_WorkExperienceInfo">
+          <Key>
+            <PropertyRef Name="WorkExperienceInfo_ID" />
+          </Key>
+          <Property Name="WorkExperienceInfo_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkExperienceInfo_PersonelInfoID" Type="Int32" Nullable="false" />
+          <Property Name="WorkExperienceInfo_StartDate" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WorkExperienceInfo_EndDate" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WorkExperienceInfo_Employer" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="WorkExperienceInfo_Department" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WorkExperienceInfo_Position" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WorkExperienceInfo_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="WorkExperienceInfo_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="WorkExperienceInfo_ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="WorkExperienceInfo_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Table_TypeRoleAccess">
+          <Key>
+            <PropertyRef Name="TypeRoleAccess_ID" />
+            <PropertyRef Name="TypeRoleAccess_TypeFullName" />
+            <PropertyRef Name="TypeRoleAccess_Role" />
+            <PropertyRef Name="TypeRoleAccess_Permission" />
+            <PropertyRef Name="TypeRoleAccess_Active" />
+          </Key>
+          <Property Name="TypeRoleAccess_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TypeRoleAccess_TypeFullName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TypeRoleAccess_Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TypeRoleAccess_Permission" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TypeRoleAccess_Active" Type="Boolean" Nullable="false" />
+          <Property Name="TypeRoleAccess_CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TypeRoleAccess_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="TypeRoleAccess_ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TypeRoleAccess_ModifiedAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Table_UserRole">
+          <Key>
+            <PropertyRef Name="UserRole_ID" />
+            <PropertyRef Name="Role_ID" />
+            <PropertyRef Name="User_ID" />
+            <PropertyRef Name="UserRole_Active" />
+          </Key>
+          <Property Name="UserRole_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role_ID" Type="Int32" Nullable="false" />
+          <Property Name="User_ID" Type="Int32" Nullable="false" />
+          <Property Name="UserRole_Active" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="HrDbContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Table_ChildrenInfo" EntityType="Self.Table_ChildrenInfo" />
+          <EntitySet Name="Table_CostCenter" EntityType="Self.Table_CostCenter" />
+          <EntitySet Name="Table_Department" EntityType="Self.Table_Department" />
+          <EntitySet Name="Table_EducationInfo" EntityType="Self.Table_EducationInfo" />
+          <EntitySet Name="Table_FamilyMembersInfo" EntityType="Self.Table_FamilyMembersInfo" />
+          <EntitySet Name="Table_Headcount" EntityType="Self.Table_Headcount" />
+          <EntitySet Name="Table_Offer" EntityType="Self.Table_Offer" />
+          <EntitySet Name="Table_OfferCycle" EntityType="Self.Table_OfferCycle" />
+          <EntitySet Name="Table_PersonelInfo" EntityType="Self.Table_PersonelInfo" />
+          <EntitySet Name="Table_ReportingInfo" EntityType="Self.Table_ReportingInfo" />
+          <EntitySet Name="Table_Resignation" EntityType="Self.Table_Resignation" />
+          <EntitySet Name="Table_Role" EntityType="Self.Table_Role" />
+          <EntitySet Name="Table_SalaryInfo" EntityType="Self.Table_SalaryInfo" />
+          <EntitySet Name="Table_Survey" EntityType="Self.Table_Survey" />
+          <EntitySet Name="Table_WorkExperienceInfo" EntityType="Self.Table_WorkExperienceInfo" />
+          <EntitySet Name="Table_TypeRoleAccess" EntityType="Self.Table_TypeRoleAccess" />
+          <EntitySet Name="Table_UserRole" EntityType="Self.Table_UserRole" />
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Model.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Model.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="xprcFile" ReturnType="Collection(Model.xprcFile_Result)">
+            <Parameter Name="txt" Mode="In" Type="String" />
+            <Parameter Name="hasTitle" Mode="In" Type="Int32" />
+            <Parameter Name="isShow" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Table_InternalLevel" EntityType="Model.Table_InternalLevel" />
+          <FunctionImport Name="Proc_InsertNewAccount">
+            <Parameter Name="returnVal" Mode="InOut" Type="Int32" />
+            <Parameter Name="OfferID" Mode="In" Type="Int32" />
+            <Parameter Name="DomainLogin" Mode="In" Type="String" />
+            <Parameter Name="ContractStartDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_InsertAddressBook">
+            <Parameter Name="OfferID" Mode="In" Type="Int32" />
+            <Parameter Name="SID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Table_Employee" EntityType="Model.Table_Employee" />
+        </EntityContainer>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="xprcFile_Result">
+          <Property Type="String" Name="TableName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ColumnCreatedBy" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ColumnModifiedBy" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="ColumnModifiedAt" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <EntityType Name="Table_InternalLevel">
+          <Key>
+            <PropertyRef Name="InternalLevel_ID" />
+          </Key>
+          <Property Name="InternalLevel_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InternalLevel_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InternalLevel_Active" Type="Boolean" />
+          <Property Name="InternalLevel_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="InternalLevel_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="InternalLevel_ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="InternalLevel_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Table_Employee">
+          <Key>
+            <PropertyRef Name="Employee_ID" />
+          </Key>
+          <Property Name="Employee_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Employee_EmployeeNo" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Employee_FullName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Employee_LocalName" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Employee_Email" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Employee_CostCenter" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Employee_JobTitle" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Employee_BusinessUnit" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Employee_Department" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Employee_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="Employee_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Employee_ModifiedAt" Type="DateTime" Precision="3" />
+          <Property Name="Employee_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="HrDbContext">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_ChildrenInfo">
+            <EntityTypeMapping TypeName="Model.Table_ChildrenInfo">
+              <MappingFragment StoreEntitySet="Table_ChildrenInfo">
+                <ScalarProperty Name="ChildrenInfo_ID" ColumnName="ChildrenInfo_ID" />
+                <ScalarProperty Name="ChildrenInfo_PersonelInfoID" ColumnName="ChildrenInfo_PersonelInfoID" />
+                <ScalarProperty Name="ChildrenInfo_FullName" ColumnName="ChildrenInfo_FullName" />
+                <ScalarProperty Name="ChildrenInfo_Gender" ColumnName="ChildrenInfo_Gender" />
+                <ScalarProperty Name="ChildrenInfo_BirthDate" ColumnName="ChildrenInfo_BirthDate" />
+                <ScalarProperty Name="ChildrenInfo_CreatedAt" ColumnName="ChildrenInfo_CreatedAt" />
+                <ScalarProperty Name="ChildrenInfo_CreatedBy" ColumnName="ChildrenInfo_CreatedBy" />
+                <ScalarProperty Name="ChildrenInfo_ModifiedAt" ColumnName="ChildrenInfo_ModifiedAt" />
+                <ScalarProperty Name="ChildrenInfo_ModifiedBy" ColumnName="ChildrenInfo_ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_CostCenter">
+            <EntityTypeMapping TypeName="Model.Table_CostCenter">
+              <MappingFragment StoreEntitySet="Table_CostCenter">
+                <ScalarProperty Name="CostCenter_ID" ColumnName="CostCenter_ID" />
+                <ScalarProperty Name="CostCenter_Name" ColumnName="CostCenter_Name" />
+                <ScalarProperty Name="CostCenter_Active" ColumnName="CostCenter_Active" />
+                <ScalarProperty Name="CostCenter_CreatedAt" ColumnName="CostCenter_CreatedAt" />
+                <ScalarProperty Name="CostCenter_CreatedBy" ColumnName="CostCenter_CreatedBy" />
+                <ScalarProperty Name="CostCenter_ModifiedAt" ColumnName="CostCenter_ModifiedAt" />
+                <ScalarProperty Name="CostCenter_ModifiedBy" ColumnName="CostCenter_ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Department">
+            <EntityTypeMapping TypeName="Model.Table_Department">
+              <MappingFragment StoreEntitySet="Table_Department">
+                <ScalarProperty Name="Department_ID" ColumnName="Department_ID" />
+                <ScalarProperty Name="Department_Name" ColumnName="Department_Name" />
+                <ScalarProperty Name="Department_Active" ColumnName="Department_Active" />
+                <ScalarProperty Name="Department_CreatedAt" ColumnName="Department_CreatedAt" />
+                <ScalarProperty Name="Department_CreatedBy" ColumnName="Department_CreatedBy" />
+                <ScalarProperty Name="Department_ModifiedAt" ColumnName="Department_ModifiedAt" />
+                <ScalarProperty Name="Department_ModifiedBy" ColumnName="Department_ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_EducationInfo">
+            <EntityTypeMapping TypeName="Model.Table_EducationInfo">
+              <MappingFragment StoreEntitySet="Table_EducationInfo">
+                <ScalarProperty Name="EducationInfo_ID" ColumnName="EducationInfo_ID" />
+                <ScalarProperty Name="EducationInfo_PersonelInfoID" ColumnName="EducationInfo_PersonelInfoID" />
+                <ScalarProperty Name="EducationInfo_StartDate" ColumnName="EducationInfo_StartDate" />
+                <ScalarProperty Name="EducationInfo_EndDate" ColumnName="EducationInfo_EndDate" />
+                <ScalarProperty Name="EducationInfo_School" ColumnName="EducationInfo_School" />
+                <ScalarProperty Name="EducationInfo_Major" ColumnName="EducationInfo_Major" />
+                <ScalarProperty Name="EducationInfo_Degree" ColumnName="EducationInfo_Degree" />
+                <ScalarProperty Name="EducationInfo_CreatedAt" ColumnName="EducationInfo_CreatedAt" />
+                <ScalarProperty Name="EducationInfo_CreatedBy" ColumnName="EducationInfo_CreatedBy" />
+                <ScalarProperty Name="EducationInfo_ModifiedAt" ColumnName="EducationInfo_ModifiedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_FamilyMembersInfo">
+            <EntityTypeMapping TypeName="Model.Table_FamilyMembersInfo">
+              <MappingFragment StoreEntitySet="Table_FamilyMembersInfo">
+                <ScalarProperty Name="FamilyMembersInfo_ID" ColumnName="FamilyMembersInfo_ID" />
+                <ScalarProperty Name="FamilyMembersInfo_PersonelInfoID" ColumnName="FamilyMembersInfo_PersonelInfoID" />
+                <ScalarProperty Name="FamilyMembersInfo_FullName" ColumnName="FamilyMembersInfo_FullName" />
+                <ScalarProperty Name="FamilyMembersInfo_Relations" ColumnName="FamilyMembersInfo_Relations" />
+                <ScalarProperty Name="FamilyMembersInfo_Employer" ColumnName="FamilyMembersInfo_Employer" />
+                <ScalarProperty Name="FamilyMembersInfo_Department" ColumnName="FamilyMembersInfo_Department" />
+                <ScalarProperty Name="FamilyMembersInfo_Position" ColumnName="FamilyMembersInfo_Position" />
+                <ScalarProperty Name="FamilyMembersInfo_CreatedAt" ColumnName="FamilyMembersInfo_CreatedAt" />
+                <ScalarProperty Name="FamilyMembersInfo_CreatedBy" ColumnName="FamilyMembersInfo_CreatedBy" />
+                <ScalarProperty Name="FamilyMembersInfo_ModifiedAt" ColumnName="FamilyMembersInfo_ModifiedAt" />
+                <ScalarProperty Name="FamilyMembersInfo_ModifiedBy" ColumnName="FamilyMembersInfo_ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Headcount">
+            <EntityTypeMapping TypeName="Model.Table_Headcount">
+              <MappingFragment StoreEntitySet="Table_Headcount">
+                <ScalarProperty Name="Headcount_ID" ColumnName="Headcount_ID" />
+                <ScalarProperty Name="Headcount_Code" ColumnName="Headcount_Code" />
+                <ScalarProperty Name="Headcount_Position" ColumnName="Headcount_Position" />
+                <ScalarProperty Name="Headcount_Number" ColumnName="Headcount_Number" />
+                <ScalarProperty Name="Headcount_CostCenter" ColumnName="Headcount_CostCenter" />
+                <ScalarProperty Name="Headcount_Department" ColumnName="Headcount_Department" />
+                <ScalarProperty Name="Headcount_InternalLevel" ColumnName="Headcount_InternalLevel" />
+                <ScalarProperty Name="Headcount_CreatedAt" ColumnName="Headcount_CreatedAt" />
+                <ScalarProperty Name="Headcount_CreatedBy" ColumnName="Headcount_CreatedBy" />
+                <ScalarProperty Name="Headcount_ModifiedAt" ColumnName="Headcount_ModifiedAt" />
+                <ScalarProperty Name="Headcount_ModifiedBy" ColumnName="Headcount_ModifiedBy" />
+                <ScalarProperty Name="Headcount_Status" ColumnName="Headcount_Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Offer">
+            <EntityTypeMapping TypeName="Model.Table_Offer">
+              <MappingFragment StoreEntitySet="Table_Offer">
+                <ScalarProperty Name="Offer_WelcomeToMgrCompleted" ColumnName="Offer_WelcomeToMgrCompleted" />
+                <ScalarProperty Name="Offer_WelcomeCandidateCompleted" ColumnName="Offer_WelcomeCandidateCompleted" />
+                <ScalarProperty Name="Offer_SyncDomainCompleted" ColumnName="Offer_SyncDomainCompleted" />
+                <ScalarProperty Name="Offer_EmailITCompleted" ColumnName="Offer_EmailITCompleted" />
+                <ScalarProperty Name="Offer_ID" ColumnName="Offer_ID" />
+                <ScalarProperty Name="Offer_HCID" ColumnName="Offer_HCID" />
+                <ScalarProperty Name="Offer_Status" ColumnName="Offer_Status" />
+                <ScalarProperty Name="Offer_PersonelInfoID" ColumnName="Offer_PersonelInfoID" />
+                <ScalarProperty Name="Offer_SalaryInfoID" ColumnName="Offer_SalaryInfoID" />
+                <ScalarProperty Name="Offer_ReportingInfoID" ColumnName="Offer_ReportingInfoID" />
+                <ScalarProperty Name="Offer_RecruitType" ColumnName="Offer_RecruitType" />
+                <ScalarProperty Name="Offer_Position" ColumnName="Offer_Position" />
+                <ScalarProperty Name="Offer_Location" ColumnName="Offer_Location" />
+                <ScalarProperty Name="Offer_OnboardingDate" ColumnName="Offer_OnboardingDate" />
+                <ScalarProperty Name="Offer_RecruitChannel" ColumnName="Offer_RecruitChannel" />
+                <ScalarProperty Name="Offer_ProbationDuration" ColumnName="Offer_ProbationDuration" />
+                <ScalarProperty Name="Offer_Notes" ColumnName="Offer_Notes" />
+                <ScalarProperty Name="Offer_SignedFile" ColumnName="Offer_SignedFile" />
+                <ScalarProperty Name="Offer_CreatedAt" ColumnName="Offer_CreatedAt" />
+                <ScalarProperty Name="Offer_CreatedBy" ColumnName="Offer_CreatedBy" />
+                <ScalarProperty Name="Offer_ModifiedAt" ColumnName="Offer_ModifiedAt" />
+                <ScalarProperty Name="Offer_ModifiedBy" ColumnName="Offer_ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_OfferCycle">
+            <EntityTypeMapping TypeName="Model.Table_OfferCycle">
+              <MappingFragment StoreEntitySet="Table_OfferCycle">
+                <ScalarProperty Name="OfferCycle_ID" ColumnName="OfferCycle_ID" />
+                <ScalarProperty Name="OfferCycle_ProcessName" ColumnName="OfferCycle_ProcessName" />
+                <ScalarProperty Name="OfferCycle_ProcessDescription" ColumnName="OfferCycle_ProcessDescription" />
+                <ScalarProperty Name="OfferCycle_StartStatus" ColumnName="OfferCycle_StartStatus" />
+                <ScalarProperty Name="OfferCycle_EndStatus" ColumnName="OfferCycle_EndStatus" />
+                <ScalarProperty Name="OfferCycle_CreatedAt" ColumnName="OfferCycle_CreatedAt" />
+                <ScalarProperty Name="OfferCycle_CreatedBy" ColumnName="OfferCycle_CreatedBy" />
+                <ScalarProperty Name="OfferCycle_ModifiedAt" ColumnName="OfferCycle_ModifiedAt" />
+                <ScalarProperty Name="OfferCycle_ModifiedBy" ColumnName="OfferCycle_ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_PersonelInfo">
+            <EntityTypeMapping TypeName="Model.Table_PersonelInfo">
+              <MappingFragment StoreEntitySet="Table_PersonelInfo">
+                <ScalarProperty Name="PersonelInfo_ID" ColumnName="PersonelInfo_ID" />
+                <ScalarProperty Name="PersonelInfo_RomanFName" ColumnName="PersonelInfo_RomanFName" />
+                <ScalarProperty Name="PersonelInfo_RomanLName" ColumnName="PersonelInfo_RomanLName" />
+                <ScalarProperty Name="PersonelInfo_FName" ColumnName="PersonelInfo_FName" />
+                <ScalarProperty Name="PersonelInfo_LName" ColumnName="PersonelInfo_LName" />
+                <ScalarProperty Name="PersonelInfo_Mobile" ColumnName="PersonelInfo_Mobile" />
+                <ScalarProperty Name="PersonelInfo_Email" ColumnName="PersonelInfo_Email" />
+                <ScalarProperty Name="PersonelInfo_Phone" ColumnName="PersonelInfo_Phone" />
+                <ScalarProperty Name="PersonelInfo_Gender" ColumnName="PersonelInfo_Gender" />
+                <ScalarProperty Name="PersonelInfo_MartialStatus" ColumnName="PersonelInfo_MartialStatus" />
+                <ScalarProperty Name="PersonelInfo_BirthDate" ColumnName="PersonelInfo_BirthDate" />
+                <ScalarProperty Name="PersonelInfo_IdentityID" ColumnName="PersonelInfo_IdentityID" />
+                <ScalarProperty Name="PersonelInfo_Nationality" ColumnName="PersonelInfo_Nationality" />
+                <ScalarProperty Name="PersonelInfo_Hukou" ColumnName="PersonelInfo_Hukou" />
+                <ScalarProperty Name="PersonelInfo_HukouType" ColumnName="PersonelInfo_HukouType" />
+                <ScalarProperty Name="PersonelInfo_FileLocation" ColumnName="PersonelInfo_FileLocation" />
+                <ScalarProperty Name="PersonelInfo_HomeAddress" ColumnName="PersonelInfo_HomeAddress" />
+                <ScalarProperty Name="PersonelInfo_PostCode" ColumnName="PersonelInfo_PostCode" />
+                <ScalarProperty Name="PersonelInfo_EmergencyContact" ColumnName="PersonelInfo_EmergencyContact" />
+                <ScalarProperty Name="PersonelInfo_EmergencyContactPhone" ColumnName="PersonelInfo_EmergencyContactPhone" />
+                <ScalarProperty Name="PersonelInfo_CreatedAt" ColumnName="PersonelInfo_CreatedAt" />
+                <ScalarProperty Name="PersonelInfo_CreatedBy" ColumnName="PersonelInfo_CreatedBy" />
+                <ScalarProperty Name="PersonelInfo_ModifiedAt" ColumnName="PersonelInfo_ModifiedAt" />
+                <ScalarProperty Name="PersonelInfo_ModifiedBy" ColumnName="PersonelInfo_ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_ReportingInfo">
+            <EntityTypeMapping TypeName="Model.Table_ReportingInfo">
+              <MappingFragment StoreEntitySet="Table_ReportingInfo">
+                <ScalarProperty Name="ReportingInfo_ID" ColumnName="ReportingInfo_ID" />
+                <ScalarProperty Name="ReportingInfo_ReportLineEmpID" ColumnName="ReportingInfo_ReportLineEmpID" />
+                <ScalarProperty Name="ReportingInfo_ReportLineEmail" ColumnName="ReportingInfo_ReportLineEmail" />
+                <ScalarProperty Name="ReportingInfo_DeptMgrEmpID" ColumnName="ReportingInfo_DeptMgrEmpID" />
+                <ScalarProperty Name="ReportingInfo_DeptMgrEmail" ColumnName="ReportingInfo_DeptMgrEmail" />
+                <ScalarProperty Name="ReportingInfo_CreatedAt" ColumnName="ReportingInfo_CreatedAt" />
+                <ScalarProperty Name="ReportingInfo_CreatedBy" ColumnName="ReportingInfo_CreatedBy" />
+                <ScalarProperty Name="ReportingInfo_ModifiedAt" ColumnName="ReportingInfo_ModifiedAt" />
+                <ScalarProperty Name="ReportingInfo_ModifiedBy" ColumnName="ReportingInfo_ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Resignation">
+            <EntityTypeMapping TypeName="Model.Table_Resignation">
+              <MappingFragment StoreEntitySet="Table_Resignation">
+                <ScalarProperty Name="Resignation_ID" ColumnName="Resignation_ID" />
+                <ScalarProperty Name="Resignation_EmpID" ColumnName="Resignation_EmpID" />
+                <ScalarProperty Name="Resignation_Status" ColumnName="Resignation_Status" />
+                <ScalarProperty Name="Resignation_ResignDate" ColumnName="Resignation_ResignDate" />
+                <ScalarProperty Name="Resignation_LastWorkingDate" ColumnName="Resignation_LastWorkingDate" />
+                <ScalarProperty Name="Resignation_DomainEndDate" ColumnName="Resignation_DomainEndDate" />
+                <ScalarProperty Name="Resignation_CreatedAt" ColumnName="Resignation_CreatedAt" />
+                <ScalarProperty Name="Resignation_CreatedBy" ColumnName="Resignation_CreatedBy" />
+                <ScalarProperty Name="Resignation_ModifiedAt" ColumnName="Resignation_ModifiedAt" />
+                <ScalarProperty Name="Resignation_ModifiedBy" ColumnName="Resignation_ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Role">
+            <EntityTypeMapping TypeName="Model.Table_Role">
+              <MappingFragment StoreEntitySet="Table_Role">
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_SalaryInfo">
+            <EntityTypeMapping TypeName="Model.Table_SalaryInfo">
+              <MappingFragment StoreEntitySet="Table_SalaryInfo">
+                <ScalarProperty Name="SalaryInfo_ID" ColumnName="SalaryInfo_ID" />
+                <ScalarProperty Name="SalaryInfo_Salary" ColumnName="SalaryInfo_Salary" />
+                <ScalarProperty Name="SalaryInfo_ReviewedSalary" ColumnName="SalaryInfo_ReviewedSalary" />
+                <ScalarProperty Name="SalaryInfo_Bonus" ColumnName="SalaryInfo_Bonus" />
+                <ScalarProperty Name="SalaryInfo_BonusType" ColumnName="SalaryInfo_BonusType" />
+                <ScalarProperty Name="SalaryInfo_BonusAmount" ColumnName="SalaryInfo_BonusAmount" />
+                <ScalarProperty Name="SalaryInfo_CreatedAt" ColumnName="SalaryInfo_CreatedAt" />
+                <ScalarProperty Name="SalaryInfo_CreatedBy" ColumnName="SalaryInfo_CreatedBy" />
+                <ScalarProperty Name="SalaryInfo_ModifiedAt" ColumnName="SalaryInfo_ModifiedAt" />
+                <ScalarProperty Name="SalaryInfo_ModifiedBy" ColumnName="SalaryInfo_ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Survey">
+            <EntityTypeMapping TypeName="Model.Table_Survey">
+              <MappingFragment StoreEntitySet="Table_Survey">
+                <ScalarProperty Name="Survey_ID" ColumnName="Survey_ID" />
+                <ScalarProperty Name="Survey_SourceID" ColumnName="Survey_SourceID" />
+                <ScalarProperty Name="Survey_SourceType" ColumnName="Survey_SourceType" />
+                <ScalarProperty Name="Survey_Content" ColumnName="Survey_Content" />
+                <ScalarProperty Name="Survey_CreatedAt" ColumnName="Survey_CreatedAt" />
+                <ScalarProperty Name="Survey_CreatedBy" ColumnName="Survey_CreatedBy" />
+                <ScalarProperty Name="Survey_ModifiedAt" ColumnName="Survey_ModifiedAt" />
+                <ScalarProperty Name="Survey_ModifiedBy" ColumnName="Survey_ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_WorkExperienceInfo">
+            <EntityTypeMapping TypeName="Model.Table_WorkExperienceInfo">
+              <MappingFragment StoreEntitySet="Table_WorkExperienceInfo">
+                <ScalarProperty Name="WorkExperienceInfo_ID" ColumnName="WorkExperienceInfo_ID" />
+                <ScalarProperty Name="WorkExperienceInfo_PersonelInfoID" ColumnName="WorkExperienceInfo_PersonelInfoID" />
+                <ScalarProperty Name="WorkExperienceInfo_StartDate" ColumnName="WorkExperienceInfo_StartDate" />
+                <ScalarProperty Name="WorkExperienceInfo_EndDate" ColumnName="WorkExperienceInfo_EndDate" />
+                <ScalarProperty Name="WorkExperienceInfo_Employer" ColumnName="WorkExperienceInfo_Employer" />
+                <ScalarProperty Name="WorkExperienceInfo_Department" ColumnName="WorkExperienceInfo_Department" />
+                <ScalarProperty Name="WorkExperienceInfo_Position" ColumnName="WorkExperienceInfo_Position" />
+                <ScalarProperty Name="WorkExperienceInfo_CreatedAt" ColumnName="WorkExperienceInfo_CreatedAt" />
+                <ScalarProperty Name="WorkExperienceInfo_CreatedBy" ColumnName="WorkExperienceInfo_CreatedBy" />
+                <ScalarProperty Name="WorkExperienceInfo_ModifiedAt" ColumnName="WorkExperienceInfo_ModifiedAt" />
+                <ScalarProperty Name="WorkExperienceInfo_ModifiedBy" ColumnName="WorkExperienceInfo_ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_TypeRoleAccess">
+            <EntityTypeMapping TypeName="Model.Table_TypeRoleAccess">
+              <MappingFragment StoreEntitySet="Table_TypeRoleAccess">
+                <ScalarProperty Name="TypeRoleAccess_ID" ColumnName="TypeRoleAccess_ID" />
+                <ScalarProperty Name="TypeRoleAccess_TypeFullName" ColumnName="TypeRoleAccess_TypeFullName" />
+                <ScalarProperty Name="TypeRoleAccess_Role" ColumnName="TypeRoleAccess_Role" />
+                <ScalarProperty Name="TypeRoleAccess_Permission" ColumnName="TypeRoleAccess_Permission" />
+                <ScalarProperty Name="TypeRoleAccess_Active" ColumnName="TypeRoleAccess_Active" />
+                <ScalarProperty Name="TypeRoleAccess_CreatedBy" ColumnName="TypeRoleAccess_CreatedBy" />
+                <ScalarProperty Name="TypeRoleAccess_CreatedAt" ColumnName="TypeRoleAccess_CreatedAt" />
+                <ScalarProperty Name="TypeRoleAccess_ModifiedBy" ColumnName="TypeRoleAccess_ModifiedBy" />
+                <ScalarProperty Name="TypeRoleAccess_ModifiedAt" ColumnName="TypeRoleAccess_ModifiedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_UserRole">
+            <EntityTypeMapping TypeName="Model.Table_UserRole">
+              <MappingFragment StoreEntitySet="Table_UserRole">
+                <ScalarProperty Name="UserRole_ID" ColumnName="UserRole_ID" />
+                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+                <ScalarProperty Name="UserRole_Active" ColumnName="UserRole_Active" />
+                <ScalarProperty Name="CreatedAt" ColumnName="CreatedAt" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedAt" ColumnName="ModifiedAt" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="Model.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="Model.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="Model.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="Model.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="Model.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="Model.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="Model.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="xprcFile" FunctionName="Model.Store.xprcFile">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.xprcFile_Result">
+                <ScalarProperty Name="TableName" ColumnName="TableName" />
+                <ScalarProperty Name="ColumnCreatedBy" ColumnName="ColumnCreatedBy" />
+                <ScalarProperty Name="ColumnModifiedBy" ColumnName="ColumnModifiedBy" />
+                <ScalarProperty Name="ColumnModifiedAt" ColumnName="ColumnModifiedAt" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="Table_InternalLevel">
+            <EntityTypeMapping TypeName="Model.Table_InternalLevel">
+              <MappingFragment StoreEntitySet="Table_InternalLevel">
+                <ScalarProperty Name="InternalLevel_ModifiedBy" ColumnName="InternalLevel_ModifiedBy" />
+                <ScalarProperty Name="InternalLevel_ModifiedAt" ColumnName="InternalLevel_ModifiedAt" />
+                <ScalarProperty Name="InternalLevel_CreatedBy" ColumnName="InternalLevel_CreatedBy" />
+                <ScalarProperty Name="InternalLevel_CreatedAt" ColumnName="InternalLevel_CreatedAt" />
+                <ScalarProperty Name="InternalLevel_Active" ColumnName="InternalLevel_Active" />
+                <ScalarProperty Name="InternalLevel_Name" ColumnName="InternalLevel_Name" />
+                <ScalarProperty Name="InternalLevel_ID" ColumnName="InternalLevel_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Proc_InsertNewAccount" FunctionName="Model.Store.Proc_InsertNewAccount" />
+          <FunctionImportMapping FunctionImportName="Proc_InsertAddressBook" FunctionName="Model.Store.Proc_InsertAddressBook" />
+          <EntitySetMapping Name="Table_Employee">
+            <EntityTypeMapping TypeName="Model.Table_Employee">
+              <MappingFragment StoreEntitySet="Table_Employee">
+                <ScalarProperty Name="Employee_ModifiedBy" ColumnName="Employee_ModifiedBy" />
+                <ScalarProperty Name="Employee_ModifiedAt" ColumnName="Employee_ModifiedAt" />
+                <ScalarProperty Name="Employee_CreatedBy" ColumnName="Employee_CreatedBy" />
+                <ScalarProperty Name="Employee_CreatedAt" ColumnName="Employee_CreatedAt" />
+                <ScalarProperty Name="Employee_Department" ColumnName="Employee_Department" />
+                <ScalarProperty Name="Employee_BusinessUnit" ColumnName="Employee_BusinessUnit" />
+                <ScalarProperty Name="Employee_JobTitle" ColumnName="Employee_JobTitle" />
+                <ScalarProperty Name="Employee_CostCenter" ColumnName="Employee_CostCenter" />
+                <ScalarProperty Name="Employee_Email" ColumnName="Employee_Email" />
+                <ScalarProperty Name="Employee_LocalName" ColumnName="Employee_LocalName" />
+                <ScalarProperty Name="Employee_FullName" ColumnName="Employee_FullName" />
+                <ScalarProperty Name="Employee_EmployeeNo" ColumnName="Employee_EmployeeNo" />
+                <ScalarProperty Name="Employee_ID" ColumnName="Employee_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

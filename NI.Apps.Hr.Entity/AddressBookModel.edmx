@@ -1,0 +1,1570 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="dtproperties">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="property" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="objectid" Type="int" />
+          <Property Name="property" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="value" Type="varchar" MaxLength="255" />
+          <Property Name="uvalue" Type="nvarchar" MaxLength="255" />
+          <Property Name="lvalue" Type="image" />
+          <Property Name="version" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table_Account">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DomainLogin" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="First_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Last_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="JobTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="Dep_ID" Type="int" />
+          <Property Name="Status_ID" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="2048" />
+          <Property Name="CostCenter_ID" Type="int" />
+          <Property Name="ContractStartDate" Type="datetime" />
+          <Property Name="ContractEndDate" Type="datetime" />
+          <Property Name="SignCounts" Type="varbinary" MaxLength="150" />
+          <Property Name="ContractMemo" Type="nvarchar" MaxLength="1024" />
+          <Property Name="ContractNo" Type="varbinary" MaxLength="150" />
+          <Property Name="EmpType_ID" Type="int" />
+          <Property Name="Account_Supervisor" Type="int" />
+        </EntityType>
+        <EntityType Name="Table_AddressBook">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="1024" />
+          <Property Name="Zip" Type="nvarchar" MaxLength="50" />
+          <Property Name="HomeTel" Type="nvarchar" MaxLength="50" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" />
+          <Property Name="Ext" Type="nvarchar" MaxLength="50" />
+          <Property Name="OfficeEmail" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email1" Type="nvarchar" MaxLength="255" />
+          <Property Name="Email2" Type="nvarchar" MaxLength="255" />
+          <Property Name="PicLocation" Type="nvarchar" MaxLength="255" />
+          <Property Name="Cube" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmergencyContactPerson" Type="nvarchar" MaxLength="100" />
+          <Property Name="EmergencyContactPhone" Type="nvarchar" MaxLength="100" />
+          <Property Name="BadgeNumber" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Table_Admin">
+          <Key>
+            <PropertyRef Name="DomainLogin" />
+          </Key>
+          <Property Name="DomainLogin" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table_Contract">
+          <Key>
+            <PropertyRef Name="Contract_ID" />
+          </Key>
+          <Property Name="Contract_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SID" Type="int" Nullable="false" />
+          <Property Name="Contract_Type" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Contract_StartDate" Type="datetime" Nullable="false" />
+          <Property Name="Contract_EndDate" Type="datetime" />
+          <Property Name="Contract_CreatedAt" Type="datetime" Nullable="false" />
+          <Property Name="Contract_CreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Contract_ModifiedAt" Type="datetime" Nullable="false" />
+          <Property Name="Contract_ModifiedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'addressbook_2.dbo.Table_CostCenter' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Table_CostCenter">
+          <Key>
+            <PropertyRef Name="CostCenter_ID" />
+            <PropertyRef Name="CostCenter_Name" />
+          </Key>
+          <Property Name="CostCenter_ID" Type="int" Nullable="false" />
+          <Property Name="CostCenter_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table_Department">
+          <Key>
+            <PropertyRef Name="Dep_ID" />
+          </Key>
+          <Property Name="Dep_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Dep_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Dep_ParentID" Type="int" />
+          <Property Name="Dep_Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="Table_EmpType">
+          <Key>
+            <PropertyRef Name="EmpType_ID" />
+          </Key>
+          <Property Name="EmpType_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmpType_Name" Type="nvarchar" MaxLength="32" />
+          <Property Name="EmpType_Description" Type="nvarchar" MaxLength="1000" />
+          <Property Name="EmpType_ModifiedBy" Type="nvarchar" MaxLength="50" />
+          <Property Name="EmpType_ModifiedAt" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Table_Status">
+          <Key>
+            <PropertyRef Name="Status_ID" />
+          </Key>
+          <Property Name="Status_ID" Type="int" Nullable="false" />
+          <Property Name="Status_Expr" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'addressbook_2.dbo.xlsContainer' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="xlsContainer">
+          <Property Name="Login" Type="nvarchar" MaxLength="100" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'addressbook_2.dbo.View_Account' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_Account">
+          <Key>
+            <PropertyRef Name="SID" />
+            <PropertyRef Name="DomainLogin" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Status_ID" />
+          </Key>
+          <Property Name="SID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DomainLogin" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="First_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Last_Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="JobTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="Dep_ID" Type="int" />
+          <Property Name="Status_ID" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="2048" />
+          <Property Name="CostCenter_ID" Type="int" />
+          <Property Name="ContractStartDate" Type="datetime" />
+          <Property Name="ContractEndDate" Type="datetime" />
+          <Property Name="SignCounts" Type="varbinary" MaxLength="150" />
+          <Property Name="ContractMemo" Type="nvarchar" MaxLength="1024" />
+          <Property Name="ContractNo" Type="varbinary" MaxLength="150" />
+          <Property Name="EmpType_ID" Type="int" />
+          <Property Name="Account_Supervisor" Type="int" />
+          <Property Name="Contract_Start_Date" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'addressbook_2.dbo.View_EmpOverView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_EmpOverView">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Home Address" />
+            <PropertyRef Name="Emergency Contact Person" />
+            <PropertyRef Name="Emergency Contact Phone" />
+            <PropertyRef Name="Badge Number" />
+            <PropertyRef Name="Home Phone" />
+            <PropertyRef Name="Mobile" />
+            <PropertyRef Name="Office Phone Ext." />
+            <PropertyRef Name="Cube" />
+            <PropertyRef Name="Office Email" />
+          </Key>
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="English First Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="English Last Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Home Address" Type="nvarchar" MaxLength="1024" Nullable="false" />
+          <Property Name="Emergency Contact Person" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Emergency Contact Phone" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Badge Number" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Home Phone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Mobile" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Office Phone Ext." Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cube" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Office Email" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'addressbook_2.dbo.View_VacationContracts' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="View_VacationContracts">
+          <Key>
+            <PropertyRef Name="SID" />
+            <PropertyRef Name="Contract_ID" />
+            <PropertyRef Name="Contract_StartDate" />
+          </Key>
+          <Property Name="SID" Type="int" Nullable="false" />
+          <Property Name="Contract_ID" Type="int" Nullable="false" />
+          <Property Name="Contract_StartDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Function Name="dt_addtosourcecontrol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vchSourceSafeINI" Type="varchar" Mode="In" />
+          <Parameter Name="vchProjectName" Type="varchar" Mode="In" />
+          <Parameter Name="vchComment" Type="varchar" Mode="In" />
+          <Parameter Name="vchLoginName" Type="varchar" Mode="In" />
+          <Parameter Name="vchPassword" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="dt_addtosourcecontrol_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vchSourceSafeINI" Type="nvarchar" Mode="In" />
+          <Parameter Name="vchProjectName" Type="nvarchar" Mode="In" />
+          <Parameter Name="vchComment" Type="nvarchar" Mode="In" />
+          <Parameter Name="vchLoginName" Type="nvarchar" Mode="In" />
+          <Parameter Name="vchPassword" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="dt_adduserobject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="dt_adduserobject_vcs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vchProperty" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="dt_checkinobject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="chObjectType" Type="char" Mode="In" />
+          <Parameter Name="vchObjectName" Type="varchar" Mode="In" />
+          <Parameter Name="vchComment" Type="varchar" Mode="In" />
+          <Parameter Name="vchLoginName" Type="varchar" Mode="In" />
+          <Parameter Name="vchPassword" Type="varchar" Mode="In" />
+          <Parameter Name="iVCSFlags" Type="int" Mode="In" />
+          <Parameter Name="iActionFlag" Type="int" Mode="In" />
+          <Parameter Name="txStream1" Type="text" Mode="In" />
+          <Parameter Name="txStream2" Type="text" Mode="In" />
+          <Parameter Name="txStream3" Type="text" Mode="In" />
+        </Function>
+        <Function Name="dt_checkinobject_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="chObjectType" Type="char" Mode="In" />
+          <Parameter Name="vchObjectName" Type="nvarchar" Mode="In" />
+          <Parameter Name="vchComment" Type="nvarchar" Mode="In" />
+          <Parameter Name="vchLoginName" Type="nvarchar" Mode="In" />
+          <Parameter Name="vchPassword" Type="nvarchar" Mode="In" />
+          <Parameter Name="iVCSFlags" Type="int" Mode="In" />
+          <Parameter Name="iActionFlag" Type="int" Mode="In" />
+          <Parameter Name="txStream1" Type="text" Mode="In" />
+          <Parameter Name="txStream2" Type="text" Mode="In" />
+          <Parameter Name="txStream3" Type="text" Mode="In" />
+        </Function>
+        <Function Name="dt_checkoutobject" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="chObjectType" Type="char" Mode="In" />
+          <Parameter Name="vchObjectName" Type="varchar" Mode="In" />
+          <Parameter Name="vchComment" Type="varchar" Mode="In" />
+          <Parameter Name="vchLoginName" Type="varchar" Mode="In" />
+          <Parameter Name="vchPassword" Type="varchar" Mode="In" />
+          <Parameter Name="iVCSFlags" Type="int" Mode="In" />
+          <Parameter Name="iActionFlag" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dt_checkoutobject_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="chObjectType" Type="char" Mode="In" />
+          <Parameter Name="vchObjectName" Type="nvarchar" Mode="In" />
+          <Parameter Name="vchComment" Type="nvarchar" Mode="In" />
+          <Parameter Name="vchLoginName" Type="nvarchar" Mode="In" />
+          <Parameter Name="vchPassword" Type="nvarchar" Mode="In" />
+          <Parameter Name="iVCSFlags" Type="int" Mode="In" />
+          <Parameter Name="iActionFlag" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dt_displayoaerror" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="iObject" Type="int" Mode="In" />
+          <Parameter Name="iresult" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dt_displayoaerror_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="iObject" Type="int" Mode="In" />
+          <Parameter Name="iresult" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dt_droppropertiesbyid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="property" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="dt_dropuserobjectbyid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dt_generateansiname" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="name" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="dt_getobjwithprop" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="property" Type="varchar" Mode="In" />
+          <Parameter Name="value" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="dt_getobjwithprop_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="property" Type="varchar" Mode="In" />
+          <Parameter Name="uvalue" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="dt_getpropertiesbyid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="property" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="dt_getpropertiesbyid_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="property" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="dt_getpropertiesbyid_vcs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="property" Type="varchar" Mode="In" />
+          <Parameter Name="value" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="dt_getpropertiesbyid_vcs_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="property" Type="varchar" Mode="In" />
+          <Parameter Name="value" Type="nvarchar" Mode="InOut" />
+        </Function>
+        <Function Name="dt_isundersourcecontrol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vchLoginName" Type="varchar" Mode="In" />
+          <Parameter Name="vchPassword" Type="varchar" Mode="In" />
+          <Parameter Name="iWhoToo" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dt_isundersourcecontrol_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vchLoginName" Type="nvarchar" Mode="In" />
+          <Parameter Name="vchPassword" Type="nvarchar" Mode="In" />
+          <Parameter Name="iWhoToo" Type="int" Mode="In" />
+        </Function>
+        <Function Name="dt_removefromsourcecontrol" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="dt_setpropertybyid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="property" Type="varchar" Mode="In" />
+          <Parameter Name="value" Type="varchar" Mode="In" />
+          <Parameter Name="lvalue" Type="image" Mode="In" />
+        </Function>
+        <Function Name="dt_setpropertybyid_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="id" Type="int" Mode="In" />
+          <Parameter Name="property" Type="varchar" Mode="In" />
+          <Parameter Name="uvalue" Type="nvarchar" Mode="In" />
+          <Parameter Name="lvalue" Type="image" Mode="In" />
+        </Function>
+        <Function Name="dt_validateloginparams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vchLoginName" Type="varchar" Mode="In" />
+          <Parameter Name="vchPassword" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="dt_validateloginparams_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="vchLoginName" Type="nvarchar" Mode="In" />
+          <Parameter Name="vchPassword" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="dt_vcsenabled" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="dt_verstamp006" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="dt_whocheckedout" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="chObjectType" Type="char" Mode="In" />
+          <Parameter Name="vchObjectName" Type="varchar" Mode="In" />
+          <Parameter Name="vchLoginName" Type="varchar" Mode="In" />
+          <Parameter Name="vchPassword" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="dt_whocheckedout_u" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="chObjectType" Type="char" Mode="In" />
+          <Parameter Name="vchObjectName" Type="nvarchar" Mode="In" />
+          <Parameter Name="vchLoginName" Type="nvarchar" Mode="In" />
+          <Parameter Name="vchPassword" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="FN_CalculateAdjustedServiceYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+          <Parameter Name="SID" Type="int" Mode="In" />
+          <Parameter Name="Reminder_Year" Type="int" Mode="In" />
+          <Parameter Name="Reminder_Month" Type="int" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="FN_CalculateAdjustedStartDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime">
+          <Parameter Name="SID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FN_CalculateServiceYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="float">
+          <Parameter Name="SID" Type="int" Mode="In" />
+          <Parameter Name="Reminder_Year" Type="int" Mode="In" />
+          <Parameter Name="Reminder_Month" Type="int" Mode="In" />
+          <Parameter Name="StartDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="FN_CalculateStartDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="datetime">
+          <Parameter Name="SID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FN_Decrypt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+          <Parameter Name="Encrypt" Type="varbinary" Mode="In" />
+        </Function>
+        <Function Name="FN_Encrypt" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="varbinary">
+          <Parameter Name="Plain" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="FN_GetAdjustedServiceYearStartDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="date">
+          <Parameter Name="SID" Type="int" Mode="In" />
+          <Parameter Name="Reminder_Year" Type="int" Mode="In" />
+          <Parameter Name="Reminder_Month" Type="int" Mode="In" />
+          <Parameter Name="StartDate" Type="date" Mode="In" />
+          <Parameter Name="AdjustedServiceYear" Type="float" Mode="In" />
+        </Function>
+        <Function Name="FN_GetDepartmentHexCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="nvarchar">
+          <Parameter Name="Dep_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="FN_GetDepartmentLevel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int">
+          <Parameter Name="Dep_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Proc_CheckAuthorization" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="alias" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Proc_DeleteContract" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Contract_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Proc_GetContract" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Proc_GetCostCenterList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Proc_GetDepartmentList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Proc_GetEmpDetailInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Proc_GetEmpInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Proc_GetEmpSID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DomainLogin" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Proc_GetEmpType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Proc_GetStatusList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Proc_GetSupervisorList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Proc_InsertContract" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SID" Type="int" Mode="In" />
+          <Parameter Name="Contract_Type" Type="nvarchar" Mode="In" />
+          <Parameter Name="Contract_StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="Contract_EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="DomainLogin" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Proc_MaintainEmpType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Proc_QueryEmpWithSort" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Dep_ID" Type="nvarchar" Mode="In" />
+          <Parameter Name="IncludeInactive" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Proc_QueryEmpWithSortExactly" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Dep_ID" Type="nvarchar" Mode="In" />
+          <Parameter Name="IncludeInactive" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Proc_SaveEmpInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DomainLogin" Type="nvarchar" Mode="In" />
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="First_Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Last_Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="JobTitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="CostCenter_ID" Type="nvarchar" Mode="In" />
+          <Parameter Name="Dep_ID" Type="nvarchar" Mode="In" />
+          <Parameter Name="Status_ID" Type="nvarchar" Mode="In" />
+          <Parameter Name="StartDate" Type="nvarchar" Mode="In" />
+          <Parameter Name="Remark" Type="nvarchar" Mode="In" />
+          <Parameter Name="Cube" Type="nvarchar" Mode="In" />
+          <Parameter Name="Address" Type="nvarchar" Mode="In" />
+          <Parameter Name="Zip" Type="nvarchar" Mode="In" />
+          <Parameter Name="HomeTel" Type="nvarchar" Mode="In" />
+          <Parameter Name="Mobile" Type="nvarchar" Mode="In" />
+          <Parameter Name="Ext" Type="nvarchar" Mode="In" />
+          <Parameter Name="OfficeEmail" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email1" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email2" Type="nvarchar" Mode="In" />
+          <Parameter Name="PicLocation" Type="nvarchar" Mode="In" />
+          <Parameter Name="EmergencyContactPerson" Type="nvarchar" Mode="In" />
+          <Parameter Name="EmergencyContactPhone" Type="nvarchar" Mode="In" />
+          <Parameter Name="BadgeNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="EmpType_ID" Type="int" Mode="In" />
+          <Parameter Name="Supervisor" Type="nvarchar" Mode="In" />
+          <Parameter Name="Result" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="Proc_UpdateContract" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Contract_ID" Type="int" Mode="In" />
+          <Parameter Name="Contract_Type" Type="nvarchar" Mode="In" />
+          <Parameter Name="Contract_StartDate" Type="datetime" Mode="In" />
+          <Parameter Name="Contract_EndDate" Type="datetime" Mode="In" />
+          <Parameter Name="DomainLogin" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Proc_UpdateEmpInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SID" Type="nvarchar" Mode="In" />
+          <Parameter Name="DomainLogin" Type="nvarchar" Mode="In" />
+          <Parameter Name="Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="First_Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="Last_Name" Type="nvarchar" Mode="In" />
+          <Parameter Name="JobTitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="CostCenter_ID" Type="nvarchar" Mode="In" />
+          <Parameter Name="Dep_ID" Type="nvarchar" Mode="In" />
+          <Parameter Name="Status_ID" Type="nvarchar" Mode="In" />
+          <Parameter Name="Remark" Type="nvarchar" Mode="In" />
+          <Parameter Name="Address" Type="nvarchar" Mode="In" />
+          <Parameter Name="Zip" Type="nvarchar" Mode="In" />
+          <Parameter Name="HomeTel" Type="nvarchar" Mode="In" />
+          <Parameter Name="Mobile" Type="nvarchar" Mode="In" />
+          <Parameter Name="Ext" Type="nvarchar" Mode="In" />
+          <Parameter Name="OfficeEmail" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email1" Type="nvarchar" Mode="In" />
+          <Parameter Name="Email2" Type="nvarchar" Mode="In" />
+          <Parameter Name="PicLocation" Type="nvarchar" Mode="In" />
+          <Parameter Name="Cube" Type="nvarchar" Mode="In" />
+          <Parameter Name="EmergencyContactPerson" Type="nvarchar" Mode="In" />
+          <Parameter Name="EmergencyContactPhone" Type="nvarchar" Mode="In" />
+          <Parameter Name="BadgeNumber" Type="nvarchar" Mode="In" />
+          <Parameter Name="Supervisor" Type="nvarchar" Mode="In" />
+          <Parameter Name="Result" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="xp_BackupTable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TableNames" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="xp_email" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="From" Type="varchar" Mode="In" />
+          <Parameter Name="To" Type="varchar" Mode="In" />
+          <Parameter Name="Subject" Type="varchar" Mode="In" />
+          <Parameter Name="Body" Type="nvarchar" Mode="In" />
+          <Parameter Name="SMTPServer" Type="varchar" Mode="In" />
+          <Parameter Name="Attachment" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="xp_SearchProcedure" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="StringToSearch" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="xprcFile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="txt" Type="ntext" Mode="In" />
+          <Parameter Name="hasTitle" Type="int" Mode="In" />
+          <Parameter Name="isShow" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="dtproperties" EntityType="Self.dtproperties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Account" EntityType="Self.Table_Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_AddressBook" EntityType="Self.Table_AddressBook" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Admin" EntityType="Self.Table_Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Contract" EntityType="Self.Table_Contract" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Department" EntityType="Self.Table_Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_EmpType" EntityType="Self.Table_EmpType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_Status" EntityType="Self.Table_Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_CostCenter" EntityType="Self.Table_CostCenter" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Table_CostCenter].[CostCenter_ID] AS [CostCenter_ID], 
+    [Table_CostCenter].[CostCenter_Name] AS [CostCenter_Name]
+    FROM [dbo].[Table_CostCenter] AS [Table_CostCenter]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_Account" EntityType="Self.View_Account" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_Account].[SID] AS [SID], 
+    [View_Account].[DomainLogin] AS [DomainLogin], 
+    [View_Account].[Name] AS [Name], 
+    [View_Account].[First_Name] AS [First_Name], 
+    [View_Account].[Last_Name] AS [Last_Name], 
+    [View_Account].[JobTitle] AS [JobTitle], 
+    [View_Account].[Dep_ID] AS [Dep_ID], 
+    [View_Account].[Status_ID] AS [Status_ID], 
+    [View_Account].[StartDate] AS [StartDate], 
+    [View_Account].[Remark] AS [Remark], 
+    [View_Account].[CostCenter_ID] AS [CostCenter_ID], 
+    [View_Account].[ContractStartDate] AS [ContractStartDate], 
+    [View_Account].[ContractEndDate] AS [ContractEndDate], 
+    [View_Account].[SignCounts] AS [SignCounts], 
+    [View_Account].[ContractMemo] AS [ContractMemo], 
+    [View_Account].[ContractNo] AS [ContractNo], 
+    [View_Account].[EmpType_ID] AS [EmpType_ID], 
+    [View_Account].[Account_Supervisor] AS [Account_Supervisor], 
+    [View_Account].[Contract_Start_Date] AS [Contract_Start_Date]
+    FROM [dbo].[View_Account] AS [View_Account]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_EmpOverView" EntityType="Self.View_EmpOverView" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_EmpOverView].[Name] AS [Name], 
+    [View_EmpOverView].[English First Name] AS [English First Name], 
+    [View_EmpOverView].[English Last Name] AS [English Last Name], 
+    [View_EmpOverView].[Home Address] AS [Home Address], 
+    [View_EmpOverView].[Emergency Contact Person] AS [Emergency Contact Person], 
+    [View_EmpOverView].[Emergency Contact Phone] AS [Emergency Contact Phone], 
+    [View_EmpOverView].[Badge Number] AS [Badge Number], 
+    [View_EmpOverView].[Home Phone] AS [Home Phone], 
+    [View_EmpOverView].[Mobile] AS [Mobile], 
+    [View_EmpOverView].[Office Phone Ext.] AS [Office Phone Ext.], 
+    [View_EmpOverView].[Cube] AS [Cube], 
+    [View_EmpOverView].[Office Email] AS [Office Email]
+    FROM [dbo].[View_EmpOverView] AS [View_EmpOverView]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="View_VacationContracts" EntityType="Self.View_VacationContracts" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [View_VacationContracts].[SID] AS [SID], 
+    [View_VacationContracts].[Contract_ID] AS [Contract_ID], 
+    [View_VacationContracts].[Contract_StartDate] AS [Contract_StartDate]
+    FROM [dbo].[View_VacationContracts] AS [View_VacationContracts]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="dtproperty">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="property" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="objectid" Type="Int32" />
+          <Property Name="property" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="value" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="uvalue" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="lvalue" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="version" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table_Account">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DomainLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Dep_ID" Type="Int32" />
+          <Property Name="Status_ID" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <Property Name="CostCenter_ID" Type="Int32" />
+          <Property Name="ContractStartDate" Type="DateTime" Precision="3" />
+          <Property Name="ContractEndDate" Type="DateTime" Precision="3" />
+          <Property Name="SignCounts" Type="Binary" MaxLength="150" FixedLength="false" />
+          <Property Name="ContractMemo" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="ContractNo" Type="Binary" MaxLength="150" FixedLength="false" />
+          <Property Name="EmpType_ID" Type="Int32" />
+          <Property Name="Account_Supervisor" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Table_AddressBook">
+          <Key>
+            <PropertyRef Name="SID" />
+          </Key>
+          <Property Name="SID" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="HomeTel" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ext" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OfficeEmail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PicLocation" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Cube" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmergencyContactPerson" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="EmergencyContactPhone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BadgeNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Table_Admin">
+          <Key>
+            <PropertyRef Name="DomainLogin" />
+          </Key>
+          <Property Name="DomainLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table_Contract">
+          <Key>
+            <PropertyRef Name="Contract_ID" />
+          </Key>
+          <Property Name="Contract_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SID" Type="Int32" Nullable="false" />
+          <Property Name="Contract_Type" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Contract_StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Contract_EndDate" Type="DateTime" Precision="3" />
+          <Property Name="Contract_CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Contract_CreatedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Contract_ModifiedAt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Contract_ModifiedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table_Department">
+          <Key>
+            <PropertyRef Name="Dep_ID" />
+          </Key>
+          <Property Name="Dep_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Dep_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Dep_ParentID" Type="Int32" />
+          <Property Name="Dep_Active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="Table_EmpType">
+          <Key>
+            <PropertyRef Name="EmpType_ID" />
+          </Key>
+          <Property Name="EmpType_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpType_Name" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="EmpType_Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="EmpType_ModifiedBy" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmpType_ModifiedAt" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Table_Status">
+          <Key>
+            <PropertyRef Name="Status_ID" />
+          </Key>
+          <Property Name="Status_ID" Type="Int32" Nullable="false" />
+          <Property Name="Status_Expr" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Table_CostCenter">
+          <Key>
+            <PropertyRef Name="CostCenter_ID" />
+            <PropertyRef Name="CostCenter_Name" />
+          </Key>
+          <Property Name="CostCenter_ID" Type="Int32" Nullable="false" />
+          <Property Name="CostCenter_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="View_Account">
+          <Key>
+            <PropertyRef Name="SID" />
+            <PropertyRef Name="DomainLogin" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Status_ID" />
+          </Key>
+          <Property Name="SID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DomainLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="JobTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Dep_ID" Type="Int32" />
+          <Property Name="Status_ID" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="2048" FixedLength="false" Unicode="true" />
+          <Property Name="CostCenter_ID" Type="Int32" />
+          <Property Name="ContractStartDate" Type="DateTime" Precision="3" />
+          <Property Name="ContractEndDate" Type="DateTime" Precision="3" />
+          <Property Name="SignCounts" Type="Binary" MaxLength="150" FixedLength="false" />
+          <Property Name="ContractMemo" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <Property Name="ContractNo" Type="Binary" MaxLength="150" FixedLength="false" />
+          <Property Name="EmpType_ID" Type="Int32" />
+          <Property Name="Account_Supervisor" Type="Int32" />
+          <Property Name="Contract_Start_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="View_EmpOverView">
+          <Key>
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="Home_Address" />
+            <PropertyRef Name="Emergency_Contact_Person" />
+            <PropertyRef Name="Emergency_Contact_Phone" />
+            <PropertyRef Name="Badge_Number" />
+            <PropertyRef Name="Home_Phone" />
+            <PropertyRef Name="Mobile" />
+            <PropertyRef Name="Office_Phone_Ext_" />
+            <PropertyRef Name="Cube" />
+            <PropertyRef Name="Office_Email" />
+          </Key>
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="English_First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="English_Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Home_Address" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Emergency_Contact_Person" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Emergency_Contact_Phone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Badge_Number" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Home_Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Office_Phone_Ext_" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cube" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Office_Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="View_VacationContracts">
+          <Key>
+            <PropertyRef Name="SID" />
+            <PropertyRef Name="Contract_ID" />
+            <PropertyRef Name="Contract_StartDate" />
+          </Key>
+          <Property Name="SID" Type="Int32" Nullable="false" />
+          <Property Name="Contract_ID" Type="Int32" Nullable="false" />
+          <Property Name="Contract_StartDate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="AddressBookDBContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="dtproperties" EntityType="Self.dtproperty" />
+          <EntitySet Name="Table_Account" EntityType="Self.Table_Account" />
+          <EntitySet Name="Table_AddressBook" EntityType="Self.Table_AddressBook" />
+          <EntitySet Name="Table_Admin" EntityType="Self.Table_Admin" />
+          <EntitySet Name="Table_Contract" EntityType="Self.Table_Contract" />
+          <EntitySet Name="Table_Department" EntityType="Self.Table_Department" />
+          <EntitySet Name="Table_EmpType" EntityType="Self.Table_EmpType" />
+          <EntitySet Name="Table_Status" EntityType="Self.Table_Status" />
+          <EntitySet Name="Table_CostCenter" EntityType="Self.Table_CostCenter" />
+          <EntitySet Name="View_Account" EntityType="Self.View_Account" />
+          <EntitySet Name="View_EmpOverView" EntityType="Self.View_EmpOverView" />
+          <EntitySet Name="View_VacationContracts" EntityType="Self.View_VacationContracts" />
+          <FunctionImport Name="dt_addtosourcecontrol">
+            <Parameter Name="vchSourceSafeINI" Mode="In" Type="String" />
+            <Parameter Name="vchProjectName" Mode="In" Type="String" />
+            <Parameter Name="vchComment" Mode="In" Type="String" />
+            <Parameter Name="vchLoginName" Mode="In" Type="String" />
+            <Parameter Name="vchPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_addtosourcecontrol_u">
+            <Parameter Name="vchSourceSafeINI" Mode="In" Type="String" />
+            <Parameter Name="vchProjectName" Mode="In" Type="String" />
+            <Parameter Name="vchComment" Mode="In" Type="String" />
+            <Parameter Name="vchLoginName" Mode="In" Type="String" />
+            <Parameter Name="vchPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_adduserobject" />
+          <FunctionImport Name="dt_adduserobject_vcs">
+            <Parameter Name="vchProperty" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_checkinobject">
+            <Parameter Name="chObjectType" Mode="In" Type="String" />
+            <Parameter Name="vchObjectName" Mode="In" Type="String" />
+            <Parameter Name="vchComment" Mode="In" Type="String" />
+            <Parameter Name="vchLoginName" Mode="In" Type="String" />
+            <Parameter Name="vchPassword" Mode="In" Type="String" />
+            <Parameter Name="iVCSFlags" Mode="In" Type="Int32" />
+            <Parameter Name="iActionFlag" Mode="In" Type="Int32" />
+            <Parameter Name="txStream1" Mode="In" Type="String" />
+            <Parameter Name="txStream2" Mode="In" Type="String" />
+            <Parameter Name="txStream3" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_checkinobject_u">
+            <Parameter Name="chObjectType" Mode="In" Type="String" />
+            <Parameter Name="vchObjectName" Mode="In" Type="String" />
+            <Parameter Name="vchComment" Mode="In" Type="String" />
+            <Parameter Name="vchLoginName" Mode="In" Type="String" />
+            <Parameter Name="vchPassword" Mode="In" Type="String" />
+            <Parameter Name="iVCSFlags" Mode="In" Type="Int32" />
+            <Parameter Name="iActionFlag" Mode="In" Type="Int32" />
+            <Parameter Name="txStream1" Mode="In" Type="String" />
+            <Parameter Name="txStream2" Mode="In" Type="String" />
+            <Parameter Name="txStream3" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_checkoutobject">
+            <Parameter Name="chObjectType" Mode="In" Type="String" />
+            <Parameter Name="vchObjectName" Mode="In" Type="String" />
+            <Parameter Name="vchComment" Mode="In" Type="String" />
+            <Parameter Name="vchLoginName" Mode="In" Type="String" />
+            <Parameter Name="vchPassword" Mode="In" Type="String" />
+            <Parameter Name="iVCSFlags" Mode="In" Type="Int32" />
+            <Parameter Name="iActionFlag" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dt_checkoutobject_u">
+            <Parameter Name="chObjectType" Mode="In" Type="String" />
+            <Parameter Name="vchObjectName" Mode="In" Type="String" />
+            <Parameter Name="vchComment" Mode="In" Type="String" />
+            <Parameter Name="vchLoginName" Mode="In" Type="String" />
+            <Parameter Name="vchPassword" Mode="In" Type="String" />
+            <Parameter Name="iVCSFlags" Mode="In" Type="Int32" />
+            <Parameter Name="iActionFlag" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dt_displayoaerror">
+            <Parameter Name="iObject" Mode="In" Type="Int32" />
+            <Parameter Name="iresult" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dt_displayoaerror_u">
+            <Parameter Name="iObject" Mode="In" Type="Int32" />
+            <Parameter Name="iresult" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dt_droppropertiesbyid">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="property" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_dropuserobjectbyid">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dt_generateansiname">
+            <Parameter Name="name" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_getobjwithprop" ReturnType="Collection(Int32)">
+            <Parameter Name="property" Mode="In" Type="String" />
+            <Parameter Name="value" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_getobjwithprop_u" ReturnType="Collection(Int32)">
+            <Parameter Name="property" Mode="In" Type="String" />
+            <Parameter Name="uvalue" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_getpropertiesbyid" ReturnType="Collection(Model.dt_getpropertiesbyid_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="property" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_getpropertiesbyid_u" ReturnType="Collection(Model.dt_getpropertiesbyid_u_Result)">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="property" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_getpropertiesbyid_vcs">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="property" Mode="In" Type="String" />
+            <Parameter Name="value" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_getpropertiesbyid_vcs_u">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="property" Mode="In" Type="String" />
+            <Parameter Name="value" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_isundersourcecontrol">
+            <Parameter Name="vchLoginName" Mode="In" Type="String" />
+            <Parameter Name="vchPassword" Mode="In" Type="String" />
+            <Parameter Name="iWhoToo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dt_isundersourcecontrol_u">
+            <Parameter Name="vchLoginName" Mode="In" Type="String" />
+            <Parameter Name="vchPassword" Mode="In" Type="String" />
+            <Parameter Name="iWhoToo" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="dt_removefromsourcecontrol" />
+          <FunctionImport Name="dt_setpropertybyid">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="property" Mode="In" Type="String" />
+            <Parameter Name="value" Mode="In" Type="String" />
+            <Parameter Name="lvalue" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="dt_setpropertybyid_u">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="property" Mode="In" Type="String" />
+            <Parameter Name="uvalue" Mode="In" Type="String" />
+            <Parameter Name="lvalue" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="dt_validateloginparams">
+            <Parameter Name="vchLoginName" Mode="In" Type="String" />
+            <Parameter Name="vchPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_validateloginparams_u">
+            <Parameter Name="vchLoginName" Mode="In" Type="String" />
+            <Parameter Name="vchPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_vcsenabled" />
+          <FunctionImport Name="dt_verstamp006" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="dt_whocheckedout">
+            <Parameter Name="chObjectType" Mode="In" Type="String" />
+            <Parameter Name="vchObjectName" Mode="In" Type="String" />
+            <Parameter Name="vchLoginName" Mode="In" Type="String" />
+            <Parameter Name="vchPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="dt_whocheckedout_u">
+            <Parameter Name="chObjectType" Mode="In" Type="String" />
+            <Parameter Name="vchObjectName" Mode="In" Type="String" />
+            <Parameter Name="vchLoginName" Mode="In" Type="String" />
+            <Parameter Name="vchPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_CheckAuthorization" ReturnType="Collection(String)">
+            <Parameter Name="alias" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_DeleteContract">
+            <Parameter Name="Contract_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_GetContract" ReturnType="Collection(Model.Proc_GetContract_Result)">
+            <Parameter Name="SID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_GetCostCenterList" ReturnType="Collection(Model.Proc_GetCostCenterList_Result)" />
+          <FunctionImport Name="Proc_GetDepartmentList" ReturnType="Collection(Model.Proc_GetDepartmentList_Result)" />
+          <FunctionImport Name="Proc_GetEmpDetailInformation" ReturnType="Collection(Model.Proc_GetEmpDetailInformation_Result)">
+            <Parameter Name="SID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_GetEmpInformation" ReturnType="Collection(Model.Proc_GetEmpInformation_Result)" />
+          <FunctionImport Name="Proc_GetEmpSID" ReturnType="Collection(Int32)">
+            <Parameter Name="DomainLogin" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_GetEmpType" ReturnType="Collection(Model.Proc_GetEmpType_Result)" />
+          <FunctionImport Name="Proc_GetStatusList" ReturnType="Collection(Model.Proc_GetStatusList_Result)" />
+          <FunctionImport Name="Proc_GetSupervisorList" ReturnType="Collection(Model.Proc_GetSupervisorList_Result)" />
+          <FunctionImport Name="Proc_InsertContract">
+            <Parameter Name="SID" Mode="In" Type="Int32" />
+            <Parameter Name="Contract_Type" Mode="In" Type="String" />
+            <Parameter Name="Contract_StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Contract_EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="DomainLogin" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_MaintainEmpType">
+            <Parameter Name="SID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_QueryEmpWithSort" ReturnType="Collection(Model.Proc_QueryEmpWithSort_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Dep_ID" Mode="In" Type="String" />
+            <Parameter Name="IncludeInactive" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_QueryEmpWithSortExactly" ReturnType="Collection(Model.Proc_QueryEmpWithSortExactly_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Dep_ID" Mode="In" Type="String" />
+            <Parameter Name="IncludeInactive" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_SaveEmpInformation">
+            <Parameter Name="DomainLogin" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="First_Name" Mode="In" Type="String" />
+            <Parameter Name="Last_Name" Mode="In" Type="String" />
+            <Parameter Name="JobTitle" Mode="In" Type="String" />
+            <Parameter Name="CostCenter_ID" Mode="In" Type="String" />
+            <Parameter Name="Dep_ID" Mode="In" Type="String" />
+            <Parameter Name="Status_ID" Mode="In" Type="String" />
+            <Parameter Name="StartDate" Mode="In" Type="String" />
+            <Parameter Name="Remark" Mode="In" Type="String" />
+            <Parameter Name="Cube" Mode="In" Type="String" />
+            <Parameter Name="Address" Mode="In" Type="String" />
+            <Parameter Name="Zip" Mode="In" Type="String" />
+            <Parameter Name="HomeTel" Mode="In" Type="String" />
+            <Parameter Name="Mobile" Mode="In" Type="String" />
+            <Parameter Name="Ext" Mode="In" Type="String" />
+            <Parameter Name="OfficeEmail" Mode="In" Type="String" />
+            <Parameter Name="Email1" Mode="In" Type="String" />
+            <Parameter Name="Email2" Mode="In" Type="String" />
+            <Parameter Name="PicLocation" Mode="In" Type="String" />
+            <Parameter Name="EmergencyContactPerson" Mode="In" Type="String" />
+            <Parameter Name="EmergencyContactPhone" Mode="In" Type="String" />
+            <Parameter Name="BadgeNumber" Mode="In" Type="String" />
+            <Parameter Name="EmpType_ID" Mode="In" Type="Int32" />
+            <Parameter Name="Supervisor" Mode="In" Type="String" />
+            <Parameter Name="Result" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_UpdateContract">
+            <Parameter Name="Contract_ID" Mode="In" Type="Int32" />
+            <Parameter Name="Contract_Type" Mode="In" Type="String" />
+            <Parameter Name="Contract_StartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Contract_EndDate" Mode="In" Type="DateTime" />
+            <Parameter Name="DomainLogin" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_UpdateEmpInformation">
+            <Parameter Name="SID" Mode="In" Type="String" />
+            <Parameter Name="DomainLogin" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="First_Name" Mode="In" Type="String" />
+            <Parameter Name="Last_Name" Mode="In" Type="String" />
+            <Parameter Name="JobTitle" Mode="In" Type="String" />
+            <Parameter Name="CostCenter_ID" Mode="In" Type="String" />
+            <Parameter Name="Dep_ID" Mode="In" Type="String" />
+            <Parameter Name="Status_ID" Mode="In" Type="String" />
+            <Parameter Name="Remark" Mode="In" Type="String" />
+            <Parameter Name="Address" Mode="In" Type="String" />
+            <Parameter Name="Zip" Mode="In" Type="String" />
+            <Parameter Name="HomeTel" Mode="In" Type="String" />
+            <Parameter Name="Mobile" Mode="In" Type="String" />
+            <Parameter Name="Ext" Mode="In" Type="String" />
+            <Parameter Name="OfficeEmail" Mode="In" Type="String" />
+            <Parameter Name="Email1" Mode="In" Type="String" />
+            <Parameter Name="Email2" Mode="In" Type="String" />
+            <Parameter Name="PicLocation" Mode="In" Type="String" />
+            <Parameter Name="Cube" Mode="In" Type="String" />
+            <Parameter Name="EmergencyContactPerson" Mode="In" Type="String" />
+            <Parameter Name="EmergencyContactPhone" Mode="In" Type="String" />
+            <Parameter Name="BadgeNumber" Mode="In" Type="String" />
+            <Parameter Name="Supervisor" Mode="In" Type="String" />
+            <Parameter Name="Result" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="xp_BackupTable">
+            <Parameter Name="TableNames" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="xp_email">
+            <Parameter Name="From" Mode="In" Type="String" />
+            <Parameter Name="To" Mode="In" Type="String" />
+            <Parameter Name="Subject" Mode="In" Type="String" />
+            <Parameter Name="Body" Mode="In" Type="String" />
+            <Parameter Name="SMTPServer" Mode="In" Type="String" />
+            <Parameter Name="Attachment" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="xp_SearchProcedure" ReturnType="Collection(String)">
+            <Parameter Name="StringToSearch" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="xprcFile" ReturnType="Collection(String)">
+            <Parameter Name="txt" Mode="In" Type="String" />
+            <Parameter Name="hasTitle" Mode="In" Type="Int32" />
+            <Parameter Name="isShow" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="dt_getpropertiesbyid_Result">
+          <Property Type="String" Name="property" Nullable="false" MaxLength="64" />
+          <Property Type="Int32" Name="version" Nullable="false" />
+          <Property Type="String" Name="value" Nullable="true" MaxLength="255" />
+          <Property Type="Binary" Name="lvalue" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="dt_getpropertiesbyid_u_Result">
+          <Property Type="String" Name="property" Nullable="false" MaxLength="64" />
+          <Property Type="Int32" Name="version" Nullable="false" />
+          <Property Type="String" Name="uvalue" Nullable="true" MaxLength="255" />
+          <Property Type="Binary" Name="lvalue" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="Proc_GetContract_Result">
+          <Property Type="Int32" Name="Contract_ID" Nullable="false" />
+          <Property Type="Int32" Name="SID" Nullable="false" />
+          <Property Type="String" Name="Contract_Type" Nullable="false" MaxLength="64" />
+          <Property Type="DateTime" Name="Contract_StartDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="Contract_EndDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="Contract_CreatedAt" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Contract_CreatedBy" Nullable="false" MaxLength="128" />
+          <Property Type="DateTime" Name="Contract_ModifiedAt" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Contract_ModifiedBy" Nullable="false" MaxLength="128" />
+        </ComplexType>
+        <ComplexType Name="Proc_GetCostCenterList_Result">
+          <Property Type="Int32" Name="CostCenter_ID" Nullable="false" />
+          <Property Type="String" Name="CostCenter_Name" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="Proc_GetDepartmentList_Result">
+          <Property Type="Int32" Name="Dep_ID" Nullable="false" />
+          <Property Type="String" Name="Dep_Name" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="Dep_ParentID" Nullable="true" />
+          <Property Type="Boolean" Name="Dep_Active" Nullable="true" />
+          <Property Type="Int32" Name="Level" Nullable="true" />
+          <Property Type="String" Name="HexCode" Nullable="true" MaxLength="64" />
+        </ComplexType>
+        <ComplexType Name="Proc_GetEmpDetailInformation_Result">
+          <Property Type="Int32" Name="SID" Nullable="false" />
+          <Property Type="String" Name="DomainLogin" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="First_Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Last_Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="JobTitle" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CostCenter_ID" Nullable="true" />
+          <Property Type="Int32" Name="Dep_ID" Nullable="true" />
+          <Property Type="String" Name="CostCenter_Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Dep_Name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Status_ID" Nullable="false" />
+          <Property Type="DateTime" Name="StartDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Remark" Nullable="true" MaxLength="2048" />
+          <Property Type="Int32" Name="EmpType_ID" Nullable="true" />
+          <Property Type="Int32" Name="Account_Supervisor" Nullable="true" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="1024" />
+          <Property Type="String" Name="Zip" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="HomeTel" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Mobile" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Ext" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="OfficeEmail" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Email1" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Email2" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="PicLocation" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Cube" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EmergencyContactPerson" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="EmergencyContactPhone" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="BadgeNumber" Nullable="true" MaxLength="100" />
+        </ComplexType>
+        <ComplexType Name="Proc_GetEmpInformation_Result">
+          <Property Type="Int32" Name="SID" Nullable="false" />
+          <Property Type="String" Name="DomainLogin" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EnglishName" Nullable="false" MaxLength="101" />
+          <Property Type="String" Name="JobTitle" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CostCenter_ID" Nullable="true" />
+          <Property Type="Int32" Name="Dep_ID" Nullable="true" />
+          <Property Type="String" Name="Dep_Name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Status_ID" Nullable="false" />
+          <Property Type="String" Name="Status_Expr" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="1024" />
+          <Property Type="String" Name="HomeTel" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Mobile" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Ext" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="OfficeEmail" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Email1" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Cube" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="Proc_GetEmpType_Result">
+          <Property Type="Int32" Name="EmpType_ID" Nullable="false" />
+          <Property Type="String" Name="EmpType_Name" Nullable="true" MaxLength="32" />
+        </ComplexType>
+        <ComplexType Name="Proc_GetStatusList_Result">
+          <Property Type="Int32" Name="Status_ID" Nullable="false" />
+          <Property Type="String" Name="Status_Expr" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="Proc_GetSupervisorList_Result">
+          <Property Type="Int32" Name="SID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="Proc_QueryEmpWithSort_Result">
+          <Property Type="Int32" Name="SID" Nullable="false" />
+          <Property Type="String" Name="DomainLogin" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EnglishName" Nullable="false" MaxLength="101" />
+          <Property Type="String" Name="JobTitle" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Dep_Name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Status_ID" Nullable="false" />
+          <Property Type="String" Name="Status_Expr" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="1024" />
+          <Property Type="String" Name="HomeTel" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Mobile" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Ext" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="OfficeEmail" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Email1" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Cube" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="Proc_QueryEmpWithSortExactly_Result">
+          <Property Type="Int32" Name="SID" Nullable="false" />
+          <Property Type="String" Name="DomainLogin" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="EnglishName" Nullable="false" MaxLength="101" />
+          <Property Type="String" Name="JobTitle" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Dep_Name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="Status_ID" Nullable="false" />
+          <Property Type="String" Name="Status_Expr" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Address" Nullable="true" MaxLength="1024" />
+          <Property Type="String" Name="HomeTel" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Mobile" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Ext" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="OfficeEmail" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Email1" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Cube" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="AddressBookDBContext">
+          <EntitySetMapping Name="dtproperties">
+            <EntityTypeMapping TypeName="Model.dtproperty">
+              <MappingFragment StoreEntitySet="dtproperties">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="objectid" ColumnName="objectid" />
+                <ScalarProperty Name="property" ColumnName="property" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="uvalue" ColumnName="uvalue" />
+                <ScalarProperty Name="lvalue" ColumnName="lvalue" />
+                <ScalarProperty Name="version" ColumnName="version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Account">
+            <EntityTypeMapping TypeName="Model.Table_Account">
+              <MappingFragment StoreEntitySet="Table_Account">
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="DomainLogin" ColumnName="DomainLogin" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="Dep_ID" ColumnName="Dep_ID" />
+                <ScalarProperty Name="Status_ID" ColumnName="Status_ID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CostCenter_ID" ColumnName="CostCenter_ID" />
+                <ScalarProperty Name="ContractStartDate" ColumnName="ContractStartDate" />
+                <ScalarProperty Name="ContractEndDate" ColumnName="ContractEndDate" />
+                <ScalarProperty Name="SignCounts" ColumnName="SignCounts" />
+                <ScalarProperty Name="ContractMemo" ColumnName="ContractMemo" />
+                <ScalarProperty Name="ContractNo" ColumnName="ContractNo" />
+                <ScalarProperty Name="EmpType_ID" ColumnName="EmpType_ID" />
+                <ScalarProperty Name="Account_Supervisor" ColumnName="Account_Supervisor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_AddressBook">
+            <EntityTypeMapping TypeName="Model.Table_AddressBook">
+              <MappingFragment StoreEntitySet="Table_AddressBook">
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="HomeTel" ColumnName="HomeTel" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Ext" ColumnName="Ext" />
+                <ScalarProperty Name="OfficeEmail" ColumnName="OfficeEmail" />
+                <ScalarProperty Name="Email1" ColumnName="Email1" />
+                <ScalarProperty Name="Email2" ColumnName="Email2" />
+                <ScalarProperty Name="PicLocation" ColumnName="PicLocation" />
+                <ScalarProperty Name="Cube" ColumnName="Cube" />
+                <ScalarProperty Name="EmergencyContactPerson" ColumnName="EmergencyContactPerson" />
+                <ScalarProperty Name="EmergencyContactPhone" ColumnName="EmergencyContactPhone" />
+                <ScalarProperty Name="BadgeNumber" ColumnName="BadgeNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Admin">
+            <EntityTypeMapping TypeName="Model.Table_Admin">
+              <MappingFragment StoreEntitySet="Table_Admin">
+                <ScalarProperty Name="DomainLogin" ColumnName="DomainLogin" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Contract">
+            <EntityTypeMapping TypeName="Model.Table_Contract">
+              <MappingFragment StoreEntitySet="Table_Contract">
+                <ScalarProperty Name="Contract_ID" ColumnName="Contract_ID" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="Contract_Type" ColumnName="Contract_Type" />
+                <ScalarProperty Name="Contract_StartDate" ColumnName="Contract_StartDate" />
+                <ScalarProperty Name="Contract_EndDate" ColumnName="Contract_EndDate" />
+                <ScalarProperty Name="Contract_CreatedAt" ColumnName="Contract_CreatedAt" />
+                <ScalarProperty Name="Contract_CreatedBy" ColumnName="Contract_CreatedBy" />
+                <ScalarProperty Name="Contract_ModifiedAt" ColumnName="Contract_ModifiedAt" />
+                <ScalarProperty Name="Contract_ModifiedBy" ColumnName="Contract_ModifiedBy" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Department">
+            <EntityTypeMapping TypeName="Model.Table_Department">
+              <MappingFragment StoreEntitySet="Table_Department">
+                <ScalarProperty Name="Dep_ID" ColumnName="Dep_ID" />
+                <ScalarProperty Name="Dep_Name" ColumnName="Dep_Name" />
+                <ScalarProperty Name="Dep_ParentID" ColumnName="Dep_ParentID" />
+                <ScalarProperty Name="Dep_Active" ColumnName="Dep_Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_EmpType">
+            <EntityTypeMapping TypeName="Model.Table_EmpType">
+              <MappingFragment StoreEntitySet="Table_EmpType">
+                <ScalarProperty Name="EmpType_ID" ColumnName="EmpType_ID" />
+                <ScalarProperty Name="EmpType_Name" ColumnName="EmpType_Name" />
+                <ScalarProperty Name="EmpType_Description" ColumnName="EmpType_Description" />
+                <ScalarProperty Name="EmpType_ModifiedBy" ColumnName="EmpType_ModifiedBy" />
+                <ScalarProperty Name="EmpType_ModifiedAt" ColumnName="EmpType_ModifiedAt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_Status">
+            <EntityTypeMapping TypeName="Model.Table_Status">
+              <MappingFragment StoreEntitySet="Table_Status">
+                <ScalarProperty Name="Status_ID" ColumnName="Status_ID" />
+                <ScalarProperty Name="Status_Expr" ColumnName="Status_Expr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_CostCenter">
+            <EntityTypeMapping TypeName="Model.Table_CostCenter">
+              <MappingFragment StoreEntitySet="Table_CostCenter">
+                <ScalarProperty Name="CostCenter_ID" ColumnName="CostCenter_ID" />
+                <ScalarProperty Name="CostCenter_Name" ColumnName="CostCenter_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_Account">
+            <EntityTypeMapping TypeName="Model.View_Account">
+              <MappingFragment StoreEntitySet="View_Account">
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="DomainLogin" ColumnName="DomainLogin" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="Dep_ID" ColumnName="Dep_ID" />
+                <ScalarProperty Name="Status_ID" ColumnName="Status_ID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CostCenter_ID" ColumnName="CostCenter_ID" />
+                <ScalarProperty Name="ContractStartDate" ColumnName="ContractStartDate" />
+                <ScalarProperty Name="ContractEndDate" ColumnName="ContractEndDate" />
+                <ScalarProperty Name="SignCounts" ColumnName="SignCounts" />
+                <ScalarProperty Name="ContractMemo" ColumnName="ContractMemo" />
+                <ScalarProperty Name="ContractNo" ColumnName="ContractNo" />
+                <ScalarProperty Name="EmpType_ID" ColumnName="EmpType_ID" />
+                <ScalarProperty Name="Account_Supervisor" ColumnName="Account_Supervisor" />
+                <ScalarProperty Name="Contract_Start_Date" ColumnName="Contract_Start_Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_EmpOverView">
+            <EntityTypeMapping TypeName="Model.View_EmpOverView">
+              <MappingFragment StoreEntitySet="View_EmpOverView">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="English_First_Name" ColumnName="English First Name" />
+                <ScalarProperty Name="English_Last_Name" ColumnName="English Last Name" />
+                <ScalarProperty Name="Home_Address" ColumnName="Home Address" />
+                <ScalarProperty Name="Emergency_Contact_Person" ColumnName="Emergency Contact Person" />
+                <ScalarProperty Name="Emergency_Contact_Phone" ColumnName="Emergency Contact Phone" />
+                <ScalarProperty Name="Badge_Number" ColumnName="Badge Number" />
+                <ScalarProperty Name="Home_Phone" ColumnName="Home Phone" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Office_Phone_Ext_" ColumnName="Office Phone Ext." />
+                <ScalarProperty Name="Cube" ColumnName="Cube" />
+                <ScalarProperty Name="Office_Email" ColumnName="Office Email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="View_VacationContracts">
+            <EntityTypeMapping TypeName="Model.View_VacationContracts">
+              <MappingFragment StoreEntitySet="View_VacationContracts">
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="Contract_ID" ColumnName="Contract_ID" />
+                <ScalarProperty Name="Contract_StartDate" ColumnName="Contract_StartDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="dt_addtosourcecontrol" FunctionName="Model.Store.dt_addtosourcecontrol" />
+          <FunctionImportMapping FunctionImportName="dt_addtosourcecontrol_u" FunctionName="Model.Store.dt_addtosourcecontrol_u" />
+          <FunctionImportMapping FunctionImportName="dt_adduserobject" FunctionName="Model.Store.dt_adduserobject" />
+          <FunctionImportMapping FunctionImportName="dt_adduserobject_vcs" FunctionName="Model.Store.dt_adduserobject_vcs" />
+          <FunctionImportMapping FunctionImportName="dt_checkinobject" FunctionName="Model.Store.dt_checkinobject" />
+          <FunctionImportMapping FunctionImportName="dt_checkinobject_u" FunctionName="Model.Store.dt_checkinobject_u" />
+          <FunctionImportMapping FunctionImportName="dt_checkoutobject" FunctionName="Model.Store.dt_checkoutobject" />
+          <FunctionImportMapping FunctionImportName="dt_checkoutobject_u" FunctionName="Model.Store.dt_checkoutobject_u" />
+          <FunctionImportMapping FunctionImportName="dt_displayoaerror" FunctionName="Model.Store.dt_displayoaerror" />
+          <FunctionImportMapping FunctionImportName="dt_displayoaerror_u" FunctionName="Model.Store.dt_displayoaerror_u" />
+          <FunctionImportMapping FunctionImportName="dt_droppropertiesbyid" FunctionName="Model.Store.dt_droppropertiesbyid" />
+          <FunctionImportMapping FunctionImportName="dt_dropuserobjectbyid" FunctionName="Model.Store.dt_dropuserobjectbyid" />
+          <FunctionImportMapping FunctionImportName="dt_generateansiname" FunctionName="Model.Store.dt_generateansiname" />
+          <FunctionImportMapping FunctionImportName="dt_getobjwithprop" FunctionName="Model.Store.dt_getobjwithprop" />
+          <FunctionImportMapping FunctionImportName="dt_getobjwithprop_u" FunctionName="Model.Store.dt_getobjwithprop_u" />
+          <FunctionImportMapping FunctionImportName="dt_getpropertiesbyid" FunctionName="Model.Store.dt_getpropertiesbyid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.dt_getpropertiesbyid_Result">
+                <ScalarProperty Name="property" ColumnName="property" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="lvalue" ColumnName="lvalue" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dt_getpropertiesbyid_u" FunctionName="Model.Store.dt_getpropertiesbyid_u">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.dt_getpropertiesbyid_u_Result">
+                <ScalarProperty Name="property" ColumnName="property" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="uvalue" ColumnName="uvalue" />
+                <ScalarProperty Name="lvalue" ColumnName="lvalue" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="dt_getpropertiesbyid_vcs" FunctionName="Model.Store.dt_getpropertiesbyid_vcs" />
+          <FunctionImportMapping FunctionImportName="dt_getpropertiesbyid_vcs_u" FunctionName="Model.Store.dt_getpropertiesbyid_vcs_u" />
+          <FunctionImportMapping FunctionImportName="dt_isundersourcecontrol" FunctionName="Model.Store.dt_isundersourcecontrol" />
+          <FunctionImportMapping FunctionImportName="dt_isundersourcecontrol_u" FunctionName="Model.Store.dt_isundersourcecontrol_u" />
+          <FunctionImportMapping FunctionImportName="dt_removefromsourcecontrol" FunctionName="Model.Store.dt_removefromsourcecontrol" />
+          <FunctionImportMapping FunctionImportName="dt_setpropertybyid" FunctionName="Model.Store.dt_setpropertybyid" />
+          <FunctionImportMapping FunctionImportName="dt_setpropertybyid_u" FunctionName="Model.Store.dt_setpropertybyid_u" />
+          <FunctionImportMapping FunctionImportName="dt_validateloginparams" FunctionName="Model.Store.dt_validateloginparams" />
+          <FunctionImportMapping FunctionImportName="dt_validateloginparams_u" FunctionName="Model.Store.dt_validateloginparams_u" />
+          <FunctionImportMapping FunctionImportName="dt_vcsenabled" FunctionName="Model.Store.dt_vcsenabled" />
+          <FunctionImportMapping FunctionImportName="dt_verstamp006" FunctionName="Model.Store.dt_verstamp006" />
+          <FunctionImportMapping FunctionImportName="dt_whocheckedout" FunctionName="Model.Store.dt_whocheckedout" />
+          <FunctionImportMapping FunctionImportName="dt_whocheckedout_u" FunctionName="Model.Store.dt_whocheckedout_u" />
+          <FunctionImportMapping FunctionImportName="Proc_CheckAuthorization" FunctionName="Model.Store.Proc_CheckAuthorization" />
+          <FunctionImportMapping FunctionImportName="Proc_DeleteContract" FunctionName="Model.Store.Proc_DeleteContract" />
+          <FunctionImportMapping FunctionImportName="Proc_GetContract" FunctionName="Model.Store.Proc_GetContract">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.Proc_GetContract_Result">
+                <ScalarProperty Name="Contract_ID" ColumnName="Contract_ID" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="Contract_Type" ColumnName="Contract_Type" />
+                <ScalarProperty Name="Contract_StartDate" ColumnName="Contract_StartDate" />
+                <ScalarProperty Name="Contract_EndDate" ColumnName="Contract_EndDate" />
+                <ScalarProperty Name="Contract_CreatedAt" ColumnName="Contract_CreatedAt" />
+                <ScalarProperty Name="Contract_CreatedBy" ColumnName="Contract_CreatedBy" />
+                <ScalarProperty Name="Contract_ModifiedAt" ColumnName="Contract_ModifiedAt" />
+                <ScalarProperty Name="Contract_ModifiedBy" ColumnName="Contract_ModifiedBy" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Proc_GetCostCenterList" FunctionName="Model.Store.Proc_GetCostCenterList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.Proc_GetCostCenterList_Result">
+                <ScalarProperty Name="CostCenter_ID" ColumnName="CostCenter_ID" />
+                <ScalarProperty Name="CostCenter_Name" ColumnName="CostCenter_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Proc_GetDepartmentList" FunctionName="Model.Store.Proc_GetDepartmentList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.Proc_GetDepartmentList_Result">
+                <ScalarProperty Name="Dep_ID" ColumnName="Dep_ID" />
+                <ScalarProperty Name="Dep_Name" ColumnName="Dep_Name" />
+                <ScalarProperty Name="Dep_ParentID" ColumnName="Dep_ParentID" />
+                <ScalarProperty Name="Dep_Active" ColumnName="Dep_Active" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="HexCode" ColumnName="HexCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Proc_GetEmpDetailInformation" FunctionName="Model.Store.Proc_GetEmpDetailInformation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.Proc_GetEmpDetailInformation_Result">
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="DomainLogin" ColumnName="DomainLogin" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="CostCenter_ID" ColumnName="CostCenter_ID" />
+                <ScalarProperty Name="Dep_ID" ColumnName="Dep_ID" />
+                <ScalarProperty Name="CostCenter_Name" ColumnName="CostCenter_Name" />
+                <ScalarProperty Name="Dep_Name" ColumnName="Dep_Name" />
+                <ScalarProperty Name="Status_ID" ColumnName="Status_ID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="EmpType_ID" ColumnName="EmpType_ID" />
+                <ScalarProperty Name="Account_Supervisor" ColumnName="Account_Supervisor" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="HomeTel" ColumnName="HomeTel" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Ext" ColumnName="Ext" />
+                <ScalarProperty Name="OfficeEmail" ColumnName="OfficeEmail" />
+                <ScalarProperty Name="Email1" ColumnName="Email1" />
+                <ScalarProperty Name="Email2" ColumnName="Email2" />
+                <ScalarProperty Name="PicLocation" ColumnName="PicLocation" />
+                <ScalarProperty Name="Cube" ColumnName="Cube" />
+                <ScalarProperty Name="EmergencyContactPerson" ColumnName="EmergencyContactPerson" />
+                <ScalarProperty Name="EmergencyContactPhone" ColumnName="EmergencyContactPhone" />
+                <ScalarProperty Name="BadgeNumber" ColumnName="BadgeNumber" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Proc_GetEmpInformation" FunctionName="Model.Store.Proc_GetEmpInformation">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.Proc_GetEmpInformation_Result">
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="DomainLogin" ColumnName="DomainLogin" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="CostCenter_ID" ColumnName="CostCenter_ID" />
+                <ScalarProperty Name="Dep_ID" ColumnName="Dep_ID" />
+                <ScalarProperty Name="Dep_Name" ColumnName="Dep_Name" />
+                <ScalarProperty Name="Status_ID" ColumnName="Status_ID" />
+                <ScalarProperty Name="Status_Expr" ColumnName="Status_Expr" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="HomeTel" ColumnName="HomeTel" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Ext" ColumnName="Ext" />
+                <ScalarProperty Name="OfficeEmail" ColumnName="OfficeEmail" />
+                <ScalarProperty Name="Email1" ColumnName="Email1" />
+                <ScalarProperty Name="Cube" ColumnName="Cube" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Proc_GetEmpSID" FunctionName="Model.Store.Proc_GetEmpSID" />
+          <FunctionImportMapping FunctionImportName="Proc_GetEmpType" FunctionName="Model.Store.Proc_GetEmpType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.Proc_GetEmpType_Result">
+                <ScalarProperty Name="EmpType_ID" ColumnName="EmpType_ID" />
+                <ScalarProperty Name="EmpType_Name" ColumnName="EmpType_Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Proc_GetStatusList" FunctionName="Model.Store.Proc_GetStatusList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.Proc_GetStatusList_Result">
+                <ScalarProperty Name="Status_ID" ColumnName="Status_ID" />
+                <ScalarProperty Name="Status_Expr" ColumnName="Status_Expr" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Proc_GetSupervisorList" FunctionName="Model.Store.Proc_GetSupervisorList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.Proc_GetSupervisorList_Result">
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Proc_InsertContract" FunctionName="Model.Store.Proc_InsertContract" />
+          <FunctionImportMapping FunctionImportName="Proc_MaintainEmpType" FunctionName="Model.Store.Proc_MaintainEmpType" />
+          <FunctionImportMapping FunctionImportName="Proc_QueryEmpWithSort" FunctionName="Model.Store.Proc_QueryEmpWithSort">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.Proc_QueryEmpWithSort_Result">
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="DomainLogin" ColumnName="DomainLogin" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="Dep_Name" ColumnName="Dep_Name" />
+                <ScalarProperty Name="Status_ID" ColumnName="Status_ID" />
+                <ScalarProperty Name="Status_Expr" ColumnName="Status_Expr" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="HomeTel" ColumnName="HomeTel" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Ext" ColumnName="Ext" />
+                <ScalarProperty Name="OfficeEmail" ColumnName="OfficeEmail" />
+                <ScalarProperty Name="Email1" ColumnName="Email1" />
+                <ScalarProperty Name="Cube" ColumnName="Cube" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Proc_QueryEmpWithSortExactly" FunctionName="Model.Store.Proc_QueryEmpWithSortExactly">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.Proc_QueryEmpWithSortExactly_Result">
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="DomainLogin" ColumnName="DomainLogin" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+                <ScalarProperty Name="JobTitle" ColumnName="JobTitle" />
+                <ScalarProperty Name="Dep_Name" ColumnName="Dep_Name" />
+                <ScalarProperty Name="Status_ID" ColumnName="Status_ID" />
+                <ScalarProperty Name="Status_Expr" ColumnName="Status_Expr" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="HomeTel" ColumnName="HomeTel" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Ext" ColumnName="Ext" />
+                <ScalarProperty Name="OfficeEmail" ColumnName="OfficeEmail" />
+                <ScalarProperty Name="Email1" ColumnName="Email1" />
+                <ScalarProperty Name="Cube" ColumnName="Cube" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Proc_SaveEmpInformation" FunctionName="Model.Store.Proc_SaveEmpInformation" />
+          <FunctionImportMapping FunctionImportName="Proc_UpdateContract" FunctionName="Model.Store.Proc_UpdateContract" />
+          <FunctionImportMapping FunctionImportName="Proc_UpdateEmpInformation" FunctionName="Model.Store.Proc_UpdateEmpInformation" />
+          <FunctionImportMapping FunctionImportName="xp_BackupTable" FunctionName="Model.Store.xp_BackupTable" />
+          <FunctionImportMapping FunctionImportName="xp_email" FunctionName="Model.Store.xp_email" />
+          <FunctionImportMapping FunctionImportName="xp_SearchProcedure" FunctionName="Model.Store.xp_SearchProcedure" />
+          <FunctionImportMapping FunctionImportName="xprcFile" FunctionName="Model.Store.xprcFile" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

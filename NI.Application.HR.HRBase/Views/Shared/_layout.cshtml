@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "_layout";
+}
+
+<!DOCTYPE html>
+<html style="margin:0; height:100%; width:100%;">
+    <head>
+        <title>Create</title>
+        @Styles.Render("~/Content/MainLayout.css")
+        @Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
+        @Scripts.Render("~/Scripts/jQuery.form.js")
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        
+    </head>
+    <body style="margin:0; padding:0; height:100%; width:100%;">
+        <div id="header" style="margin:0; height:10%; padding-right:40px;">
+            <img id="img" src="~/Images/NI.png" alt="National Instruments" style="vertical-align:middle"/>
+            <span id="title" style="text-align:center; vertical-align:middle; font-size:150%; font-weight:bold;">NI Shanghai HR Management System</span>
+            <span id="user_info" style="text-align:center; vertical-align:middle; font-size:150%; font-weight:bold; float:right;">Welcome,</span>
+        </div>
+        <div id="tableContainer" style="margin:0px; padding:0; height:90%; width:98%;">
+            <div id="tableRow">
+                <div id="sidebar" >
+                    <ul id="navigation">
+                        <li>
+                            <a class="nav" href="">Home</a>
+                        </li>
+                        <li>
+                            <a class="nav" href="">Search</a>
+                            <ul id="navigationdown" style="font-style:italic;font-weight:normal;">
+                                <li>                                    
+                                    @Html.ActionLink("HeadCount", "Search", "HeadCount", new {}, new { @class = "subnav", style = "font-weight:normal;" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Offer", "Search", "Offer",new{}, new { @class = "subnav", style = "font-weight:normal;" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Employee", "Search", "HeadCount", new {}, new { @class = "subnav", style = "font-weight:normal;" })
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="nav" href="">Leave</a>
+                        </li>
+                    </ul>              
+                </div>
+                <div id="main_content">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>    
+    </body>
+</html>

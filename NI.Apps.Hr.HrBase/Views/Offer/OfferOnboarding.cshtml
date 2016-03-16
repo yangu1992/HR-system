@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "OfferOnboarding";
+}
+
+@model NI.Application.HR.HRBase.Models.OfferActivity.OfferCreateModel
+
+@Html.Partial("_OfferDetailInfo",Model);
+
+<br />
+<p id="pending_Onboarding_section" style="width:90%; text-align:center; ">
+    <input type="button" name="ConfirmBtn" value=" Confirm "
+           onclick="location.href='@Url.Action("Confirm", "Offer", new { offerID=Model.Offer.ID})'"
+           style="font-size:18px; line-height:1.4; margin-right:35px;" />
+</p>

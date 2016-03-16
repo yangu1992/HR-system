@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "HeadCountSearch";
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+
+@model NI.Application.HR.HRBase.Models.HeadcountActivity.HeadCountSearchModel
+@using PagedList.Mvc;
+@Styles.Render("~/Content/PagedList.css")
+
+@using (Html.BeginForm("Search", "HeadCount", FormMethod.Get))
+{
+    <fieldset id="headcount_search_field" style="display:block;">
+        <legend style="font-weight:bold;">Search Headcount</legend>
+
+        <div id="headcount_search">
+            <table id="headcount_table" style="width:90%; border-collapse:collapse;">
+                <tr>
+                    <td class="hc-attr-name" style="width:14%; text-align:right;">HC Code:</td>
+                    <td class="hc-attr-value" style="width:14%; text-align:left;">
+                        @Html.TextBoxFor(model => model.Code, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
+                    </td>
+                    <td class="hc-attr-name" style="width:14%; text-align:right;">Position:</td>
+                    <td class="hc-attr-value" style="width:14%; text-align:left;">
+                        @Html.TextBoxFor(model => model.Position, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
+                    </td>                   
+                    <td class="hc-attr-name" style="width:14%; text-align:right;">Department:</td>
+                    <td class="hc-attr-value" style="width:14%; text-align:left;">
+                        @Html.TextBoxFor(model => model.Department, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <p style="width:90%; text-align:right;">
+            <input type="submit" name="SearchButton" value="Search" style="font-size:18px; line-height:1.4;"/>
+            <input type="button" value="Create Headcount" onclick="window.location.href = '@Url.Action("Create", "HeadCount")';" style="font-size:18px; line-height:1.4;" />
+        </p>
+    </fieldset>
+}
+
+<fieldset style="display:block; margin-top:10px; margin-bottom:0px;">
+    <legend style="font-weight:bold;">HeadCount List</legend>
+
+    <div class="headcountList" style="height:570px; border:1px solid grey;">
+        <table id="headcounts_table" border="1" rules="all" style="width:91%; border-collapse:collapse; table-layout:fixed; ">
+            <tr style="height:18px;">
+                <th>HC Code</th>
+                <th>Position</th>
+                <th>Number</th>
+                <th>Cost Center</th>
+                <th>Department</th>
+                <th>Internal Level</th>
+            </tr>
+            <tbody id="tbody">
+                @if (Model.HeadCountList!=null && Model.HeadCountList.Count != 0)
+                {
+                    foreach (var item in Model.HeadCountList)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(item.Code.ToString(), "ShowDetail", "HeadCount", new { HeadcountCode = item.Code }, new { style="text-decoration: underline;color: black;"})</td>
+                            <td>@item.Position</td>
+                            <td>@item.Number</td>
+                            <td>@item.CostCenter</td>
+                            <td>@item.Department</td>
+                            <td>@item.InternalLevel</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <br />
+        <div style="width:91%;">
+            @if (Model.HeadCountList != null && Model.HeadCountList.Count != 0)
+            {
+                <span style=" float:left">Page @(Model.HeadCountList.PageCount < Model.HeadCountList.PageNumber ? 0 : Model.HeadCountList.PageNumber) of @Model.HeadCountList.PageCount</span>
+                <span style=" float:right">
+                    @Html.PagedListPager(Model.HeadCountList,
+                     page => Url.Action("Search", "HeadCount", new { Page = page }
+                              ))
+                </span>
+            }
+        </div>
+        
+
+    </div>
+</fieldset>
+
+<script type="text/javascript">
+    var message = '@message';
+    if (message)
+        alert(message);
+</script>
+

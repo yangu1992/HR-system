@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "OfferPendingApprove";
+}
+
+@model NI.Application.HR.HRBase.Models.OfferActivity.OfferCreateModel
+
+@using (Html.BeginForm("ApproveByMgr", "Offer", FormMethod.Post, new { id = "PostForm" }))
+{
+    @Html.Partial("_OfferDetailInfo", Model);
+}
+
+<br />
+<p id="pending_MgrApprove_section" style="width:90%; text-align:center; " class="valid-offer-section">
+    <input type="button" id="MgrApproveBtn" name="MgrApproveBtn" value=" Approve " style="font-size:18px; line-height:1.4; margin-right:35px;" />
+    <input type="button" name="RejectBtn" value=" Reject "
+           onclick="location.href='@Url.Action("Reject", "Offer", new { offerID=Model.Offer.ID})'"
+           style="font-size:18px; line-height:1.4; margin-right:35px;" />
+    <input type="button" value="Revise" onclick="location.href='@Url.Action("Revise", "Offer", new { offerID=Model.Offer.ID})'" style="font-size:18px; line-height:1.4;" />
+</p>
+
+<div id="dialog-confirm" title="Offer Email Check">
+    <table id="dialog_table" style="border:0;">
+        <tr>
+            <td style="vertical-align:top; border:0;"><label for="From">From</label></td>
+            <td style="vertical-align:central; border:0;">
+                @Html.TextBoxFor(model => model.Email.FromEmail)
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top; border:0;"><label for="To">To</label></td>
+            <td style="vertical-align:central; border:0;">
+                @Html.TextAreaFor(model => model.Email.ToEmail, 2, 20, null)
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top; border:0;"><label for="CC">CC</label></td>
+            <td style="vertical-align:central; border:0;">
+                @Html.TextAreaFor(model => model.Email.CCEmail, 2, 20, null)
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top; border:0;"><label for="Subject">Subject </label></td>
+            <td style="vertical-align:central; border:0;">
+                @Html.TextAreaFor(model => model.Email.Subject, 2, 20, null)
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+<script type="text/javascript">
+    $('.Date').datepicker();
+    $('.Date').datepicker("setDate",new Date());
+
+    $(function () {
+        $('#dialog-confirm').dialog({
+            autoOpen: false,
+            resizable: false,
+            height: 500,
+            width: 450,
+            modal: true,
+            buttons: [
+                {
+                    text: "Send Email",
+                    click: $.noop,
+                    type: "submit",
+                    click: function () {
+                        $(this).dialog("close");
+                        $("div.mask").css("display", "block");
+                        $('#PostForm').submit();
+                    }
+                },
+                {
+                    text: "Cancel",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            ],
+            open: function () {
+                $("#Email_FromEmail").val("yan.gu@ni.com")+ ";";
+                $("#Email_ToEmail").val($("#Personel_Email").val()+ ";" );
+                $("#Email_CCEmail").val($("#Report_ReportLineEmail").val() + ";" + $("#Report_DepartmentMgrEmail").val()+ ";");
+                $("#Email_Subject").val("Offer Letter from National Instruments");
+                $(this).parent().appendTo('#PostForm');
+            }
+        });
+
+
+
+        $("#MgrApproveBtn").click(function () {
+            $('#dialog-confirm').dialog("open");
+        });
+    });
+</script>

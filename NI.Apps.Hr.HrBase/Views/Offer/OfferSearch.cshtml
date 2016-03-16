@@ -1,0 +1,145 @@
+﻿@{
+    ViewBag.Title = "OfferSearch";
+    var message=TempData["AlertMessage"]??string.Empty;
+}
+
+@model NI.Application.HR.HRBase.Models.OfferActivity.OfferSearchModel
+@using PagedList.Mvc;
+@Styles.Render("~/Content/PagedList.css")
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+@using (Html.BeginForm("Search", "Offer", FormMethod.Get))
+{
+    <fieldset id="offer_search_field" style="display:block;">
+        <legend style="font-weight:bold;">Search Offer</legend>
+
+        <div id="offer_search">
+            <table id="offer_table" style="width:90%; border-collapse:collapse;">
+                <tr>
+                    <td class="hc-attr-name" style="width:10%; text-align:right;">Chinese Name</td>
+                    <td class="hc-attr-value" style="width:10%; text-align:left;">
+                        @Html.TextBoxFor(model => model.ChineseName, new {@style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
+                    <td class="hc-attr-name" style="width:10%; text-align:right;">From Date</td>
+                    <td class="hc-attr-value" style="width:10%; text-align:left;">
+                        @Html.TextBoxFor(model => model.FromDate, new {@class="Date", @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
+                    </td>
+                    <td class="hc-attr-name" style="width:10%; text-align:right;">To Date</td>
+                    <td class="hc-attr-value" style="width:10%; text-align:left;">
+                        @Html.TextBoxFor(model => model.ToDate, new { @class = "Date", @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
+                    </td>
+                    <td class="hc-attr-name" style="width:10%; text-align:right;">Status</td>
+                    <td class="hc-attr-value" style="width:10%; text-align:left;">
+                        @Html.DropDownListFor(model => model.Status, new List<SelectListItem> { 
+                                                                                new SelectListItem{Text="Draft",Value="Draft"},
+                                                                                new SelectListItem{Text="Pending Manager Approval",Value="Pending Manager Approval"},
+                                                                                new SelectListItem{Text="Waiting Candidate Feedback",Value="Waiting Candidate Feedback"},
+                                                                                new SelectListItem{Text="Manager Rejected",Value="Manager Rejected"},
+                                                                                new SelectListItem{Text="Pending Welcome Letter",Value="Pending Welcome Letter"},
+                                                                                new SelectListItem{Text="Candidate Rejected",Value="Candidate Rejected"}
+                                                                            },
+                                                                            "--Select--", 
+                                                                            new { @class = "box_for_create", style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <p style="width:90%; text-align:right;">
+            <input type="submit" name="SearchButton" value="Search" style="font-size:18px; line-height:1.4;" />
+            <input id="CreateOfferBtn" type="button" value="Create Offer" style="font-size:18px; line-height:1.4;" />
+        </p>
+    </fieldset>
+}
+
+<fieldset style="display:block; margin-top:10px; margin-bottom:0px;">
+    <legend style="font-weight:bold;">Offer List</legend>
+
+    <div class="offerList" style="height:570px; border:1px solid grey;">
+        <table id="offers_table" border="1" rules="all" style="width:96%; border-collapse:collapse; table-layout:fixed; ">
+            <tr style="height:18px;">
+                <th>Candidate Name</th>
+                <th>Recruiment Type</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Onboarding Date</th>
+                <th>Probation Due Date</th>
+                <th nowrap>Status</th>
+            </tr>
+            <tbody id="tbody">
+                @if (Model.OfferList != null && Model.OfferList.Count != 0)
+                {
+                    foreach (var item in Model.OfferList)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(item.Name.ToString(), "GoToNewestPage", "Offer",
+                                new { OfferID=item.ID }, 
+                                new { style = "text-decoration: underline;color: black;" })
+                            </td>
+                            <td>@item.Type</td>
+                            <td>@item.Phone</td>
+                            <td>@item.Email</td>
+                            <td>@item.OnboardingDate</td>
+                            <td>@item.ProbationDueDate</td>
+                            <td nowrap>@item.Status</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <br />
+        <div style="width:91%;">
+            @if (Model.OfferList != null && Model.OfferList.Count != 0)
+            {
+                <span style=" float:left">Page @(Model.OfferList.PageCount < Model.OfferList.PageNumber ? 0 : Model.OfferList.PageNumber) of @Model.OfferList.PageCount</span>
+                <span style=" float:right">
+                    @Html.PagedListPager(Model.OfferList,
+                      page => Url.Action("Search", "Offer", new RouteValueDictionary(){
+                          {"FromDate",Model.FromDate},
+                          {"ToDate",Model.ToDate},
+                          {"Status",Model.Status},
+                          {"Page", page}
+                      }
+                              ))
+                </span>
+            }
+
+        </div>
+     </div>
+</fieldset>
+
+<div id="dialog-confirm">
+    <p>You have to select a headcount before creating offer.Are you sure?</p>
+</div>
+
+<script type="text/javascript">
+    $('.Date').datepicker();
+    $('.Date').datepicker("setDate",new Date());
+
+    var message = '@message';
+    if (message)
+        alert(message);
+
+    $(function() {
+        $('#dialog-confirm').dialog({
+            title:"Want to create offer?",
+            autoOpen:false,
+            resizable:false,
+            height: 340,
+            width:340,
+            modal:true,
+            buttons:{
+                "Yes": function () {
+                    window.location.href = '@Url.Action("Search", "HeadCount")';
+                },
+                "Cancel": function () {
+                    $(this).dialog("close");
+                }
+            }       
+        });
+
+        $("#CreateOfferBtn").click(function () {
+            $('#dialog-confirm').dialog("open");
+        });
+    });
+</script>

@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "HeadCountDetail";
+}
+
+@model NI.Application.HR.HRBase.Models.HeadcountActivity.HeadCountDetailModel
+@using PagedList.Mvc;
+@Styles.Render("~/Content/HeadCount/HeadCountDetail.css")
+@Styles.Render("~/Content/PagedList.css")
+
+<fieldset id="headcount_field" style="display:block;">
+    <legend style="font-weight:bold;">Headcount_Detail</legend>
+
+    <div id="headcount_create">
+        @using (Html.BeginForm("Create", "HeadCount", FormMethod.Post,
+                            new { id = "form1" }))
+        {
+            @Html.HiddenFor(model => model.headcount.ID)
+            
+            <table id="headcount_table" style="width:90%; border-collapse:collapse;">
+                <tr>
+                    <td class="hc-attr-name" style="width:14%; text-align:right;">HC Code:</td>
+                    <td class="hc-attr-name" style="width:14%; text-align:left;">
+                        @Html.DisplayFor(model => model.headcount.Code, new { @class = "box_for_detail", @id = "code_info" })
+                    </td>
+                    <td class="hc-attr-name" style="width:14%; text-align:right;">Position:</td>
+                    <td class="hc-attr-value" style="width:14%; text-align:left;">
+                        @Html.DisplayFor(model => model.headcount.Position, new { @class = "box_for_detail", @id = "position_info" })
+                    </td>
+                    <td class="hc-attr-name" style="width:14%; text-align:right;">Number:</td>
+                    <td class="hc-attr-value" style="width:14%; text-align:left;">
+                        @Html.DisplayFor(model => model.headcount.Number, new { @class = "box_for_detail", @id = "number_info" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="hc-attr-name" style="width:14%; text-align:right;">CostCenter:</td>
+                    <td class="hc-attr-value" style="width:14%; text-align:left;">
+                        @Html.DisplayFor(model => model.headcount.CostCenter)
+                    </td>
+                    <td class="hc-attr-name" style="width:14%; text-align:right;">Department:</td>
+                    <td class="hc-attr-value" style="width:14%; text-align:left;">
+                        @Html.DisplayFor(model => model.headcount.Department)
+                    </td>
+                    <td class="hc-attr-name" style="width:14%; text-align:right;">Internal Level:</td>
+                    <td class="hc-attr-value" style="width:14%; text-align:left;">
+                        @Html.DisplayFor(model => model.headcount.InternalLevel)
+                    </td>
+                </tr>
+            </table>
+
+            <p style="width:90%; text-align:right;">
+                <input id="editBtn" type="button" value="Edit" />
+                <input type="button" value="Create Offer" onclick="window.location.href = '@Url.Action("Create", "Offer", new  {HeadcountCode=Model.headcount.Code })';" />
+            </p>
+        }
+    </div>
+</fieldset>
+
+<fieldset style="display:block; margin-top:10px; margin-bottom:0px;">
+    <legend style="font-weight:bold;">Offer List</legend>
+
+    <div class="offerList" style="height:570px; border:1px solid grey;">
+        <table id="offers_table" border="1" rules="all" style="width:91%; border-collapse:collapse; table-layout:fixed; ">
+            <tr style="height:18px;">
+                <th>Candidate Name</th>
+                <th>Recruiment Type</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Onboarding Date</th>
+                <th>Probation Due Date</th>
+                <th>Status</th>
+            </tr>
+            <tbody id="tbody">
+                @if (Model.offers.Count != 0)
+                {
+                    foreach (var item in Model.offers)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(item.Name.ToString(), "GoToNewestPage", "Offer",
+                                new { OfferID = item.ID },
+                                new { style = "text-decoration: underline;color: black;" })
+                            </td>
+                            <td>@item.Type</td>
+                            <td>@item.Phone</td>
+                            <td>@item.Email</td>
+                            <td>@item.OnboardingDate</td>
+                            <td>@item.ProbationDueDate</td>
+                            <td>@item.Status</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <br/>
+        @if (Model.offers.Count != 0)
+        {
+            <span style=" float:left">Page @(Model.offers.PageCount < Model.offers.PageNumber ? 0 : Model.offers.PageNumber) of @Model.offers.PageCount</span>
+            <span style=" float:right">
+                @Html.PagedListPager(Model.offers,
+                      page => Url.Action("ShowDetail", "HeadCount", new { HeadcountCode=@Model.headcount.Code,Page = page }
+                              ))
+            </span>
+        }
+    </div> 
+</fieldset>
+
+<script type="text/javascript">
+    $("#editBtn").click(function () {
+        var ID=$("#headcount_ID").val().trim();
+        $.get("/HeadCount/Edit/?hcID="+Number(ID), function (response) {
+            $("#headcount_create").html(response);
+        });
+    });
+</script>

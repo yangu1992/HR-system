@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using PagedList;
 using NI.Apps.Hr.Entity.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace NI.Application.HR.HRBase.Models.HeadcountActivity
 {

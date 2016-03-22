@@ -45,26 +45,17 @@ namespace NI.Application.HR.HRBase.Controllers.HeadCountController
                 }
             }
 
-            
+            SpinnerService service = new SpinnerService();
+            ViewData["Department"] = new SelectList(service.GetDepartmentList());
             return View("HeadCountSearch",model);
         }
 
         public ActionResult Create()
         {
             SpinnerService service = new SpinnerService();
-           
-            IEnumerable<SelectListItem> list1 = service.GetCostCenterList().Select(
-                b => new SelectListItem { Value=b,Text=b});
-
-            IEnumerable<SelectListItem> list2 = service.GetDepartmentList().Select(
-                b => new SelectListItem { Value = b, Text = b });
-
-            IEnumerable<SelectListItem> list3 = service.GetInternalLevelList().Select(
-                b => new SelectListItem { Value = b, Text = b });
-
-            ViewData["CostCenter"] = list1;
-            ViewData["Department"] = list2;
-            ViewData["InternalLevel"] = list3;
+            ViewData["CostCenter"] = new SelectList(service.GetCostCenterList());
+            ViewData["Department"] = new SelectList(service.GetDepartmentList());
+            ViewData["InternalLevel"] = new SelectList(service.GetInternalLevelList());
 
             return View("HeadCountCreate");
         }
@@ -76,57 +67,39 @@ namespace NI.Application.HR.HRBase.Controllers.HeadCountController
                 Headcount_ID=headcount.ID,
                 Headcount_Code=headcount.Code,
                 Headcount_Position=headcount.Position,
+                Headcount_Number=headcount.Number,
                 Headcount_CostCenter=headcount.CostCenter,
                 Headcount_Department=headcount.Department,
                 Headcount_InternalLevel=headcount.InternalLevel
             };
 
             Table_Headcount tmp = this.HeadCountService.AddHeadCount(newHC);
-            HeadCount hc = new HeadCount
-            {
-                ID = tmp.Headcount_ID,
-                Code = tmp.Headcount_Code,
-                Position = tmp.Headcount_Position,
-                Number = tmp.Headcount_Number??0,
-                CostCenter = tmp.Headcount_CostCenter,
-                Department = tmp.Headcount_Department,
-                InternalLevel = tmp.Headcount_InternalLevel
-            };
-            TempData["hc"] = hc;
-            return RedirectToAction("ShowDetail", "HeadCount", new { CreateBtn =headcount.CreateBtn});
+            
+            return RedirectToAction("ShowDetail", "HeadCount", new { HeadcountCode = tmp.Headcount_Code });
                // return View("test", result);      
         }
 
-        public ActionResult ShowDetail(string CreateBtn, int? HeadcountCode, int? Page)
+        public ActionResult ShowDetail(string CreateBtn, int HeadcountCode, int? Page=1)
         {
             HeadCount hc = null;
 
-            //in create new headcount process
-            if (CreateBtn != null) 
+            Table_Headcount searchResult = this.HeadCountService.FindHeadCountByCode(HeadcountCode);
+            hc = new HeadCount
             {
-                Page = 1;
-                hc = (HeadCount)TempData["hc"];      
-            }
-
-            //in search an existing headcount proccess
-            if (HeadcountCode != null) {
-                Table_Headcount searchResult = this.HeadCountService.FindHeadCountByCode(HeadcountCode);
-                hc = new HeadCount
-                {
-                    ID=searchResult.Headcount_ID,
-                    Code = searchResult.Headcount_Code,
-                    Position = searchResult.Headcount_Position,
-                    Number = searchResult.Headcount_Number??0,
-                    CostCenter = searchResult.Headcount_CostCenter,
-                    Department = searchResult.Headcount_Department,
-                    InternalLevel = searchResult.Headcount_InternalLevel
-                };
-            }
-          
-            int pageNumber = (Page ?? 1);
-            IEnumerable<Offer> offers = this.OfferService.FindOffersByHcCode(hc.Code);
+                ID = searchResult.Headcount_ID,
+                Code = searchResult.Headcount_Code,
+                Position = searchResult.Headcount_Position,
+                Number = searchResult.Headcount_Number ?? 0,
+                CostCenter = searchResult.Headcount_CostCenter,
+                Department = searchResult.Headcount_Department,
+                InternalLevel = searchResult.Headcount_InternalLevel
+            };    
             
-            HeadCountDetailModel HcDetail = new HeadCountDetailModel { headcount = hc, offers = offers.ToPagedList(pageNumber,pageSize) };
+          
+            int pageNumber = Page??1;
+            IEnumerable<Offer> offers = this.OfferService.FindOffersByHcCode(hc.Code);
+
+            HeadCountDetailModel HcDetail = new HeadCountDetailModel { headcount = hc, offers = offers.ToPagedList(pageNumber, pageSize) };
 
             return View("HeadCountDetail", HcDetail);
         }
@@ -154,19 +127,9 @@ namespace NI.Application.HR.HRBase.Controllers.HeadCountController
                 offers = offers.ToPagedList(1,pageSize) };
 
             SpinnerService service = new SpinnerService();
-
-            IEnumerable<SelectListItem> list1 = service.GetCostCenterList().Select(
-                b => new SelectListItem { Value = b, Text = b });
-
-            IEnumerable<SelectListItem> list2 = service.GetDepartmentList().Select(
-                b => new SelectListItem { Value = b, Text = b });
-
-            IEnumerable<SelectListItem> list3 = service.GetInternalLevelList().Select(
-                b => new SelectListItem { Value = b, Text = b });
-
-            ViewData["headcount.CostCenter"] = list1;
-            ViewData["headcount.Department"] = list2;
-            ViewData["headcount.InternalLevel"] = list3;
+            ViewData["headcount.CostCenter"] = new SelectList(service.GetCostCenterList(),hc.CostCenter);
+            ViewData["headcount.Department"] = new SelectList(service.GetDepartmentList(),hc.Department);
+            ViewData["headcount.InternalLevel"] = new SelectList(service.GetInternalLevelList(),hc.InternalLevel);
 
             return PartialView("~/Views/Shared/_HeadCountEditPartial.cshtml", model);
         }

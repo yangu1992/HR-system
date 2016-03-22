@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace NI.Application.HR.HRBase.Models.OfferActivity
 {
@@ -16,6 +17,7 @@ namespace NI.Application.HR.HRBase.Models.OfferActivity
         public string Postion { get; set; }
         public string Location { get; set; }
         public string Channel { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
         public DateTime? OnBoardingDate { get; set; }
         public int? ProbationDuration { get; set; }
         public string UploadFormPath { get; set; }

@@ -5,6 +5,7 @@ using System.Web;
 using NI.Application.HR.HRBase.Models.OfferActivity;
 using Microsoft.Office.Interop.Excel;
 using NI.Application.HR.HRBase.Models.OfferActivity.PersonalInfoFormModels;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace NI.Application.HR.HRBase.Controllers
 {
@@ -12,17 +13,16 @@ namespace NI.Application.HR.HRBase.Controllers
     {
         public PersonalInfoFormModel getFormModel(HttpPostedFileBase fb, string path)
         {
-            Microsoft.Office.Interop.Excel.Application app = new Microsoft.Office.Interop.Excel.Application();
+            Excel.Application app = new Excel.Application();
+            Excel.Sheets sheets;
+            Excel.Workbook workbook = null;
 
-            Microsoft.Office.Interop.Excel.Sheets sheets;
             object oMissiong = System.Reflection.Missing.Value;
-            Microsoft.Office.Interop.Excel.Workbook workbook = null;
-
             workbook = app.Workbooks.Open(path, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong,
                 oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong);
             sheets = workbook.Worksheets;
 
-            Microsoft.Office.Interop.Excel.Worksheet worksheet = (Microsoft.Office.Interop.Excel.Worksheet)sheets.get_Item(1);//读取第一张表  
+            Excel.Worksheet worksheet = (Excel.Worksheet)sheets.get_Item(1);//读取第一张表  
 
             PersonalInfoModel personalInfo = getPersonalInfo(worksheet);
             List<EducationBackgroudModel> eduInfo = getEduInfo(worksheet);
@@ -42,6 +42,7 @@ namespace NI.Application.HR.HRBase.Controllers
                 TentativeOnboardDate = worksheet.get_Range("I42").Text
             };
 
+            //release
             workbook.Close(false, oMissiong, oMissiong);
             System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
             workbook = null;

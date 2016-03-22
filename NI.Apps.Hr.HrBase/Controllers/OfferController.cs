@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -112,7 +113,8 @@ namespace NI.Application.HR.HRBase.Controllers
                 getOfferEntity(model.Offer),
                 getPersonelEntity(model.Personel),
                 getReportEntity(model.Report),
-                getSalaryEntity(model.Salary)
+                getSalaryEntity(model.Salary),
+                getBonusEntities(model.Salary)
             );
 
             EmailControl emailControl = new EmailControl();
@@ -121,6 +123,8 @@ namespace NI.Application.HR.HRBase.Controllers
             model = getCurrentModelData(model.Offer.ID);
             return View("OfferPendingApprove", model);                                    
         }
+
+        
 
         public ActionResult ShowInvalidOfferDetail() {
             OfferCreateModel model = new OfferCreateModel();
@@ -152,21 +156,24 @@ namespace NI.Application.HR.HRBase.Controllers
             OfferCreateModel model = getCurrentModelData(OfferID);
             TempData["model"] = model;
 
-            if (model.Offer.Status == "Pending Candidate Onboarding") {
-                return View("OfferOnboarding", model);
-            }
-            else if (model.Offer.Status == "Waiting Candidate Feedback") {
-                return View("OfferWaitingFeedback", model);
-            }
-            else if (model.Offer.Status == "Pending Manager Approval")
+            switch (model.Offer.Status)
             {
-                return View("OfferPendingApprove", model);
+                case "Draft":
+                    SpinnerService service = new SpinnerService();
+                    ViewData["Report.ReportLine"] = new SelectList(service.GetEmployeeList(), model.Report.ReportLine);
+                    ViewData["Report.DepartmentMgr"] = new SelectList(service.GetEmployeeList(), model.Report.DepartmentMgr);
+                    return View("OfferCreate",model);
+                case "Pending Candidate Onboarding":
+                    return View("OfferOnboarding", model);
+                case "Waiting Candidate Feedback":
+                    return View("OfferWaitingFeedback", model);
+                case "Pending Manager Approval":
+                    return View("OfferPendingApprove", model);
             }
-
             return RedirectToAction("ShowInvalidOfferDetail", "Offer");
         }
 
-        public PartialViewResult UploadPersonalInfoForm(int offerID)
+        public ActionResult UploadPersonalInfoForm(int offerID)
         {
             HttpPostedFileBase fb = Request.Files[0];
  
@@ -183,20 +190,27 @@ namespace NI.Application.HR.HRBase.Controllers
             PersonalInfoFormModel formModel = excelReadController.getFormModel(fb, filePath);
 
             //add personel info to database and update offer info
-            Table_Offer newOffer= new Table_Offer { 
-                Offer_ID=offerID,
-                Offer_OnboardingDate=DateTime.Parse(formModel.TentativeOnboardDate),
-                Offer_SignedFile = filePath
-            };
-            Table_PersonelInfo newPersonelInfo = getNewPersonelInfo(offerID, formModel.PersonalInfo);
-            List<Table_EducationInfo> newEducationInfo = getNewEducationInfo(formModel.EduInfo);
-            List<Table_WorkExperienceInfo> newWorkExpInfo = getWorkExpInfo(formModel.WorkExperienceInfo);
-            List<Table_FamilyMembersInfo> newFamilyInfo = getFamilyInfo(formModel.FamilyMemInfo);
-            List<Table_ChildrenInfo> newChildrenInfo = getChildrenInfo(formModel.ChildsInfo);
-            this.OfferService.UpdatePersonelInfo(newOffer,
-                newPersonelInfo, newEducationInfo, newWorkExpInfo,
-               newFamilyInfo, newChildrenInfo);
-
+            try
+            {
+                Table_Offer newOffer = new Table_Offer
+                {
+                    Offer_ID = offerID,
+                    Offer_OnboardingDate = DateTime.Parse(formModel.TentativeOnboardDate),
+                    Offer_SignedFile = filePath
+                };
+                Table_PersonelInfo newPersonelInfo = getNewPersonelInfo(offerID, formModel.PersonalInfo);
+                List<Table_EducationInfo> newEducationInfo = getNewEducationInfo(formModel.EduInfo);
+                List<Table_WorkExperienceInfo> newWorkExpInfo = getWorkExpInfo(formModel.WorkExperienceInfo);
+                List<Table_FamilyMembersInfo> newFamilyInfo = getFamilyInfo(formModel.FamilyMemInfo);
+                List<Table_ChildrenInfo> newChildrenInfo = getChildrenInfo(formModel.ChildsInfo);
+                this.OfferService.UpdatePersonelInfo(newOffer,
+                    newPersonelInfo, newEducationInfo, newWorkExpInfo,
+                   newFamilyInfo, newChildrenInfo);
+            }catch(System.FormatException e){
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("failed"); 
+            }
+            
             return PartialView("~/Views/Shared/PersonalFormDialogPartial.cshtml", formModel);
         }
 
@@ -265,6 +279,28 @@ namespace NI.Application.HR.HRBase.Controllers
             return RedirectToAction("Create", "Offer");
         }
 
+        public ActionResult Edit(int offerID) {
+            OfferCreateModel model = getCurrentModelData(offerID);
+
+            SpinnerService service = new SpinnerService();
+            ViewData["Report.ReportLine"] = new SelectList(service.GetEmployeeList(), model.Report.ReportLine);
+            ViewData["Report.DepartmentMgr"] = new SelectList(service.GetEmployeeList(), model.Report.DepartmentMgr);
+
+            return View("OfferEdit",model);
+        }
+
+        public ActionResult SaveChanges(OfferCreateModel model)
+        {
+            this.OfferService.SaveOffer(
+                getOfferEntity(model.Offer),
+                getPersonelEntity(model.Personel),
+                getReportEntity(model.Report),
+                getSalaryEntity(model.Salary),
+                getBonusEntities(model.Salary)
+            );
+
+            return RedirectToAction("GoToNewestPage", "Offer", new { OfferID = model.Offer.ID });
+        }
         private List<Table_ChildrenInfo> getChildrenInfo(List<ChildrenInfoModel> list)
         {
             List<Table_ChildrenInfo> result = new List<Table_ChildrenInfo>();
@@ -368,9 +404,11 @@ namespace NI.Application.HR.HRBase.Controllers
             Table_Headcount headcount = this.HeadCountService.FindHeadCountByID(offer.Offer_HCID);
             Table_PersonelInfo personel = this.PersonelService.FindPersonelByID(offer.Offer_PersonelInfoID);
             Table_ReportingInfo reportLine = this.ReportService.FindReportLineByID(offer.Offer_ReportingInfoID);
-           // Table_Employee lineMgr = this.EmployeeService.FindEmployeeByID(reportLine.ReportingInfo_ReportLineEmpID);
-           // Table_Employee manager = this.EmployeeService.FindEmployeeByID(reportLine.ReportingInfo_DeptMgrEmpID);
             Table_SalaryInfo salary = this.SalaryService.FindSalaryByID(offer.Offer_SalaryInfoID);
+            List<Table_BonusInfo> bonus = null;
+            if (salary != null) {
+                bonus = this.SalaryService.FindBonusBySalaryID(salary.SalaryInfo_ID);
+            }
 
             OfferDetailModel offerDetail = new OfferDetailModel
             {
@@ -414,8 +452,26 @@ namespace NI.Application.HR.HRBase.Controllers
             SalaryDetailModel salaryDetail = new SalaryDetailModel
             {
                 Salary = salary.SalaryInfo_Salary,
-                bonus = salary.SalaryInfo_Bonus
             };
+            if (bonus != null) {
+                salaryDetail.bonus = true;
+                foreach (var b in bonus) { 
+                    switch (b.BonusInfo_Type){
+                        case "Sign-On":
+                            salaryDetail.SignOn=true;
+                            salaryDetail.SignOnPrice = b.BonusInfo_Amount;
+                            continue;
+                        case "Relocation":
+                            salaryDetail.Relocation = true;
+                            salaryDetail.RelocationPrice = b.BonusInfo_Amount;
+                            continue;
+                        case "Other":
+                            salaryDetail.Other = true;
+                            salaryDetail.OtherPrice = b.BonusInfo_Amount;
+                            continue;
+                    }                  
+                }
+            }
 
             OfferCreateModel model = new OfferCreateModel
             {
@@ -428,18 +484,53 @@ namespace NI.Application.HR.HRBase.Controllers
             return model;
         }
 
+        private List<Table_BonusInfo> getBonusEntities(SalaryDetailModel model)
+        {
+            if (model == null) {
+                return null;
+            }
+
+            List<Table_BonusInfo> list = new List<Table_BonusInfo>();
+            if (model.SignOn) {
+                list.Add(new Table_BonusInfo {
+                    BonusInfo_Type="Sign-On",
+                    BonusInfo_Amount=model.SignOnPrice??0
+                });
+            }
+            if (model.Relocation)
+            {
+                list.Add(new Table_BonusInfo
+                {
+                    BonusInfo_Type = "Relocation",
+                    BonusInfo_Amount = model.RelocationPrice ?? 0
+                });
+            }
+            if (model.Other)
+            {
+                list.Add(new Table_BonusInfo
+                {
+                    BonusInfo_Type = "Other",
+                    BonusInfo_Amount = model.OtherPrice ?? 0
+                });
+            }
+            return list;
+        }
         private Table_SalaryInfo getSalaryEntity(SalaryDetailModel salaryDetailModel)
         {
+            if (salaryDetailModel == null)
+                return null;
+
             return new Table_SalaryInfo
             {
-                SalaryInfo_Salary=salaryDetailModel.Salary,
-                SalaryInfo_Bonus=salaryDetailModel.bonus
+                SalaryInfo_Salary=salaryDetailModel.Salary
             };           
         }
 
         private Table_ReportingInfo getReportEntity(ReportDetailModel reportDetailModel)
         {
             //int ReportLineEmpID=this.EmplyeeService.FindID
+            if (reportDetailModel == null)
+                return null;
 
             EmployeeRepository repo = new EmployeeRepository();
 
@@ -469,6 +560,7 @@ namespace NI.Application.HR.HRBase.Controllers
             int headcountID = this.HeadCountService.GetIDByCode(offerDetailModel.HeadcountCode);
 
             return new Table_Offer{
+                Offer_ID=offerDetailModel.ID,
                 Offer_HCID=headcountID,
                 Offer_Status=offerDetailModel.Status,
                 Offer_RecruitType=offerDetailModel.RecruitType,

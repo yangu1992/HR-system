@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "OfferEdit";
+}
+@model NI.Application.HR.HRBase.Models.OfferActivity.OfferCreateModel
+
+@using (Html.BeginForm("SaveChanges", "Offer", FormMethod.Post, new { id = "PostForm" }))
+{
+    @Html.Partial("_OfferBaseInfoEditable", Model.Offer ?? new NI.Application.HR.HRBase.Models.OfferActivity.OfferDetailModel(),
+                       new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Offer" } });
+
+    @Html.Partial("_OfferPersonInfoEditable", Model.Personel ?? new NI.Application.HR.HRBase.Models.OfferActivity.PersonelDetailModel(),
+                   new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Personel" }})
+
+    @Html.Partial("_OfferPositionInfoEditable",Model)
+}
+
+<script type="text/javascript">
+    $("#SaveChangesBtn").bind('click', function (event) {
+        $("#PostForm").submit();
+    });
+</script>

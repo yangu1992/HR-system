@@ -61,13 +61,13 @@
     <div class="offerList" style="height:570px; border:1px solid grey;">
         <table id="offers_table" border="1" rules="all" style="width:91%; border-collapse:collapse; table-layout:fixed; ">
             <tr style="height:18px;">
-                <th>Candidate Name</th>
-                <th>Recruiment Type</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Onboarding Date</th>
-                <th>Probation Due Date</th>
-                <th>Status</th>
+                <th width="11%">Candidate Name</th>
+                <th width="11%">Recruiment Type</th>
+                <th width="11%">Phone</th>
+                <th width="22%">Email</th>
+                <th width="12%">Onboarding Date</th>
+                <th width="12%">Probation Due Date</th>
+                <th width="20%">Status</th>
             </tr>
             <tbody id="tbody">
                 @if (Model.offers.Count != 0)
@@ -75,16 +75,16 @@
                     foreach (var item in Model.offers)
                     {
                         <tr>
-                            <td>@Html.ActionLink(item.Name.ToString(), "GoToNewestPage", "Offer",
+                            <td >@Html.ActionLink(item.Name.ToString(), "GoToNewestPage", "Offer",
                                 new { OfferID = item.ID },
                                 new { style = "text-decoration: underline;color: black;" })
                             </td>
-                            <td>@item.Type</td>
-                            <td>@item.Phone</td>
-                            <td>@item.Email</td>
-                            <td>@item.OnboardingDate</td>
-                            <td>@item.ProbationDueDate</td>
-                            <td>@item.Status</td>
+                            <td >@item.Type</td>
+                            <td >@item.Phone</td>
+                            <td >@item.Email</td>
+                            <td >@String.Format("{0:yyyy/MM/dd}", item.OnboardingDate)</td>
+                            <td >@String.Format("{0:yyyy/MM/dd}", item.ProbationDueDate)</td>
+                            <td >@item.Status</td>
                         </tr>
                     }
                 }

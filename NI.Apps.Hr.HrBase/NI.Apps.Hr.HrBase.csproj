@@ -68,6 +68,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -140,13 +141,16 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Controllers\EmailControl.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\ExcelReadController.cs" />
     <Compile Include="Controllers\HeadCountController.cs" />
+    <Compile Include="Controllers\HttpParamActionAttribute.cs" />
     <Compile Include="Controllers\OfferController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\EmailModel.cs" />
+    <Compile Include="Models\EmployeeActivity\EmployeeSearchModel.cs" />
     <Compile Include="Models\HeadcountActivity\CostCenterListModel.cs" />
     <Compile Include="Models\HeadcountActivity\DepartmentListModel.cs" />
     <Compile Include="Models\HeadcountActivity\HeadCountCreateModel.cs" />
@@ -178,19 +182,27 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
+    <Content Include="Images\processing.gif" />
     <Content Include="Images\accept.png" />
     <Content Include="Images\bullet.png" />
     <Content Include="Images\heroAccent.png" />
     <Content Include="Images\leftbg.bmp" />
     <Content Include="Images\NI.png" />
-    <Content Include="Images\processing.gif" />
     <Content Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery-1.4.4-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.4.4.js" />
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\jquery.form.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
@@ -251,6 +263,13 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <None Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery.form.min.js.map" />
+    <Content Include="Views\Offer\_OfferBaseInfo.cshtml" />
+    <Content Include="Views\Offer\_OfferPersonInfoEditable.cshtml" />
+    <Content Include="Views\Offer\_OfferPositionInfoEditable.cshtml" />
+    <Content Include="Views\Offer\_OfferPositionInfoFixed.cshtml" />
+    <Content Include="Views\Offer\_OfferPersonInfoFixed.cshtml" />
+    <Content Include="Views\Offer\OfferEdit.cshtml" />
+    <Content Include="Views\Offer\_OfferBaseInfoEditable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NI.Apps.Hr.BussinessLogic\NI.Apps.Hr.BussinessLogic.csproj">

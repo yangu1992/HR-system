@@ -23,6 +23,7 @@ namespace NI.Apps.Hr.Service
         private IWorkExperienceRepository _workExperienceRepository;
         private IFamilyMembersRepository _familyMembersRepository;
         private IChildrenRepository _childrenRepository;
+        private IBonusRepository _bonusRepository;
 
         public IHeadCountRepository HeadCountRepository
         {
@@ -64,8 +65,11 @@ namespace NI.Apps.Hr.Service
         {
             get { return _childrenRepository ?? (_childrenRepository = new ChildrenRepository()); }
         }
+        public IBonusRepository BonusRepository{
+            get{return _bonusRepository??(_bonusRepository=new BonusRepository());}
+        }
 
-        public int AddNewOffer(Table_Offer o, Table_PersonelInfo p, Table_ReportingInfo r, Table_SalaryInfo s)
+        public int AddNewOffer(Table_Offer o, Table_PersonelInfo p, Table_ReportingInfo r, Table_SalaryInfo s, List<Table_BonusInfo> b)
         {
             int personelID = this.PersonelRepository.Add(p);
             int reportID = this.ReportRepository.Add(r);
@@ -74,6 +78,14 @@ namespace NI.Apps.Hr.Service
             o.Offer_PersonelInfoID = personelID;
             o.Offer_ReportingInfoID = reportID;
             o.Offer_SalaryInfoID = salaryID;
+
+            if (b != null) {
+                foreach (var bonus in b)
+                {
+                    bonus.BonusInfo_SalaryInfoID = salaryID;
+                    this.BonusRepository.Add(bonus);
+                }
+            }         
 
             int offerID = this.OfferRepository.Add(o);
 
@@ -165,6 +177,16 @@ namespace NI.Apps.Hr.Service
         }
         public void AcceptOffer(int offerID) {
             this.OfferRepository.UpdateStatus(offerID,"Accept");
+        }
+
+
+        public void SaveOffer(Table_Offer offer, Table_PersonelInfo personelInfo, Table_ReportingInfo reportInfo, Table_SalaryInfo salaryInfo, List<Table_BonusInfo> bonusList)
+        {
+            this.OfferRepository.SaveChanges(offer,
+                personelInfo,
+                reportInfo,
+                salaryInfo,
+                bonusList);
         }
     }
 }

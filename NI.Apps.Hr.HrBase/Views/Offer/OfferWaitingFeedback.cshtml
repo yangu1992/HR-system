@@ -4,7 +4,13 @@
 
 @model NI.Application.HR.HRBase.Models.OfferActivity.OfferCreateModel
 
-@Html.Partial("_OfferDetailInfo", Model);
+@Html.Partial("_OfferBaseInfo", Model.Offer ?? new NI.Application.HR.HRBase.Models.OfferActivity.OfferDetailModel(),
+                       new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Offer" } })
+
+@Html.Partial("_OfferPersonInfoFixed", Model.Personel ?? new NI.Application.HR.HRBase.Models.OfferActivity.PersonelDetailModel(),
+                   new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Personel" } })
+
+@Html.Partial("_OfferPositionInfoFixed", Model)
 
 <div id="feedback_update_section" style="overflow-y:scroll;">
     <fieldset>
@@ -19,7 +25,7 @@
                         new { id = "upload_File_Form", enctype = "multipart/form-data",style="display:inline"}))
                     {
                         <input type="file" id="fileName" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" style="display:inline;">
-                        <input name="info" type="submit" value="Upload" style="display:inline;">
+                        <input id="uploadBtn" type="button" value="Upload" style="display:inline;">
                     }
                     @if (Model.Offer.UploadFormPath != null) { 
                         <img id="uploadFormStatus" src="~/Images/accept.png" alt="Uploaded" /> 
@@ -29,8 +35,7 @@
             </tr>
             <tr>
                 <td style="border:0;">
-                    2. Send Email to IT team: <input id="sendRequestBtn" type="button" value="Send"
-                                                     onclick="location.href='@Url.Action("RequestDomain", "Offer", new { offerID=Model.Offer.ID})'">
+                    2. Send Email to IT team: <input id="sendRequestBtn" type="button" value="Send">
                     @if (Model.Offer.EmailITCompleted != null)
                     {
                         <img id="emailITStatus" src="~/Images/accept.png" alt="email IT finished" />
@@ -45,12 +50,12 @@
             </tr>
             <tr>
                 <td style="padding-left:58px;border:0;">
-                    Domain Login: <input id="address_book_domain" type="text">
+                    <span>Domain Login: </span><input id="address_book_domain" type="text">
                 </td>
             </tr>
             <tr>
                 <td style="padding-left:17px;border:0;">
-                    Contract Start Date: <input id="start_date" class="Date" type="text">
+                    <span>Contract Start Date: </span><input id="start_date" class="Date" type="text">
                     <input id="syncBtn" type="button" value="Sync" >
                     @if (Model.Offer.SyncDomainCompleted != null)
                     {
@@ -67,7 +72,7 @@
             <tr>
                 <td style="padding-left:17px;border:0;">
                     Email To cadidate: <input id="emailCandidateBtn" type="button" value="Send"
-                                         onclick="location.href='@Url.Action("SendWelcomeToCandidate", "Offer",
+                                            onclick="showProgress();location.href='@Url.Action("SendWelcomeToCandidate", "Offer",
                                      new
                                      {
                                          OfferID = Model.Offer.ID,
@@ -86,7 +91,7 @@
             <tr>
                 <td style="padding-left:17px;border:0;">
                     Email To Department Manager: <input id="emailMgrBtn" type="button" value="Send"
-                                                    onclick="location.href='@Url.Action("SendWelcomeToLineMgr", "Offer",
+                                                    onclick="showProgress();location.href='@Url.Action("SendWelcomeToLineMgr", "Offer",
                                                     new { OfferID=Model.Offer.ID,LineMgrEmail = Model.Report.ReportLineEmail })'">
                     @if (Model.Offer.WelcomeToMgrCompleted != null)
                     {
@@ -130,32 +135,38 @@
             },
         });
 
-        var file;
-        $("#fileName").change(function () {
-            file = this.files[0];
-        });
-
         $("#upload_File_Form").ajaxForm({
             beforeSubmit: function () {
-                if (file == null)
-                    alert("please select");
+                $("div.mask").css("display", "block");
             },
             
             success:function(data){
+                $("div.mask").css("display", "none");
                 $("#dialog-personal-form-message").html(data);
                 $("#dialog-personal-form-message").dialog("open"); 
                 $("#uploadFormStatus").attr("style","visibility:visible");
-            } 
+            } ,
+            error:function(data){
+                $("div.mask").css("display", "none");
+                alert("File format is not supported!");
+            }
         });
 
         $("#syncBtn").click(function(){
             var domainLogin=$("#address_book_domain").val().trim();
-            var startDate = $("#start_date").val().trim();
-            var offerID=$("#Offer_ID").val().trim();
-            $.post("/Offer/SyncDomain/", { OfferID: offerID, DomainLogin: domainLogin, ContractStartDate: startDate }, function (response) {
-                alert("Success!");
-                $("#syncDomainStatus").attr("style","visibility:visible");
-            });
+            if(domainLogin==""){
+                alert("Please input Domain Login first!");
+            }else{
+                var startDate = $("#start_date").val().trim();
+                var offerID=$("#Offer_ID").val().trim();
+
+                $("div.mask").css("display", "block");
+                $.post("/Offer/SyncDomain/", { OfferID: offerID, DomainLogin: domainLogin, ContractStartDate: startDate }, function (response) {
+                    $("div.mask").css("display", "none");
+                    $("#syncDomainStatus").attr("style","visibility:visible");
+                });
+            }
+            
         });
 
         function updateDetail(){
@@ -167,5 +178,39 @@
             $("#personel_Email").html($("#personel_Email").html().replace(new RegExp($("#personel_Email").text().trim(), "g"),$("#PersonalInfo_Email").text().trim()));
             $("#offer_OnBoardingDate").html($("#offer_OnBoardingDate").html().replace(new RegExp($("#offer_OnBoardingDate").text().trim(), "g"),$("#TentativeOnboardDate").text().trim()));
         }
+
+        $("#uploadBtn").click(function(){
+            var file=$("input#fileName").val();
+            if(file==""){
+                alert("Please select a file first!");
+            }else{
+                $("div.mask").css("display", "block");
+                $('#upload_File_Form').submit();
+            }
+            
+        });
+
+        $("#sendRequestBtn").click(function(){
+            var offerID=$("#Offer_ID").val().trim();
+            $("div.mask").css("display", "block");
+            $.post("/Offer/RequestDomain/", { OfferID: offerID}, function (response) {             
+                $("div.mask").css("display", "none");
+                $("#emailITStatus").attr("style","visibility:visible");
+            });
+        });
+    });
+
+    function showProgress(){
+        $("div.mask").css("display", "block");
+    }
+
+    $(window).load(function () {
+        var status=$("#Salary_bonus").is(":checked");
+
+        if (status == false) {
+            $(".bonus_section").hide();
+        }
+
+        $("input.read_only").attr("disabled","disabled");
     });
 </script>

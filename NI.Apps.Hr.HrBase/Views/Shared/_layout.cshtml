@@ -6,10 +6,12 @@
 <!DOCTYPE html>
 <html style="margin:0; height:100%; width:100%;">
     <head>
-        <title>Create</title>
+        <title></title>
         @Styles.Render("~/Content/MainLayout.css")
         @Scripts.Render("~/Scripts/jquery-1.10.2.min.js")
+        @Scripts.Render("~/bundles/jqueryval")
         @Scripts.Render("~/Scripts/jQuery.form.js")
+        
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         
@@ -37,7 +39,7 @@
                                     @Html.ActionLink("Offer", "Search", "Offer",new{}, new { @class = "subnav", style = "font-weight:normal;" })
                                 </li>
                                 <li>
-                                    @Html.ActionLink("Employee", "Search", "HeadCount", new {}, new { @class = "subnav", style = "font-weight:normal;" })
+                                    @Html.ActionLink("Employee", "Search", "Employee", new {}, new { @class = "subnav", style = "font-weight:normal;" })
                                 </li>
                             </ul>
                         </li>
@@ -53,10 +55,11 @@
         </div>  
         
         <div class="mask" style="display:none">
-            <div style="text-align:center;">
-                <img id="processStatus" src="~/Images/processing.gif" alt="process " style="al" />
-            </div>
-            
+            <table style="width:100%;height:100%;">
+                <tr valign=middle align=center>
+                    <td><img id="processStatus" src="~/Images/processing.gif" alt="process " style="al" /></td>
+                </tr>
+            </table>        
         </div>
     </body>
 </html>

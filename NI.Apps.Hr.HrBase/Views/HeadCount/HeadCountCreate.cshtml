@@ -16,48 +16,43 @@
                 <tr>
                     <td class="hc-attr-name" style="width:14%; text-align:right;">HC Code:</td>
                     <td class="hc-attr-value" style="width:14%; text-align:left;">
-                        @Html.TextBoxFor(model => model.Code, new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
-                        @Html.ValidationMessageFor(model => model.Code)
-
+                        @Html.EditorFor(model => model.Code, new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
+                        
                     </td>
                     <td class="hc-attr-name" style="width:14%; text-align:right;">Position:</td>
                     <td class="hc-attr-value" style="width:14%; text-align:left;">
-                        @Html.TextBoxFor(model => model.Position, new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
-                        @Html.ValidationMessageFor(model => model.Position)
+                        @Html.EditorFor(model => model.Position, new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
+                        
 
                     </td>
                     <td class="hc-attr-name" style="width:14%; text-align:right;">Number:</td>
                     <td class="hc-attr-value" style="width:14%; text-align:left;">
-                        @Html.TextBoxFor(model => model.Number, new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
-                        @Html.ValidationMessageFor(model => model.Number)
-
+                        @Html.EditorFor(model => model.Number, new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
+                        
                     </td>
                 </tr>
                 <tr>
                     <td class="hc-attr-name" style="width:14%; text-align:right;">CostCenter:</td>
                     <td class="hc-attr-value" style="width:14%; text-align:left;">
                         @Html.DropDownListFor(model => model.CostCenter, ViewData["CostCenter"] as SelectList, "--Select--", new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
-                        @Html.ValidationMessageFor(model => model.CostCenter)
-
                     </td>
                     <td class="hc-attr-name" style="width:14%; text-align:right;">Department:</td>
                     <td class="hc-attr-value" style="width:14%; text-align:left;">
                         @Html.DropDownListFor(model => model.Department, ViewData["Department"] as SelectList, "--Select--", new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
-                        @Html.ValidationMessageFor(model => model.Department)
-
                     </td>
                     <td class="hc-attr-name" style="width:14%; text-align:right;">Internal Level:</td>
                     <td class="hc-attr-value" style="width:14%; text-align:left;">
                         @Html.DropDownListFor(model => model.InternalLevel, ViewData["InternalLevel"] as SelectList, "--Select--", new { @class = "box_for_create", style = "font-size:18px; line-height:1.5;" })
-                        @Html.ValidationMessageFor(model => model.InternalLevel)
-
                     </td>
                 </tr>
             </table>
 
-            <p style="width:90%; text-align:right;">
-                <input name="CreateBtn" type="submit" value="Create HeadCount" class="btn box_for_create" style="font-size:18px; line-height:1.4;" />
-            </p>
+            <div style="width:90%;margin:18px;">
+                @Html.ValidationMessageFor(model => model.Code, null, new { @style="float:left;margin-right:5px;"})
+                @Html.ValidationMessageFor(model => model.Position, null, new { @style = "float:left;margin-right:5px;" })
+                @Html.ValidationMessageFor(model => model.Number, null, new { @style = "float:left;" })
+                <input name=" createbtn" type="submit" value="Create HeadCount" class="btn box_for_create" style="font-size:18px; line-height:1.4;float:right;" />
+            </div>
         }
     </div>
 </fieldset>

@@ -28,6 +28,7 @@ namespace NI.Apps.Hr.Entity
         }
     
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Table_BonusInfo> Table_BonusInfo { get; set; }
         public virtual DbSet<Table_ChildrenInfo> Table_ChildrenInfo { get; set; }
         public virtual DbSet<Table_CostCenter> Table_CostCenter { get; set; }
         public virtual DbSet<Table_Department> Table_Department { get; set; }

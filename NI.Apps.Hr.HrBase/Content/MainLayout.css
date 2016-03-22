@@ -100,7 +100,7 @@ table tr td select
 
 input.btn
 {
-    width:130px;
+    width:auto;
     height:30px;
 }
 
@@ -133,4 +133,18 @@ input.btn
     opacity:0.3; 
     filter: alpha(opacity=30); 
     background-color:gray;
+}
+
+/* validation error layout
+----------------------------------------------------------*/
+.input-validation-error {
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+span.field-validation-error>span {
+    color:red;
+}
+
+input.read_only {
+    
 }

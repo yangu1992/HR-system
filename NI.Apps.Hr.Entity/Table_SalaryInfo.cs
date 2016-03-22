@@ -17,9 +17,6 @@ namespace NI.Apps.Hr.Entity
         public int SalaryInfo_ID { get; set; }
         public Nullable<decimal> SalaryInfo_Salary { get; set; }
         public Nullable<decimal> SalaryInfo_ReviewedSalary { get; set; }
-        public Nullable<bool> SalaryInfo_Bonus { get; set; }
-        public string SalaryInfo_BonusType { get; set; }
-        public Nullable<decimal> SalaryInfo_BonusAmount { get; set; }
         public Nullable<System.DateTime> SalaryInfo_CreatedAt { get; set; }
         public string SalaryInfo_CreatedBy { get; set; }
         public Nullable<System.DateTime> SalaryInfo_ModifiedAt { get; set; }

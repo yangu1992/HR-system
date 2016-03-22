@@ -51,12 +51,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddressBookRepository.cs" />
+    <Compile Include="BonusRepository.cs" />
     <Compile Include="ChildrenRepository.cs" />
     <Compile Include="EducationRepository.cs" />
     <Compile Include="EmployeeRepository.cs" />
     <Compile Include="FamilyMembersRepository.cs" />
     <Compile Include="HeadCountRepository.cs" />
     <Compile Include="Interface\IAddressBookRepository.cs" />
+    <Compile Include="Interface\IBonusRepository.cs" />
     <Compile Include="Interface\IChildrenRepository.cs" />
     <Compile Include="Interface\IEducationRepository.cs" />
     <Compile Include="Interface\IEmployeeRepository.cs" />

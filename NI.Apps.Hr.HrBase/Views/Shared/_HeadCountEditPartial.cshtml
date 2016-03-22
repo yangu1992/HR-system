@@ -26,17 +26,17 @@
         <tr>
             <td class="hc-attr-name" style="width:14%; text-align:right;">CostCenter:</td>
             <td class="hc-attr-value" style="width:14%; text-align:left;">
-                @Html.DropDownListFor(model => model.headcount.CostCenter, ViewData["CostCenter"] as SelectList, Model.headcount.CostCenter, new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
+                @Html.DropDownListFor(model => model.headcount.CostCenter, ViewData["CostCenter"] as SelectList, new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
                 @Html.ValidationMessageFor(model => model.headcount.CostCenter)
             </td>
             <td class="hc-attr-name" style="width:14%; text-align:right;">Department:</td>
             <td class="hc-attr-value" style="width:14%; text-align:left;">
-                @Html.DropDownListFor(model => model.headcount.Department, ViewData["Department"] as SelectList, Model.headcount.Department, new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
+                @Html.DropDownListFor(model => model.headcount.Department, ViewData["Department"] as SelectList, new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
                 @Html.ValidationMessageFor(model => model.headcount.Department)
             </td>
             <td class="hc-attr-name" style="width:14%; text-align:right;">Internal Level:</td>
             <td class="hc-attr-value" style="width:14%; text-align:left;">
-                @Html.DropDownListFor(model => model.headcount.InternalLevel, ViewData["InternalLevel"] as SelectList, Model.headcount.InternalLevel, new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
+                @Html.DropDownListFor(model => model.headcount.InternalLevel, ViewData["InternalLevel"] as SelectList, new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
                 @Html.ValidationMessageFor(model => model.headcount.InternalLevel)
             </td>
         </tr>

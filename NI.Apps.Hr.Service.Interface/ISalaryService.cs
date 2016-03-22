@@ -10,5 +10,7 @@ namespace NI.Apps.Hr.Service.Interface
     public interface ISalaryService
     {
         Table_SalaryInfo FindSalaryByID(int? id);
+
+        List<Table_BonusInfo> FindBonusBySalaryID(int salaryID);
     }
 }

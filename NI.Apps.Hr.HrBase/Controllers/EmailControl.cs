@@ -7,6 +7,7 @@ using NI.Application.HR.HRBase.Models;
 using NI.Application.HR.HRBase.Models.OfferActivity;
 using Outlook = Microsoft.Office.Interop.Outlook;
 using Word = Microsoft.Office.Interop.Word;
+using System.Net.Mail;
 
 namespace NI.Application.HR.HRBase.Controllers
 {
@@ -15,28 +16,29 @@ namespace NI.Application.HR.HRBase.Controllers
         private string EmailTemplatePath = "~/Views/EmailTemplate/";
         public void Send(EmailModel email)
         {
-            Outlook.Application app = new Outlook.Application();
-            Outlook.MailItem mailItem = (Outlook.MailItem)app.CreateItem(Outlook.OlItemType.olMailItem);
+            MailMessage msg = new MailMessage();
+            msg.From = new MailAddress("huihui.gong@ni.com"); //msg.From=new MailAddress(user email);
 
-            Outlook.Accounts accounts = app.Session.Accounts;
 
-            // Outlook.Account  GetAccountForEmailAddress(oApp, "support@mydomain.com");
-            // Use this account to send the e-mail. 
-            Outlook.Account account = null;
-            foreach (Outlook.Account item in accounts)
+            if (!string.IsNullOrEmpty(email.ToEmail))
             {
-                // When the e-mail address matches, return the account. 
-                if (item.SmtpAddress == "huihui.gong@ni.com")
+                foreach (var address in email.ToEmail.Split(new[] { ";", "," }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    account = item;
+                    msg.To.Add(address);
                 }
             }
-            mailItem.SendUsingAccount = account;
-            mailItem.To = email.ToEmail;
-            mailItem.CC = email.CCEmail;
-            mailItem.Subject = email.Subject;
-            mailItem.BodyFormat = Outlook.OlBodyFormat.olFormatHTML;
-            mailItem.HTMLBody = email.Body;
+
+            if (!string.IsNullOrEmpty(email.CCEmail))
+            {
+                foreach (var address in email.CCEmail.Split(new[] { ";", "," }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    msg.CC.Add(address);
+                }
+            }
+
+            msg.Subject = email.Subject;
+            msg.IsBodyHtml = true;
+            msg.Body = email.Body;
 
             if (!string.IsNullOrEmpty(email.AttachmentsLocation))
             {
@@ -44,18 +46,33 @@ namespace NI.Application.HR.HRBase.Controllers
                 DirectoryInfo folder = new DirectoryInfo(System.Web.HttpContext.Current.Server.MapPath(email.AttachmentsLocation));
                 foreach (FileInfo file in folder.GetFiles())
                 {
-                    mailItem.Attachments.Add(file.FullName, Outlook.OlAttachmentType.olByValue);
+                    msg.Attachments.Add(new Attachment(file.FullName));
                 }
             }
 
             if (!string.IsNullOrEmpty(email.NIOfferPath))
             {
-                mailItem.Attachments.Add(email.NIOfferPath, Outlook.OlAttachmentType.olByValue);
+                msg.Attachments.Add(new Attachment(email.NIOfferPath));
             }
 
-            ((Outlook._MailItem)mailItem).Send();
-            mailItem = null;
-            app = null;
+            SmtpClient client = new SmtpClient();
+            client.UseDefaultCredentials = false;
+            client.Credentials = new System.Net.NetworkCredential("huihui.gong@ni.com", "Password-6"); //change with login user
+            client.Port = 587; // You can use Port 25 if 587 is blocked (mine is!)
+            client.Host = "smtp.office365.com";
+            client.TargetName = "STARTTLS/smtp.office365.com";
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            client.EnableSsl = true;
+
+            try
+            {
+                client.Send(msg);
+                // lblText.Text = "Message Sent Succesfully";
+            }
+            catch (Exception ex)
+            {
+                // lblText.Text = ex.ToString();
+            }
         }
 
         //send approval email to Mgr for approve
@@ -95,7 +112,7 @@ namespace NI.Application.HR.HRBase.Controllers
 
             //Create an instance for word app
             var application = new Word.Application();
-            application.Visible = true;
+            application.Visible = false;
 
             var template = application.Documents.Open(path + fileName);
             template.StoryRanges[Word.WdStoryType.wdMainTextStory].Copy();

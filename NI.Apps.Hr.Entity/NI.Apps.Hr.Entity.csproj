@@ -94,6 +94,9 @@
     <Compile Include="sysdiagram.cs">
       <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Table_BonusInfo.cs">
+      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Table_ChildrenInfo.cs">
       <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
     </Compile>
@@ -153,7 +156,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <EntityDeploy Include="HrManagementPortalModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>HrManagementPortalModel.Designer.cs</LastGenOutput>

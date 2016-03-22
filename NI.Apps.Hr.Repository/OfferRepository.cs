@@ -127,12 +127,15 @@ namespace NI.Apps.Hr.Repository{
         {
             using (var db = new HrDbContext())
             {
+                DateTime startDate = FromDate.Value.Date;
+                DateTime endDate = ToDate.Value.AddDays(1).Date;
+
                 var result = (from o in db.Table_Offer
                               join h in db.Table_Headcount on o.Offer_HCID equals h.Headcount_ID
                               join p in db.Table_PersonelInfo on o.Offer_PersonelInfoID equals p.PersonelInfo_ID
                               where (string.IsNullOrEmpty(Name) || (p.PersonelInfo_FName+p.PersonelInfo_LName)==Name)
-                              && (FromDate == null || o.Offer_CreatedAt >= FromDate)
-                              && (ToDate == null || o.Offer_CreatedAt <=ToDate)
+                              && (FromDate == null || o.Offer_CreatedAt >= startDate)
+                              && (ToDate == null || o.Offer_CreatedAt < endDate)
                               && (string.IsNullOrEmpty(Status) || o.Offer_Status == Status)
                             
                               select new Offer()
@@ -215,6 +218,97 @@ namespace NI.Apps.Hr.Repository{
                 offer.Offer_ModifiedBy = "NIA Support";
 
                 db.SaveChanges();
+            }
+        }
+
+
+        public void SaveChanges(Table_Offer offer, Table_PersonelInfo personelInfo, Table_ReportingInfo reportInfo, Table_SalaryInfo salaryInfo, List<Table_BonusInfo> bonusList)
+        {
+            using (var db = new HrDbContext())
+            {
+                Table_Offer entity = db.Table_Offer.Find(offer.Offer_ID);
+                if (entity != null) {
+                    entity.Offer_RecruitType = offer.Offer_RecruitType;
+                    entity.Offer_Position = offer.Offer_Position;
+                    entity.Offer_Location=offer.Offer_Location;
+                    entity.Offer_OnboardingDate=offer.Offer_OnboardingDate;
+                    entity.Offer_RecruitChannel=offer.Offer_RecruitChannel;
+                    entity.Offer_ProbationDuration=offer.Offer_ProbationDuration;
+                    entity.Offer_ModifiedAt=DateTime.Now;
+                    entity.Offer_ModifiedBy = "NIA Support";       //should be the user name
+                }
+
+                Table_PersonelInfo person = db.Table_PersonelInfo.Find(entity.Offer_PersonelInfoID);
+                if (person != null)
+                {
+                    person.PersonelInfo_RomanFName = personelInfo.PersonelInfo_RomanFName;
+                    person.PersonelInfo_RomanLName = personelInfo.PersonelInfo_RomanLName;
+                    person.PersonelInfo_FName = personelInfo.PersonelInfo_FName;
+                    person.PersonelInfo_LName = personelInfo.PersonelInfo_LName;
+                    person.PersonelInfo_Email = personelInfo.PersonelInfo_Email;
+                    person.PersonelInfo_ModifiedAt = DateTime.Now;
+                    person.PersonelInfo_ModifiedBy = "NIA Support";       //should be the user name
+                }
+
+                Table_ReportingInfo report=db.Table_ReportingInfo.Find(entity.Offer_ReportingInfoID);
+                if(report!=null){
+                    report.ReportingInfo_ReportLineEmpID=reportInfo.ReportingInfo_ReportLineEmpID;
+                    report.ReportingInfo_ReportLineEmail=reportInfo.ReportingInfo_ReportLineEmail;
+                    report.ReportingInfo_DeptMgrEmpID=reportInfo.ReportingInfo_DeptMgrEmpID;
+                    report.ReportingInfo_DeptMgrEmail=reportInfo.ReportingInfo_DeptMgrEmail;
+                    report.ReportingInfo_ModifiedAt=DateTime.Now;
+                    report.ReportingInfo_ModifiedBy="NIA Support";
+                }
+
+                Table_SalaryInfo salary=db.Table_SalaryInfo.Find(entity.Offer_SalaryInfoID);
+                if(salary!=null){
+                    salary.SalaryInfo_Salary=salaryInfo.SalaryInfo_Salary;
+                    salary.SalaryInfo_ModifiedAt=DateTime.Now;
+                    salary.SalaryInfo_ModifiedBy="NIA Support";
+                }
+
+                List<Table_BonusInfo> preBonus=(from b in db.Table_BonusInfo
+                                                    where b.BonusInfo_SalaryInfoID==entity.Offer_SalaryInfoID
+                                                    select b).ToList();
+                if(bonusList==null){
+                    //delete previous bonus
+                    db.Table_BonusInfo.RemoveRange(preBonus);
+                }else{
+                    //update existing bonus
+                    Table_BonusInfo updatedBonus=null;
+
+                    foreach(var tmp in bonusList){
+                        switch (tmp.BonusInfo_Type){
+                            case "Sign-On":
+                                updatedBonus = preBonus.Find(delegate(Table_BonusInfo b) { return b.BonusInfo_Type == "Sign-On"; });
+                                preBonus.Remove(updatedBonus);
+                                updatedBonus.BonusInfo_Amount = tmp.BonusInfo_Amount;
+                                updatedBonus.BonusInfo_ModifiedAt=DateTime.Now;
+                                updatedBonus.BonusInfo_ModifiedBy="NIA Support";
+                                
+                                continue;
+                            case "Relocation":
+                                updatedBonus = preBonus.Find(delegate(Table_BonusInfo b) { return b.BonusInfo_Type == "Relocation"; });
+                                preBonus.Remove(updatedBonus);
+                                updatedBonus.BonusInfo_Amount = tmp.BonusInfo_Amount;
+                                updatedBonus.BonusInfo_ModifiedAt=DateTime.Now;
+                                updatedBonus.BonusInfo_ModifiedBy="NIA Support";
+                                continue;
+                            case "Others":
+                                updatedBonus = preBonus.Find(delegate(Table_BonusInfo b) { return b.BonusInfo_Type == "Others"; });
+                                preBonus.Remove(updatedBonus);
+                                updatedBonus.BonusInfo_Amount = tmp.BonusInfo_Amount;
+                                updatedBonus.BonusInfo_ModifiedAt=DateTime.Now;
+                                updatedBonus.BonusInfo_ModifiedBy="NIA Support";
+                                continue;
+                        }
+                        
+                    }
+                }
+                db.Table_BonusInfo.RemoveRange(preBonus);
+
+                db.SaveChanges();
+
             }
         }
     }

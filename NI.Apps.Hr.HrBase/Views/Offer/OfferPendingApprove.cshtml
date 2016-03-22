@@ -6,7 +6,13 @@
 
 @using (Html.BeginForm("ApproveByMgr", "Offer", FormMethod.Post, new { id = "PostForm" }))
 {
-    @Html.Partial("_OfferDetailInfo", Model);
+    @Html.Partial("_OfferBaseInfo", Model.Offer ?? new NI.Application.HR.HRBase.Models.OfferActivity.OfferDetailModel(),
+                       new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Offer" } });
+
+    @Html.Partial("_OfferPersonInfoFixed", Model.Personel ?? new NI.Application.HR.HRBase.Models.OfferActivity.PersonelDetailModel(),
+                   new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Personel" } })
+
+    @Html.Partial("_OfferPositionInfoFixed", Model)
 }
 
 <br />
@@ -80,8 +86,8 @@
             ],
             open: function () {
                 $("#Email_FromEmail").val("yan.gu@ni.com")+ ";";
-                $("#Email_ToEmail").val($("#Personel_Email").val()+ ";" );
-                $("#Email_CCEmail").val($("#Report_ReportLineEmail").val() + ";" + $("#Report_DepartmentMgrEmail").val()+ ";");
+                $("#Email_ToEmail").val($("#Personel_Email").val());
+                $("#Email_CCEmail").val($("#Report_ReportLineEmail").val() + ";" + $("#Report_DepartmentMgrEmail").val());
                 $("#Email_Subject").val("Offer Letter from National Instruments");
                 $(this).parent().appendTo('#PostForm');
             }
@@ -91,6 +97,16 @@
 
         $("#MgrApproveBtn").click(function () {
             $('#dialog-confirm').dialog("open");
+        });
+
+        $(window).load(function () {
+            var status = $("#Salary_bonus").is(":checked");
+
+            if (status == false) {
+                $(".bonus_section").hide();
+            }
+
+            $("input.read_only").attr("disabled","disabled");     
         });
     });
 </script>

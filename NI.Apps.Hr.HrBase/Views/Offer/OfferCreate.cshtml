@@ -8,137 +8,30 @@
 
 @using (Html.BeginForm("Create", "Offer", FormMethod.Post, new {id = "PostForm" }))
 {
-    <div id="base_info">
-        <span style="font-weight:bold;">Offer Status:</span>
-        <span style="margin-right:20px; font-weight:bold; color:#8B4513;">@Html.DisplayFor(model => model.Offer.Status)</span>
-        @Html.HiddenFor(model => model.Offer.Status)
-        <span style="margin-right:20px;font-weight:bold;">HC:@Html.DisplayFor(model => model.Offer.HeadcountCode)</span>
-        @Html.HiddenFor(model => model.Offer.HeadcountCode)
-        <span style="font-weight:bold;">Valid/Total: @Html.DisplayFor(model => model.Offer.ValidOfferNumber)/@Html.DisplayFor(model => model.Offer.TotalOfferNumber)</span>
-    </div>
+    @Html.Partial("_OfferBaseInfo", Model.Offer ?? new NI.Application.HR.HRBase.Models.OfferActivity.OfferDetailModel(),
+                       new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Offer" } });
     
-    <div id="personel_info_section">
-        <h3 style="background-color:#87CEFA">Personal Information</h3>
-        <div>
-        <table id="personel_info_table" style="width:90%; border-collapse:collapse;">
-            <tr>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">English First Name:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.TextBoxFor(model => model.Personel.RomanFName, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
-                </td>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">English Last Name:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.TextBoxFor(model => model.Personel.RomanLName, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
-                </td>
-            </tr>
-            <tr>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Chinese First Name:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.TextBoxFor(model => model.Personel.FName, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
-                </td>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Chinese Last Name:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.TextBoxFor(model => model.Personel.LName, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
-                </td>
-            </tr>
-            <tr>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Phone:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.TextBoxFor(model => model.Personel.Phone, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
-                </td>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Email:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.TextBoxFor(model => model.Personel.Email, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
-                </td>
-            </tr>
-        </table>
-            </div>
-    </div>
+    @Html.Partial("_OfferPersonInfoEditable", Model.Personel ?? new NI.Application.HR.HRBase.Models.OfferActivity.PersonelDetailModel(),
+                   new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Personel" }})
+    
+    @Html.Partial("_OfferPositionInfoEditable",Model)
 
-    <div id="position_info_section">
-        <h3 style="background-color:#87CEFA">Position Information</h3>
-        <div>
-        <table id="position_info_table" style="width:90%; border-collapse:collapse;">
-            <tr>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Recruitment Type:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.DropDownListFor(model => model.Offer.RecruitType, new List<SelectListItem> { 
-                                                                                new SelectListItem{Text="Campus",Value="Campus"},
-                                                                                new SelectListItem{Text="Social",Value="Social"}
-                                                                            },
-                                                                            "--Select--", 
-                                                                            new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" }
-                    )
-                </td>
-           
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Channel:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.DropDownListFor(model => model.Offer.Channel, new List<SelectListItem> {
-                                                                                new SelectListItem{Text="赶集网",Value="赶集网"},
-                                                                                new SelectListItem{Text="大街网",Value="大街网"}
-                                                                            },
-                                                                            "--Select--",
-                                                                            new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" }
-                    )
-                </td>
-            
-            </tr>
-            <tr>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Position:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.TextBoxFor(model => model.Offer.Postion, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
-                </td>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Location:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.TextBoxFor(model => model.Offer.Location, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
-                </td>
-            </tr>
-            <tr>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Reporting Line:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.DropDownListFor(model => model.Report.ReportLine, ViewData["Employee"] as SelectList, "--Select--", new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
-                    @Html.ValidationMessageFor(model => model.Report.ReportLine)
-                </td>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Reporting Line Email:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.TextBoxFor(model => model.Report.ReportLineEmail, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
-                </td>
-            </tr>
-            <tr>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Department Mgr:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.DropDownListFor(model => model.Report.DepartmentMgr, ViewData["Employee"] as SelectList, "--Select--", new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
-                    @Html.ValidationMessageFor(model => model.Report.DepartmentMgr)
-                </td>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Department Mgr Email:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.TextBoxFor(model => model.Report.DepartmentMgrEmail, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
-                </td>
-            </tr>
-            <tr>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">On boarding Date:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.TextBoxFor(model => model.Offer.OnBoardingDate, new { @class = "Date", @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
-                </td>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Contract/Probation Duration:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.TextBoxFor(model => model.Offer.ProbationDuration, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
-                </td>
-            </tr>
-            <tr>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Salary:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.TextBoxFor(model => model.Salary.Salary, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
-                </td>
-            </tr>
-        </table>
-            </div >
-        <br/>
-        <p style="width:90%; text-align:center;">
-            <input type="button" id="SaveBtn" name="SaveButton" value=" Save " style="font-size:18px; line-height:1.4; margin-right:35px;" />
-            @Html.HiddenFor(model => model.SaveButton)
-            <input type="button" value="Cancle" onclick="window.location.href = '@Url.Action("Search", "HeadCount")';" style="font-size:18px; line-height:1.4;" />
-        </p>
+    <br />
+    <p style="width:90%; text-align:center;">
+        <input type="button" id="SaveBtn" name="SaveButton" value=" Save " style="font-size:18px; line-height:1.4; margin-right:35px;" />
+        @Html.HiddenFor(model => model.SaveButton)
+        <input type="button" value="Cancel" onclick="window.location.href = '@Url.Action("Search", "HeadCount")';" style="font-size:18px; line-height:1.4;" />
+    </p>
+    
+    <div id="input-error-summary">
+        @Html.ValidationMessageFor(model => model.Personel.Phone, null, new { })
+        @Html.ValidationMessageFor(model => model.Personel.Email)
+        @Html.ValidationMessageFor(model => model.Report.ReportLineEmail)
+        @Html.ValidationMessageFor(model => model.Report.DepartmentMgrEmail)
+        @Html.ValidationMessageFor(model => model.Salary.Salary)
+        @Html.ValidationMessageFor(model => model.Salary.SignOnPrice)
+        @Html.ValidationMessageFor(model => model.Salary.RelocationPrice)
+        @Html.ValidationMessageFor(model => model.Salary.OtherPrice)
     </div>
 
     <div id="dialog-confirm" title="Approve Email Check">        
@@ -168,9 +61,7 @@
                     </td>
                 </tr>
             </table>               
-    </div>
-    
-  
+    </div> 
 }
 
 <script type="text/javascript">
@@ -204,15 +95,63 @@
             ],
             open: function () {
                 $("#Email_FromEmail").val("yan.gu@ni.com")+ ";";
-                $("#Email_ToEmail").val($("#Report_ReportLineEmail").val() + ";" + $("#Report_DepartmentMgrEmail").val())+ ";";
+                $("#Email_ToEmail").val($("#Report_ReportLineEmail").val() + ";" + $("#Report_DepartmentMgrEmail").val());
                 $("#Email_Subject").val("Approval to Offer - " + $("#Personel_FName").val() + $("#Personel_LName").val() + " for " + $("#Offer_Postion").val());
                 $(this).parent().appendTo('#PostForm');
             }
         });
 
         $("#SaveBtn").click(function () {   
-            $("#SaveButton").val("SaveButtonClicked");
-            $('#dialog-confirm').dialog("open");
+            var error=$(".input-validation-error").length;
+            if(error>0){
+                alert("Please correct your input before Save!");
+            }else{
+                if(checkBonus()){
+                    $("#SaveButton").val("SaveButtonClicked");
+                    $('#dialog-confirm').dialog("open");
+                }         
+            }
+            
+        });
+
+        function checkBonus(){
+            var Sign_Status=$("#Salary_SignOn").is(":checked");
+            var Relocation_Status=$("#Salary_Relocation").is(":checked");
+            var Other_Status=$("#Salary_Other").is(":checked");
+            var Sign_Price=$("#Salary_SignOnPrice").val();
+            var Relocation_Price=$("#Salary_RelocationPrice").val();
+            var Other_Price=$("#Salary_OtherPrice").val();
+            var Salary=$("#Salary_Salary").val();
+
+            if((Sign_Status || Relocation_Status||Other_Status) && (Salary=="")){
+                alert("You need to input salary before bonus!");
+                return false;
+            }
+
+            if( (Sign_Status && Sign_Price=="") || (Relocation_Status && Relocation_Price=="")||(Other_Status && Other_Price=="")){
+                alert("You need to click checkbox and enter price both!");
+                return false;
+            }
+
+            return true;
+
+        }
+        $("#Salary_bonus").click(function () {
+            var status = $(this).is(":checked");
+
+            if (status == false) {
+                $(".bonus_section").hide();
+            } else {
+                $(".bonus_section").show();
+            }
+        });
+
+        $(window).load(function () {
+            var status=$("#Salary_bonus").is(":checked");
+
+            if (status == false) {
+                $(".bonus_section").hide();
+            } 
         });
     });
 </script>

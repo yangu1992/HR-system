@@ -1,0 +1,16 @@
+﻿@model NI.Application.HR.HRBase.Models.OfferActivity.OfferDetailModel
+
+<div id="base_info">
+    <span style="font-weight:bold;">Offer Status:</span>
+    <span style="margin-right:20px; font-weight:bold; color:#8B4513;">@Html.DisplayFor(model => model.Status)</span>
+    @Html.HiddenFor(model => model.Status)
+    <span style="margin-right:20px;font-weight:bold;">HC:@Html.DisplayFor(model => model.HeadcountCode)</span>
+    @Html.HiddenFor(model => model.HeadcountCode)
+    <span style="font-weight:bold;">
+        Valid/Total: @Html.DisplayFor(model => model.ValidOfferNumber)/@Html.DisplayFor(model => model.TotalOfferNumber)
+    </span>
+    @Html.HiddenFor(model => model.ID)
+
+    <a href="javascript:document.forms[0].submit()" style="color:blue;text-decoration:underline;float:right;">Save</a>
+    @Html.ActionLink("Cancel", "GoToNewestPage", "Offer", new { OfferID = Model.ID }, new { @style = "color:blue;text-decoration:underline;float:right;padding-right:20px;" })
+</div>

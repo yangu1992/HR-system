@@ -15,6 +15,19 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="Table_BonusInfo">
+          <Key>
+            <PropertyRef Name="BonusInfo_ID" />
+          </Key>
+          <Property Name="BonusInfo_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BonusInfo_SalaryInfoID" Type="int" Nullable="false" />
+          <Property Name="BonusInfo_Type" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="BonusInfo_Amount" Type="money" Nullable="false" />
+          <Property Name="BonusInfo_CreatedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="BonusInfo_CreatedAt" Type="datetime" />
+          <Property Name="BonusInfo_ModifiedBy" Type="nvarchar" MaxLength="64" />
+          <Property Name="BonusInfo_ModifiedAt" Type="datetime" />
+        </EntityType>
         <EntityType Name="Table_ChildrenInfo">
           <Key>
             <PropertyRef Name="ChildrenInfo_ID" />
@@ -244,9 +257,6 @@
           <Property Name="SalaryInfo_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SalaryInfo_Salary" Type="money" />
           <Property Name="SalaryInfo_ReviewedSalary" Type="money" />
-          <Property Name="SalaryInfo_Bonus" Type="bit" />
-          <Property Name="SalaryInfo_BonusType" Type="nvarchar" MaxLength="64" />
-          <Property Name="SalaryInfo_BonusAmount" Type="money" />
           <Property Name="SalaryInfo_CreatedAt" Type="datetime" />
           <Property Name="SalaryInfo_CreatedBy" Type="nvarchar" MaxLength="64" />
           <Property Name="SalaryInfo_ModifiedAt" Type="datetime" />
@@ -372,6 +382,7 @@ warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have
         </Function>
         <EntityContainer Name="HRManagementPortalModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_BonusInfo" EntityType="Self.Table_BonusInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Table_ChildrenInfo" EntityType="Self.Table_ChildrenInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Table_CostCenter" EntityType="Self.Table_CostCenter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Table_Department" EntityType="Self.Table_Department" Schema="dbo" store:Type="Tables" />
@@ -429,6 +440,19 @@ warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have
           <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Table_BonusInfo">
+          <Key>
+            <PropertyRef Name="BonusInfo_ID" />
+          </Key>
+          <Property Name="BonusInfo_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BonusInfo_SalaryInfoID" Type="Int32" Nullable="false" />
+          <Property Name="BonusInfo_Type" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BonusInfo_Amount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="BonusInfo_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="BonusInfo_CreatedAt" Type="DateTime" Precision="3" />
+          <Property Name="BonusInfo_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="BonusInfo_ModifiedAt" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Table_ChildrenInfo">
           <Key>
@@ -659,9 +683,6 @@ warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have
           <Property Name="SalaryInfo_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SalaryInfo_Salary" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="SalaryInfo_ReviewedSalary" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="SalaryInfo_Bonus" Type="Boolean" />
-          <Property Name="SalaryInfo_BonusType" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
-          <Property Name="SalaryInfo_BonusAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="SalaryInfo_CreatedAt" Type="DateTime" Precision="3" />
           <Property Name="SalaryInfo_CreatedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="SalaryInfo_ModifiedAt" Type="DateTime" Precision="3" />
@@ -732,6 +753,7 @@ warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have
         </EntityType>
         <EntityContainer Name="HrDbContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Table_BonusInfo" EntityType="Self.Table_BonusInfo" />
           <EntitySet Name="Table_ChildrenInfo" EntityType="Self.Table_ChildrenInfo" />
           <EntitySet Name="Table_CostCenter" EntityType="Self.Table_CostCenter" />
           <EntitySet Name="Table_Department" EntityType="Self.Table_Department" />
@@ -822,6 +844,20 @@ warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Table_BonusInfo">
+            <EntityTypeMapping TypeName="HRManagementPortalModel.Table_BonusInfo">
+              <MappingFragment StoreEntitySet="Table_BonusInfo">
+                <ScalarProperty Name="BonusInfo_ID" ColumnName="BonusInfo_ID" />
+                <ScalarProperty Name="BonusInfo_SalaryInfoID" ColumnName="BonusInfo_SalaryInfoID" />
+                <ScalarProperty Name="BonusInfo_Type" ColumnName="BonusInfo_Type" />
+                <ScalarProperty Name="BonusInfo_Amount" ColumnName="BonusInfo_Amount" />
+                <ScalarProperty Name="BonusInfo_CreatedBy" ColumnName="BonusInfo_CreatedBy" />
+                <ScalarProperty Name="BonusInfo_CreatedAt" ColumnName="BonusInfo_CreatedAt" />
+                <ScalarProperty Name="BonusInfo_ModifiedBy" ColumnName="BonusInfo_ModifiedBy" />
+                <ScalarProperty Name="BonusInfo_ModifiedAt" ColumnName="BonusInfo_ModifiedAt" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1067,9 +1103,6 @@ warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have
                 <ScalarProperty Name="SalaryInfo_ID" ColumnName="SalaryInfo_ID" />
                 <ScalarProperty Name="SalaryInfo_Salary" ColumnName="SalaryInfo_Salary" />
                 <ScalarProperty Name="SalaryInfo_ReviewedSalary" ColumnName="SalaryInfo_ReviewedSalary" />
-                <ScalarProperty Name="SalaryInfo_Bonus" ColumnName="SalaryInfo_Bonus" />
-                <ScalarProperty Name="SalaryInfo_BonusType" ColumnName="SalaryInfo_BonusType" />
-                <ScalarProperty Name="SalaryInfo_BonusAmount" ColumnName="SalaryInfo_BonusAmount" />
                 <ScalarProperty Name="SalaryInfo_CreatedAt" ColumnName="SalaryInfo_CreatedAt" />
                 <ScalarProperty Name="SalaryInfo_CreatedBy" ColumnName="SalaryInfo_CreatedBy" />
                 <ScalarProperty Name="SalaryInfo_ModifiedAt" ColumnName="SalaryInfo_ModifiedAt" />

@@ -10,7 +10,7 @@ namespace NI.Apps.Hr.Service.Interface
 {
     public interface IOfferService
     {
-        int AddNewOffer(Table_Offer o,Table_PersonelInfo p,Table_ReportingInfo r,Table_SalaryInfo s);
+        int AddNewOffer(Table_Offer o,Table_PersonelInfo p,Table_ReportingInfo r,Table_SalaryInfo s,List<Table_BonusInfo> b);
         int GetValidOfferNumber(int? code);
         IEnumerable<Offer> FindOffersByHcCode(int code);
         IEnumerable<Offer> FindOffers(string Name,DateTime? FromDate,DateTime? ToDate,string Status);
@@ -25,5 +25,7 @@ namespace NI.Apps.Hr.Service.Interface
 
         void UpdateOfferFeedback(int offerID, Boolean? EmailITCompleted, Boolean? SyncDomainCompleted, Boolean? WelcomeCandidateCompleted, Boolean? WelcomeToMgrCompleted);
         void AcceptOffer(int offerID);
+
+        void SaveOffer(Table_Offer offer, Table_PersonelInfo personelInfo, Table_ReportingInfo reportInfo, Table_SalaryInfo salaryInfo, List<Table_BonusInfo> bonusList);
     }
 }

@@ -5,7 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
-namespace NI.Application.HR.HRBase.Models.OfferActivity
+namespace NI.Apps.Hr.HrBase.Models.OfferActivity
 {
     public class OfferDetailModel
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace NI.Application.HR.HRBase.Models.HeadcountActivity
+namespace NI.Apps.Hr.HrBase.Models.HeadcountActivity
 {
     public class HeadCountModel
     {

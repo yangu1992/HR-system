@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using NI.Application.HR.HRBase.Models.OfferActivity.PersonalInfoFormModels;
+using NI.Apps.Hr.HrBase.Models.OfferActivity.PersonalInfoFormModels;
 
-namespace NI.Application.HR.HRBase.Models.OfferActivity
+namespace NI.Apps.Hr.HrBase.Models.OfferActivity
 {
     public class PersonalInfoFormModel
     {

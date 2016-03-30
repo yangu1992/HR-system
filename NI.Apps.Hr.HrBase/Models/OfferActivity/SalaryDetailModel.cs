@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace NI.Application.HR.HRBase.Models.OfferActivity
+namespace NI.Apps.Hr.HrBase.Models.OfferActivity
 {
     public class SalaryDetailModel
     {

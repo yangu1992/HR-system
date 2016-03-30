@@ -6,18 +6,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PagedList;
 using NI.Apps.Hr.Service;
 using NI.Apps.Hr.Service.Interface;
-using NI.Application.HR.HRBase.Models.HeadcountActivity;
 using NI.Apps.Hr.Entity;
 using NI.Apps.Hr.Entity.Models;
-using PagedList;
 using NI.Apps.Hr.HrBase.Models.HeadcountActivity;
-using NI.Apps.Hr.HrBase.Controllers;
 using NI.Apps.Hr.HrBase.Filters;
 using NI.Apps.Hr.HrBase.BusinessRules;
 
-namespace NI.Application.HR.HRBase.Controllers.HeadCountController
+namespace NI.Apps.Hr.HrBase.Controllers
 {
     [CustomAuthorize(RoleName = "OfferSpecialist")]
     public class HeadCountController : Controller

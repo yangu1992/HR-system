@@ -6,7 +6,7 @@ using PagedList;
 using NI.Apps.Hr.Entity.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace NI.Application.HR.HRBase.Models.OfferActivity
+namespace NI.Apps.Hr.HrBase.Models.OfferActivity
 {
     public class OfferSearchModel
     {

@@ -4,21 +4,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using NI.Application.HR.HRBase.Models.OfferActivity.PersonalInfoFormModels;
-using NI.Application.HR.HRBase.Models.OfferActivity;
-using NI.Application.HR.HRBase.Models;
+using System.IO;
+using PagedList;
+using NI.Apps.Hr.HrBase.Models;
+using NI.Apps.Hr.HrBase.Models.OfferActivity;
+using NI.Apps.Hr.HrBase.Models.OfferActivity.PersonalInfoFormModels;
+using NI.Apps.Hr.Entity;
 using NI.Apps.Hr.Service;
 using NI.Apps.Hr.Service.Interface;
-using PagedList;
-using NI.Apps.Hr.Entity;
-using System.IO;
 using NI.Apps.Hr.Repository;
 using NI.Apps.Hr.Repository.Interface;
 using NI.Apps.Hr.HrBase.Filters;
 using NI.Apps.Hr.HrBase.BusinessRules;
 
 
-namespace NI.Application.HR.HRBase.Controllers
+namespace NI.Apps.Hr.HrBase.Controllers
 {
     [CustomAuthorize(RoleName = "OfferSpecialist")]
     public class OfferController : Controller

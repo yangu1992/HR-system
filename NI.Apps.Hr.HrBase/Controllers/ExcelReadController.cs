@@ -6,11 +6,11 @@ using System.IO;
 using System.IO.Packaging;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
-using NI.Application.HR.HRBase.Models.OfferActivity;
-using NI.Application.HR.HRBase.Models.OfferActivity.PersonalInfoFormModels;
+using NI.Apps.Hr.HrBase.Models.OfferActivity;
+using NI.Apps.Hr.HrBase.Models.OfferActivity.PersonalInfoFormModels;
 
 
-namespace NI.Application.HR.HRBase.Controllers
+namespace NI.Apps.Hr.HrBase.Controllers
 {
     public class ExcelReadController
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace NI.Application.HR.HRBase.Models.OfferActivity
+namespace NI.Apps.Hr.HrBase.Models.OfferActivity
 {
     public class OfferCreateModel
     {

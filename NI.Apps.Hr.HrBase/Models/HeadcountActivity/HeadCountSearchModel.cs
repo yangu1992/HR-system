@@ -6,7 +6,7 @@ using PagedList;
 using NI.Apps.Hr.Entity.Models;
 using System.ComponentModel.DataAnnotations;
 
-namespace NI.Application.HR.HRBase.Models.HeadcountActivity
+namespace NI.Apps.Hr.HrBase.Models.HeadcountActivity
 {
     public class HeadCountSearchModel
     {

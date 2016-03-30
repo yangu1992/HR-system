@@ -4,22 +4,19 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using NI.Application.HR.HRBase.Models;
-using NI.Application.HR.HRBase.Models.OfferActivity;
-
 using System.Net.Mail;
 using System.IO.Packaging;
-using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Wordprocessing;
-using DocumentFormat.OpenXml;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using System.Threading;
-using NI.Apps.Hr.HrBase.Controllers;
-using NI.Apps.Hr.Entity;
 using System.Data.Entity.Core.Objects;
+using NI.Apps.Hr.HrBase.Controllers;
+using NI.Apps.Hr.HrBase.Models;
+using NI.Apps.Hr.HrBase.Models.OfferActivity;
+using NI.Apps.Hr.Entity;
 
-namespace NI.Application.HR.HRBase.Controllers
+
+namespace NI.Apps.Hr.HrBase.Controllers
 {
     public class EmailControl
     {

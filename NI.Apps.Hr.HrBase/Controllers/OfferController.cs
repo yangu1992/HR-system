@@ -13,10 +13,14 @@ using PagedList;
 using NI.Apps.Hr.Entity;
 using System.IO;
 using NI.Apps.Hr.Repository;
+using NI.Apps.Hr.Repository.Interface;
+using NI.Apps.Hr.HrBase.Filters;
+using NI.Apps.Hr.HrBase.BusinessRules;
 
 
 namespace NI.Application.HR.HRBase.Controllers
 {
+    [CustomAuthorize(RoleName = "OfferSpecialist")]
     public class OfferController : Controller
     {
         //
@@ -27,6 +31,8 @@ namespace NI.Application.HR.HRBase.Controllers
         private IReportService _reportService;
         private ISalaryService _salaryService;
         private IEmployeeService _employeeService;
+        private IEmployeeRepository _employeeRepository;
+      
         public IOfferService OfferService
         {
             get { return _offerService ?? (_offerService = new OfferService()); }
@@ -53,6 +59,9 @@ namespace NI.Application.HR.HRBase.Controllers
         {
             get { return _employeeService ?? (_employeeService = new EmployeeService()); }
         }
+        public IEmployeeRepository EmployeeRepository {
+            get { return _employeeRepository ?? (_employeeRepository = new EmployeeRepository()); }
+        }
 
         public ActionResult Index()
         {
@@ -60,7 +69,9 @@ namespace NI.Application.HR.HRBase.Controllers
         }
 
         public ActionResult Search(OfferSearchModel model)
-        {           
+        {
+            ViewBag.User = Utility.getCurrentUserName(Utility.CurrentUser);
+
             int pageSize = 14;
             int pageNumber = (model.Page ?? 1);
             if (!string.IsNullOrEmpty(model.SearchButton) || model.Page.HasValue)
@@ -78,25 +89,19 @@ namespace NI.Application.HR.HRBase.Controllers
 
         public ActionResult Create(int? HeadcountCode)
         {
-            SpinnerService service = new SpinnerService();
-            IEnumerable<SelectListItem> list = service.GetEmployeeList().Select(
-                b => new SelectListItem { Value = b, Text = b });
-            ViewData["Report.ReportLine"] = list;
-            ViewData["Report.DepartmentMgr"] = list;
+            ViewBag.User = Utility.getCurrentUserName(Utility.CurrentUser);
 
             OfferCreateModel model = new OfferCreateModel();          
 
             if (HeadcountCode != null)
             {
                 //in create offer process
+                Table_Headcount hc = this.HeadCountService.FindHeadCountByCode(HeadcountCode);
+
                 model.Offer = new OfferDetailModel();
                 model.Offer.Status = "Draft";
                 model.Offer.HeadcountCode = HeadcountCode??0;
-            }
-            else { 
-                //in revise process
-                model = (OfferCreateModel)TempData["model"];
-                model.Offer.Status = this.OfferService.GetOfferStatus(model.Offer.ID);
+                model.Offer.Postion = hc.Headcount_Position;
             }
             
             model.Offer.ValidOfferNumber = this.OfferService.GetValidOfferNumber(model.Offer.HeadcountCode);
@@ -107,51 +112,67 @@ namespace NI.Application.HR.HRBase.Controllers
 
         [HttpPost]
         public ActionResult Create(OfferCreateModel model) {
-            //save action
-            //add offer related info to database
-            model.Offer.ID = this.OfferService.AddNewOffer(
-                getOfferEntity(model.Offer),
-                getPersonelEntity(model.Personel),
-                getReportEntity(model.Report),
-                getSalaryEntity(model.Salary),
-                getBonusEntities(model.Salary)
-            );
+            //in revise process ,just need to update the offer
+            if (model.Offer.ID > 0)
+            {
+                model.Offer.Status = "Pending Manager Approval";
+                this.OfferService.SaveOffer(
+                    getOfferEntity(model.Offer),
+                    getPersonelEntity(model.Personel),
+                    getReportEntity(model.Report),
+                    getSalaryEntity(model.Salary),
+                    getBonusEntities(model.Salary)
+                );
+            }
+            else 
+            {
+                //save action
+                //add new offer related info to database
+                model.Offer.ID = this.OfferService.AddNewOffer(
+                    getOfferEntity(model.Offer),
+                    getPersonelEntity(model.Personel),
+                    getReportEntity(model.Report),
+                    getSalaryEntity(model.Salary),
+                    getBonusEntities(model.Salary)
+                );
+            }          
 
             EmailControl emailControl = new EmailControl();
             emailControl.SendApprovalEmail(model); //send email for approve         
 
-            model = getCurrentModelData(model.Offer.ID);
-            return View("OfferPendingApprove", model);                                    
-        }
-
-        
-
-        public ActionResult ShowInvalidOfferDetail() {
-            OfferCreateModel model = new OfferCreateModel();
-            model = (OfferCreateModel)TempData["model"];
-
-            return View("InvalidOfferDetail", model);
+            return RedirectToAction("GoToNewestPage", "Offer", new { OfferID = model.Offer.ID });                                          
         }
 
         public ActionResult Reject(int offerID) {
             this.OfferService.RejectOffer(offerID);
 
-            return RedirectToAction("Search","Offer");
+            return RedirectToAction("GoToNewestPage", "Offer", new { OfferID = offerID });
         }
 
-        public ActionResult ApproveByMgr(OfferCreateModel model) {
+        //[CheckEmailFrom]
+        public ActionResult ApproveByMgr(int OfferID, string FromEmail, string ToEmail, string CcEmail, string Subject)
+        {
             //update offer status
-            this.OfferService.ApproveByMgr(model.Offer.ID);
+            this.OfferService.ApproveByMgr(OfferID);
 
+            OfferCreateModel model = getCurrentModelData(OfferID);
             //send offer email
+            EmailModel email = new EmailModel
+            {
+                FromEmail = FromEmail,
+                ToEmail = ToEmail,
+                CCEmail = CcEmail,
+                Subject = Subject
+            };
+            model.Email = email;
             EmailControl emailControl = new EmailControl();
             emailControl.SendOfferEmail(model);
 
-            OfferCreateModel model1 = getCurrentModelData(model.Offer.ID);
-            return View("OfferWaitingFeedback", model1);
+            return Json(new { offer_id = OfferID }); 
         }
 
         public ActionResult GoToNewestPage(int OfferID) {
+            ViewBag.User = Utility.getCurrentUserName(Utility.CurrentUser);
             //recreat model
             OfferCreateModel model = getCurrentModelData(OfferID);
             TempData["model"] = model;
@@ -159,9 +180,6 @@ namespace NI.Application.HR.HRBase.Controllers
             switch (model.Offer.Status)
             {
                 case "Draft":
-                    SpinnerService service = new SpinnerService();
-                    ViewData["Report.ReportLine"] = new SelectList(service.GetEmployeeList(), model.Report.ReportLine);
-                    ViewData["Report.DepartmentMgr"] = new SelectList(service.GetEmployeeList(), model.Report.DepartmentMgr);
                     return View("OfferCreate",model);
                 case "Pending Candidate Onboarding":
                     return View("OfferOnboarding", model);
@@ -169,8 +187,10 @@ namespace NI.Application.HR.HRBase.Controllers
                     return View("OfferWaitingFeedback", model);
                 case "Pending Manager Approval":
                     return View("OfferPendingApprove", model);
+                case "Onboarded":
+                    return View("InvalidOfferDetail", model);    //just for temp
             }
-            return RedirectToAction("ShowInvalidOfferDetail", "Offer");
+            return View("InvalidOfferDetail", model);
         }
 
         public ActionResult UploadPersonalInfoForm(int offerID)
@@ -187,7 +207,7 @@ namespace NI.Application.HR.HRBase.Controllers
             fb.SaveAs(filePath);
 
             ExcelReadController excelReadController = new ExcelReadController();
-            PersonalInfoFormModel formModel = excelReadController.getFormModel(fb, filePath);
+            PersonalInfoFormModel formModel = excelReadController.getFormModel(filePath);
 
             //add personel info to database and update offer info
             try
@@ -195,7 +215,7 @@ namespace NI.Application.HR.HRBase.Controllers
                 Table_Offer newOffer = new Table_Offer
                 {
                     Offer_ID = offerID,
-                    Offer_OnboardingDate = DateTime.Parse(formModel.TentativeOnboardDate),
+                    Offer_OnboardingDate = (formModel.TentativeOnboardDate == null) ? (DateTime?)null : DateTime.Parse(formModel.TentativeOnboardDate),
                     Offer_SignedFile = filePath
                 };
                 Table_PersonelInfo newPersonelInfo = getNewPersonelInfo(offerID, formModel.PersonalInfo);
@@ -215,21 +235,29 @@ namespace NI.Application.HR.HRBase.Controllers
         }
 
         //need email to IT with candidate's info
-        public ActionResult RequestDomain(int offerID)
+        public ActionResult RequestDomain(int OfferID,string FromEmail,string ToEmail,string CcEmail,string Subject)
         {
-            OfferCreateModel model = getCurrentModelData(offerID);
+            OfferCreateModel model = getCurrentModelData(OfferID);
 
             EmailControl emailControl = new EmailControl();
-            string chineseName = model.Personel.FName + model.Personel.LName;
-            string englishName = model.Personel.RomanFName + model.Personel.RomanLName;
+            string chineseName = model.Personel.LName + model.Personel.FName;
+            string englishName = model.Personel.RomanLName + ", " + model.Personel.RomanFName;
+            EmailModel email=new EmailModel{
+                FromEmail=FromEmail,
+                ToEmail=ToEmail,
+                CCEmail=CcEmail,
+                Subject=Subject
+            };
             emailControl.SendDomainRequestEmail(chineseName+"/"+englishName,
                 model.Offer.Postion,
                 model.Report.ReportLine,
-                model.Offer.OnBoardingDate);
+                model.Offer.OnBoardingDate,
+                email
+                );
 
-            this.OfferService.UpdateOfferFeedback(offerID,true,null,null,null);
-            model.Offer.EmailITCompleted = true;
-            return View("OfferWaitingFeedback", model);
+            this.OfferService.UpdateOfferFeedback(OfferID,true,null,null,null);
+
+            return Json(new { offer_id = OfferID });
         }
 
         public ActionResult SyncDomain(int OfferID,string DomainLogin, DateTime ContractStartDate)
@@ -237,54 +265,73 @@ namespace NI.Application.HR.HRBase.Controllers
             this.OfferService.SyncDomainToAddressBook(OfferID, DomainLogin, ContractStartDate);
             this.OfferService.UpdateOfferFeedback(OfferID, null, true, null, null);
 
-            OfferCreateModel model = getCurrentModelData(OfferID);
-            return View("OfferWaitingFeedback", model);
+            return RedirectToAction("GoToNewestPage", "Offer", new { OfferID = OfferID });  
         }
 
         //send welcome email to candidate
-        public ActionResult SendWelcomeToCandidate(int OfferID, string name, string candidateEmail, string MgrEmail, DateTime onboardingDate)
+        public ActionResult SendWelcomeToCandidate(int OfferID ,string FromEmail,string ToEmail,string CcEmail,string Subject)
         {
+            OfferCreateModel model = getCurrentModelData(OfferID);
+
             EmailControl emailControl = new EmailControl();
-            emailControl.SendWelcomeEmail(name,candidateEmail,MgrEmail,onboardingDate);
+            EmailModel email = new EmailModel
+            {
+                FromEmail = FromEmail,
+                ToEmail = ToEmail,
+                CCEmail = CcEmail,
+                Subject = Subject
+            };
+
+            string chineseName = model.Personel.LName + model.Personel.FName;
+            emailControl.SendWelcomeEmail(chineseName, 
+                email, 
+                (model.Offer.OnBoardingDate ?? DateTime.Now));
 
             this.OfferService.UpdateOfferFeedback(OfferID, null, null, true, null);
 
-            OfferCreateModel model = getCurrentModelData(OfferID);
-            return View("OfferWaitingFeedback", model);
+            return Json(new { offer_id = OfferID });
         }
 
-        public ActionResult SendWelcomeToLineMgr(int OfferID, string LineMgrEmail)
+        public ActionResult SendWelcomeToLineMgr(int OfferID, string FromEmail, string ToEmail, string CcEmail, string Subject)
         {
             EmailControl emailControl = new EmailControl();
-            emailControl.SendWelcomeEmail(LineMgrEmail);
+            EmailModel email = new EmailModel
+            {
+                FromEmail = FromEmail,
+                ToEmail = ToEmail,
+                CCEmail = CcEmail,
+                Subject = Subject
+            };
+            emailControl.SendWelcomeEmail(email);
 
             this.OfferService.UpdateOfferFeedback(OfferID, null, null, null, true);
 
-            OfferCreateModel model = getCurrentModelData(OfferID);
-            return View("OfferWaitingFeedback", model);
+            return Json(new { offer_id=OfferID});
         }
 
         //candidate accept in the process "waiting candidate feedback"
         public ActionResult Accept(int offerID) {
             this.OfferService.AcceptOffer(offerID);
 
-            OfferCreateModel model = getCurrentModelData(offerID);
-            return View("OfferOnboarding", model);
+            return RedirectToAction("GoToNewestPage", "Offer", new { OfferID = offerID });  
+        }
+
+        //the candidate onboarded confirmed
+        public ActionResult Confirm(int offerID) {
+            this.OfferService.ConfirmOnboard(offerID);
+
+            return RedirectToAction("GoToNewestPage", "Offer", new { OfferID = offerID });
         }
         public ActionResult Revise(int offerID) {
             this.OfferService.ReviseOffer(offerID);
 
-            OfferCreateModel model = getCurrentModelData(offerID);
-            TempData["model"] = model;
-            return RedirectToAction("Create", "Offer");
+            return RedirectToAction("GoToNewestPage", "Offer", new { OfferID = offerID });
         }
 
         public ActionResult Edit(int offerID) {
-            OfferCreateModel model = getCurrentModelData(offerID);
+            ViewBag.User = Utility.getCurrentUserName(Utility.CurrentUser);
 
-            SpinnerService service = new SpinnerService();
-            ViewData["Report.ReportLine"] = new SelectList(service.GetEmployeeList(), model.Report.ReportLine);
-            ViewData["Report.DepartmentMgr"] = new SelectList(service.GetEmployeeList(), model.Report.DepartmentMgr);
+            OfferCreateModel model = getCurrentModelData(offerID);
 
             return View("OfferEdit",model);
         }
@@ -301,6 +348,16 @@ namespace NI.Application.HR.HRBase.Controllers
 
             return RedirectToAction("GoToNewestPage", "Offer", new { OfferID = model.Offer.ID });
         }
+        public JsonResult GetEmployeesEmails()
+        {       
+            var db = new HrDbContext();
+            
+            var result = from e in db.Table_Employee
+                             select new { e.Employee_FullName, e.Employee_Email };
+            
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         private List<Table_ChildrenInfo> getChildrenInfo(List<ChildrenInfoModel> list)
         {
             List<Table_ChildrenInfo> result = new List<Table_ChildrenInfo>();
@@ -373,10 +430,30 @@ namespace NI.Application.HR.HRBase.Controllers
 
         private Table_PersonelInfo getNewPersonelInfo(int offerID, PersonalInfoModel model)
         {
+            //string tmp=null;
+            //tmp=model.ChineseFName;
+            //tmp = model.ChineseGName;
+            //tmp = model.Gender;
+            //tmp = model.MaritalStatus;
+            //tmp = model.EnglishGName;
+            //tmp = model.EnglishFName; //family name
+            //tmp = DateTime.Parse(model.BirthDate).ToShortDateString();
+            //     tmp = model.ID;
+            //     tmp = model.Nationality;
+            //     tmp = model.Hukou;
+            //      tmp = model.HukouType;
+            //   tmp = model.FileLocation;
+            //   tmp = model.HomeAddress;
+            //   tmp = model.PostCode;
+            //   tmp = model.Phone;
+            //   tmp = model.Email;
+            //   tmp = model.EmergencyContact;
+            //   tmp = model.EmergencyContactPhone;
+
             Table_PersonelInfo entity = new Table_PersonelInfo
             {
-                PersonelInfo_FName = model.ChineseFName,
-                PersonelInfo_LName = model.ChineseGName,
+                PersonelInfo_FName = model.ChineseGName,
+                PersonelInfo_LName = model.ChineseFName,
                 PersonelInfo_Gender = model.Gender,
                 PersonelInfo_MartialStatus = model.MaritalStatus,
                 PersonelInfo_RomanFName = model.EnglishGName,
@@ -419,6 +496,7 @@ namespace NI.Application.HR.HRBase.Controllers
                 Location=offer.Offer_Location,
                 Channel=offer.Offer_RecruitChannel,
                 OnBoardingDate=offer.Offer_OnboardingDate,
+                ContractDuration=offer.Offer_ContractDuration,
                 ProbationDuration=offer.Offer_ProbationDuration,
                 Status=offer.Offer_Status,
                 UploadFormPath=offer.Offer_SignedFile,
@@ -452,6 +530,7 @@ namespace NI.Application.HR.HRBase.Controllers
             SalaryDetailModel salaryDetail = new SalaryDetailModel
             {
                 Salary = salary.SalaryInfo_Salary,
+                ReviewSalary=salary.SalaryInfo_ReviewedSalary
             };
             if (bonus != null) {
                 salaryDetail.bonus = true;
@@ -522,7 +601,8 @@ namespace NI.Application.HR.HRBase.Controllers
 
             return new Table_SalaryInfo
             {
-                SalaryInfo_Salary=salaryDetailModel.Salary
+                SalaryInfo_Salary=salaryDetailModel.Salary,
+                SalaryInfo_ReviewedSalary=salaryDetailModel.ReviewSalary
             };           
         }
 
@@ -568,6 +648,7 @@ namespace NI.Application.HR.HRBase.Controllers
                 Offer_Location=offerDetailModel.Location,
                 Offer_OnboardingDate=offerDetailModel.OnBoardingDate,
                 Offer_RecruitChannel=offerDetailModel.Channel,
+                Offer_ContractDuration=offerDetailModel.ContractDuration,
                 Offer_ProbationDuration=offerDetailModel.ProbationDuration
             };          
         }

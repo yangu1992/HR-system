@@ -27,5 +27,7 @@ namespace NI.Apps.Hr.Service.Interface
         void AcceptOffer(int offerID);
 
         void SaveOffer(Table_Offer offer, Table_PersonelInfo personelInfo, Table_ReportingInfo reportInfo, Table_SalaryInfo salaryInfo, List<Table_BonusInfo> bonusList);
+
+        void ConfirmOnboard(int offerID);
     }
 }

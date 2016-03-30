@@ -1,0 +1,30 @@
+﻿@model NI.Application.HR.HRBase.Models.EmailModel
+
+
+    <table id="dialog_table" style="border:0;">
+        <tr>
+            <td style="vertical-align:top; border:0;"><label for="From">From</label></td>
+            <td style="vertical-align:central; border:0;">
+                @Html.TextBoxFor(model => model.FromEmail)
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top; border:0;"><label for="To">To</label></td>
+            <td style="vertical-align:central; border:0;">
+                @Html.TextAreaFor(model => model.ToEmail, 2, 20, null)
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top; border:0;"><label for="CC">CC</label></td>
+            <td style="vertical-align:central; border:0;">
+                @Html.TextAreaFor(model => model.CCEmail, 2, 20, null)
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align:top; border:0;"><label for="Subject">Subject </label></td>
+            <td style="vertical-align:central; border:0;">
+                @Html.TextAreaFor(model => model.Subject, 2, 20, null)
+            </td>
+        </tr>
+    </table>
+

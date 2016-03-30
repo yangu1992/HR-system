@@ -1,8 +1,8 @@
 ﻿@{
     ViewBag.Title = "OfferCreate";
+    var message = TempData["AlertMessage"] ?? string.Empty;
 }
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+@Scripts.Render("~/Scripts/employeeAutoComplete.js")
 
 @model NI.Application.HR.HRBase.Models.OfferActivity.OfferCreateModel
 
@@ -65,10 +65,20 @@
 }
 
 <script type="text/javascript">
-    $('.Date').datepicker();
-    $('.Date').datepicker("setDate",new Date());
+    $('.Date').attr('readOnly', 'true');
+    $('.Date').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy/mm/dd"
+    });
 
-    $(function () {      
+    var message = '@message';
+    if (message)
+        alert(message);
+
+    var getEmployeeEmailURL = '@Url.Action("GetEmployeesEmails", "Offer")';
+
+    $(function () {
         $('#dialog-confirm').dialog({
             autoOpen: false,
             resizable: false,
@@ -78,7 +88,7 @@
             buttons: [
                 {
                     text: "Send Email",
-                    click:$.noop,
+                    click: $.noop,
                     type: "submit",
                     click: function () {
                         $(this).dialog("close");
@@ -87,48 +97,53 @@
                     }
                 },
                 {
-                    text:"Cancel",
-                    click:function(){
+                    text: "Cancel",
+                    click: function () {
                         $(this).dialog("close");
                     }
                 }
             ],
             open: function () {
-                $("#Email_FromEmail").val("yan.gu@ni.com")+ ";";
+                $("#Email_FromEmail").val("yan.gu@ni.com") + ";";
                 $("#Email_ToEmail").val($("#Report_ReportLineEmail").val() + ";" + $("#Report_DepartmentMgrEmail").val());
-                $("#Email_Subject").val("Approval to Offer - " + $("#Personel_FName").val() + $("#Personel_LName").val() + " for " + $("#Offer_Postion").val());
+                $("#Email_Subject").val("Approval to Offer - " + $("#Personel_LName").val() + $("#Personel_FName").val() + " for " + $("#Offer_Postion").val());
                 $(this).parent().appendTo('#PostForm');
             }
         });
 
-        $("#SaveBtn").click(function () {   
-            var error=$(".input-validation-error").length;
-            if(error>0){
+        $("#SaveBtn").click(function () {
+            var ChineseFName = $("#Personel_FName").val();
+            var ChineseLName = $("#Personel_LName").val();
+            var requiredError = (ChineseFName == "" || ChineseLName == ""); //if true,is error
+            if (requiredError)
+                alert("Chinese Name is necessary!");
+
+            var error = $(".input-validation-error").length;
+            if (error > 0) {
                 alert("Please correct your input before Save!");
-            }else{
-                if(checkBonus()){
-                    $("#SaveButton").val("SaveButtonClicked");
-                    $('#dialog-confirm').dialog("open");
-                }         
             }
-            
+
+            if (!requiredError && (error == 0) && checkBonus()) {
+                $("#SaveButton").val("SaveButtonClicked");
+                $('#dialog-confirm').dialog("open");
+            }
         });
 
-        function checkBonus(){
-            var Sign_Status=$("#Salary_SignOn").is(":checked");
-            var Relocation_Status=$("#Salary_Relocation").is(":checked");
-            var Other_Status=$("#Salary_Other").is(":checked");
-            var Sign_Price=$("#Salary_SignOnPrice").val();
-            var Relocation_Price=$("#Salary_RelocationPrice").val();
-            var Other_Price=$("#Salary_OtherPrice").val();
-            var Salary=$("#Salary_Salary").val();
+        function checkBonus() {
+            var Sign_Status = $("#Salary_SignOn").is(":checked");
+            var Relocation_Status = $("#Salary_Relocation").is(":checked");
+            var Other_Status = $("#Salary_Other").is(":checked");
+            var Sign_Price = $("#Salary_SignOnPrice").val();
+            var Relocation_Price = $("#Salary_RelocationPrice").val();
+            var Other_Price = $("#Salary_OtherPrice").val();
+            var Salary = $("#Salary_Salary").val();
 
-            if((Sign_Status || Relocation_Status||Other_Status) && (Salary=="")){
+            if ((Sign_Status || Relocation_Status || Other_Status) && (Salary == "")) {
                 alert("You need to input salary before bonus!");
                 return false;
             }
 
-            if( (Sign_Status && Sign_Price=="") || (Relocation_Status && Relocation_Price=="")||(Other_Status && Other_Price=="")){
+            if ((Sign_Status && Sign_Price == "") || (Relocation_Status && Relocation_Price == "") || (Other_Status && Other_Price == "")) {
                 alert("You need to click checkbox and enter price both!");
                 return false;
             }
@@ -136,6 +151,20 @@
             return true;
 
         }
+        $("#Offer_RecruitType").change(function () {
+            var recruitmentType = $("#Offer_RecruitType").val();
+
+            if (recruitmentType == 'Social') {
+                $(".attr_for_social").show();
+            } else {
+                $(".attr_for_social").hide();
+            }
+
+            if (recruitmentType == 'Campus') {
+                $("#Offer_Channel").val("Campus");
+            }
+        });
+
         $("#Salary_bonus").click(function () {
             var status = $(this).is(":checked");
 
@@ -147,13 +176,24 @@
         });
 
         $(window).load(function () {
-            var status=$("#Salary_bonus").is(":checked");
+            var status = $("#Salary_bonus").is(":checked");
 
             if (status == false) {
                 $(".bonus_section").hide();
-            } 
+            }
+
+            var recruitmentType = $("#Offer_RecruitType").val();
+            if (recruitmentType == 'Campus') {
+                $(".attr_for_social").show();
+            } else {
+                $(".attr_for_social").hide();
+            }
+
+
         });
     });
 </script>
+
+@Scripts.Render("~/Scripts/disableBackButton.js")
 
 

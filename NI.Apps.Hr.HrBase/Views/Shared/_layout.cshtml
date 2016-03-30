@@ -18,16 +18,20 @@
     </head>
     <body style="margin:0; padding:0; height:100%; width:100%;">
         <div id="header" style="margin:0; height:10%; padding-right:40px;">
-            <img id="img" src="~/Images/NI.png" alt="National Instruments" style="vertical-align:middle"/>
-            <span id="title" style="text-align:center; vertical-align:middle; font-size:150%; font-weight:bold;">NI Shanghai HR Management System</span>
-            <span id="user_info" style="text-align:center; vertical-align:middle; font-size:150%; font-weight:bold; float:right;">Welcome,</span>
+            <table border="0" frame=void rules=none style="border-color:white">
+                <tr>
+                    <td width="10%" style="border-color:white;"><img id="img" src="~/Images/NI.png" alt="National Instruments" style="vertical-align:middle" /></td>
+                    <td width="30%" style="border-color:white;"><span id="title" style="vertical-align:middle; font-size:150%; font-weight:bold;">NI Shanghai HR Management System</span></td>
+                    <td style="border-color:white;"><span id="user_info" style="vertical-align:middle; font-size:150%; float:right;">Welcome,@ViewBag.User</span></td>
+                </tr>
+            </table> 
         </div>
         <div id="tableContainer" style="margin:0px; padding:0; height:90%; width:98%;">
             <div id="tableRow">
                 <div id="sidebar" >
                     <ul id="navigation">
-                        <li>
-                            <a class="nav" href="">Home</a>
+                        <li>                   
+                            @Html.ActionLink("Home", "Index", "Home", new { }, new { @class = "nav" })
                         </li>
                         <li>
                             <a class="nav" href="">Search</a>

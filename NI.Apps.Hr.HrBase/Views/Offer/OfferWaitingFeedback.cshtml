@@ -13,204 +13,356 @@
 @Html.Partial("_OfferPositionInfoFixed", Model)
 
 <div id="feedback_update_section" style="overflow-y:scroll;">
-    <fieldset>
-        <legend style="font-weight:bold;">Feedback Update</legend>
-        <table>
-            <tr>
-                <td style="border:0;">
-                    1. Upload the personal information form:
-                    @using (Html.BeginForm("UploadPersonalInfoForm", "Offer",
-                        new { offerID = Model.Offer.ID },
-                        FormMethod.Post,
-                        new { id = "upload_File_Form", enctype = "multipart/form-data",style="display:inline"}))
-                    {
-                        <input type="file" id="fileName" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" style="display:inline;">
-                        <input id="uploadBtn" type="button" value="Upload" style="display:inline;">
-                    }
-                    @if (Model.Offer.UploadFormPath != null) { 
-                        <img id="uploadFormStatus" src="~/Images/accept.png" alt="Uploaded" /> 
-                    }
-                    <img id="uploadFormStatus" src="data:image/png;base64,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" alt="Uploaded" style="visibility:hidden" />
-                </td>
-            </tr>
-            <tr>
-                <td style="border:0;">
-                    2. Send Email to IT team: <input id="sendRequestBtn" type="button" value="Send">
-                    @if (Model.Offer.EmailITCompleted != null)
-                    {
-                        <img id="emailITStatus" src="~/Images/accept.png" alt="email IT finished" />
-                    }
-                    <img id="emailITStatus" src="~/Images/accept.png" alt="email IT finished" style="visibility:hidden" />
-                </td>
-            </tr>
-            <tr>
-                <td style="border:0;">
-                    3. Sync with Address book. Please input below value and click on "Sync".
-                </td>
-            </tr>
-            <tr>
-                <td style="padding-left:58px;border:0;">
-                    <span>Domain Login: </span><input id="address_book_domain" type="text">
-                </td>
-            </tr>
-            <tr>
-                <td style="padding-left:17px;border:0;">
-                    <span>Contract Start Date: </span><input id="start_date" class="Date" type="text">
-                    <input id="syncBtn" type="button" value="Sync" >
-                    @if (Model.Offer.SyncDomainCompleted != null)
-                    {
-                        <img id="syncDomainStatus" src="~/Images/accept.png" alt="sync Domain finished" />
-                    }
-                    <img id="syncDomainStatus" src="~/Images/accept.png" alt="sync Domain finished" style="visibility:hidden" />
-                </td>
-            </tr>
-            <tr>
-                <td style="border:0;">
-                    4. Send Welcome Emails to candidate and Department Manger.
-                </td>
-            </tr>
-            <tr>
-                <td style="padding-left:17px;border:0;">
-                    Email To cadidate: <input id="emailCandidateBtn" type="button" value="Send"
-                                            onclick="showProgress();location.href='@Url.Action("SendWelcomeToCandidate", "Offer",
-                                     new
-                                     {
-                                         OfferID = Model.Offer.ID,
-                                         name=Model.Personel.FName+Model.Personel.LName,
-                                         candidateEmail=Model.Personel.Email,
-                                         MgrEmail=Model.Report.DepartmentMgrEmail,
-                                         onboardingDate=Model.Offer.OnBoardingDate
-                                     })'">
-                    @if (Model.Offer.WelcomeCandidateCompleted != null)
-                    {
-                        <img id="welcomeCandidateStatus" src="~/Images/accept.png" alt="welcome email to candidate finished" />
-                    }
-                    <img id="welcomeCandidateStatus" src="~/Images/accept.png" alt="welcome email to candidate finished" style="visibility:hidden" />
-                </td>
-            </tr>
-            <tr>
-                <td style="padding-left:17px;border:0;">
-                    Email To Department Manager: <input id="emailMgrBtn" type="button" value="Send"
-                                                    onclick="showProgress();location.href='@Url.Action("SendWelcomeToLineMgr", "Offer",
-                                                    new { OfferID=Model.Offer.ID,LineMgrEmail = Model.Report.ReportLineEmail })'">
-                    @if (Model.Offer.WelcomeToMgrCompleted != null)
-                    {
-                        <img id="welcomeToMgrStatus" src="~/Images/accept.png" alt="welcome to manager finished" />
-                    }
-                    <img id="welcomeToMgrStatus" src="~/Images/accept.png" alt="welcome to manager finished" style="visibility:hidden" />
-                </td>
-            </tr>
-        </table>
-
-    </fieldset>
-    <p style="width:90%; text-align:center;" class="valid-offer-section">
-        <input type="button" name="AcceptBtn" value=" Accept "
-               onclick="location.href='@Url.Action("Accept", "Offer", new { offerID = Model.Offer.ID })'"
-               style="font-size:18px; line-height:1.4; margin-right:35px;" />
-        <input type="button" name="RejectBtn" value=" Reject "
-               onclick="location.href='@Url.Action("Reject", "Offer", new { offerID=Model.Offer.ID})'"
-               style="font-size:18px; line-height:1.4; margin-right:35px;" />
-        <input type="button" value="Revise" onclick="location.href='@Url.Action("Revise", "Offer", new { offerID=Model.Offer.ID})'" style="font-size:18px; line-height:1.4;" />
-    </p>
+    @Html.Partial("_FeedbackSection",Model.Offer)
 </div>
+<p style="width:90%; text-align:center;" class="valid-offer-section">
+    <input type="button" name="AcceptBtn" value=" Accept "
+           onclick="location.href='@Url.Action("Accept", "Offer", new { offerID = Model.Offer.ID })'"
+           style="font-size:18px; line-height:1.4; margin-right:35px;" />
+    <input type="button" name="RejectBtn" value=" Reject "
+           onclick="if (confirm('Are you sure?')) { window.location.href = '@Url.Action("Reject", "Offer", new { offerID = Model.Offer.ID })'; }"
+           style="font-size:18px; line-height:1.4; margin-right:35px;" />
+    <input type="button" value="Revise" onclick="location.href='@Url.Action("Revise", "Offer", new { offerID=Model.Offer.ID})'" style="font-size:18px; line-height:1.4;" />
+</p>
 
 <div id="dialog-personal-form-message" title="Upload Success"></div>
 
+
+<div id="dialog-email-IT" title="Email Check">
+    @Html.Partial("_EmailConfirmDialog", Model.Email ?? new NI.Application.HR.HRBase.Models.EmailModel())
+</div>
+
+<div id="dialog-email-candidate" title="Email Check">
+    @Html.Partial("_EmailConfirmDialog", Model.Email ?? new NI.Application.HR.HRBase.Models.EmailModel())
+</div>
+
+<div id="dialog-email-Mgr" title="Email Check">
+    @Html.Partial("_EmailConfirmDialog", Model.Email ?? new NI.Application.HR.HRBase.Models.EmailModel())
+</div>
+
+
 <script type="text/javascript">
-    $('.Date').datepicker();
-    $('.Date').datepicker("setDate",new Date());
+    $('.Date').attr('readOnly', 'true');
+    $('.Date').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy/mm/dd"
+    });
+    $('.Date').datepicker('setDate', 'today');
+
 
     $(function () {
-        $('#dialog-personal-form-message').dialog({
+        //send domain request to IT email confirm
+        $('#dialog-email-IT').dialog({
             autoOpen: false,
             resizable: false,
-            height: 850,
-            width: 1350,
+            height: 500,
+            width: 450,
             modal: true,
-            buttons: {
-                ok: function () {
-                    updateDetail();
-                    $(this).dialog("close");            
+            buttons: [
+                {
+                    text: "Send Email",
+                    click: $.noop,
+                    type: "submit",
+                    click: function () {
+                        var offerID = $("#Offer_ID").val().trim();
+                        $(this).dialog("close");
+                        $("div.mask").css("display", "block");
+
+                        var from = $("#FromEmail").val();
+                        var to = $("#ToEmail").val();
+                        var cc = $("#CCEmail").val();
+                        var subject = $("#Subject").val();
+                        var data = {
+                            OfferID: offerID,
+                            FromEmail: from,
+                            ToEmail: to,
+                            CcEmail: cc,
+                            Subject: subject
+                        };
+                        data = JSON.stringify(data);
+                        $.ajax({
+                            type: "POST",
+                            data: data,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            url: '@Url.Action("RequestDomain", "Offer")',
+                            success: function (response) {
+                                var param = response.offer_id;
+                                var url = '@Url.Action("GoToNewestPage", "Offer", new { offerID = "__param__" })';
+                                window.location.href = url.replace('__param__', encodeURIComponent(param));
+                            }
+                        });
+                    }
+                },
+                {
+                    text: "Cancel",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
                 }
-            },
-        });
-
-        $("#upload_File_Form").ajaxForm({
-            beforeSubmit: function () {
-                $("div.mask").css("display", "block");
-            },
-            
-            success:function(data){
-                $("div.mask").css("display", "none");
-                $("#dialog-personal-form-message").html(data);
-                $("#dialog-personal-form-message").dialog("open"); 
-                $("#uploadFormStatus").attr("style","visibility:visible");
-            } ,
-            error:function(data){
-                $("div.mask").css("display", "none");
-                alert("File format is not supported!");
+            ],
+            open: function () {
+                clearEmailConfirmkDialog();
+                var onboarddate = $("#offer_OnBoardingDate").html().trim();
+                $("input#FromEmail").val("yan.gu@ni.com"); //change with user
+                $("textarea#ToEmail").val("<IT Penang>");
+                $("textarea#CCEmail").val("Huiyan.guo@ni.com, Yan.huang@ni.com");
+                $("textarea#Subject").val("new comer on " + onboarddate);
             }
         });
 
-        $("#syncBtn").click(function(){
-            var domainLogin=$("#address_book_domain").val().trim();
-            if(domainLogin==""){
-                alert("Please input Domain Login first!");
-            }else{
-                var startDate = $("#start_date").val().trim();
-                var offerID=$("#Offer_ID").val().trim();
 
-                $("div.mask").css("display", "block");
-                $.post("/Offer/SyncDomain/", { OfferID: offerID, DomainLogin: domainLogin, ContractStartDate: startDate }, function (response) {
-                    $("div.mask").css("display", "none");
-                    $("#syncDomainStatus").attr("style","visibility:visible");
-                });
-            }
-            
+
+        $("#sendRequestBtn").click(function () {
+            $('#dialog-email-IT').dialog("open");
         });
 
-        function updateDetail(){
-            $("#personel_FName").html($("#personel_FName").html().replace(new RegExp($("#personel_FName").text().trim(), "g"),$("#PersonalInfo_EnglishFName").text().trim()));
-            $("#personel_LName").html($("#personel_LName").html().replace(new RegExp($("#personel_LName").text().trim(), "g"),$("#PersonalInfo_EnglishGName").text().trim()));
-            $("#personel_RomanFName").html($("#personel_RomanFName").html().replace(new RegExp($("#personel_RomanFName").text().trim(), "g"),$("#PersonalInfo_ChineseFName").text().trim()));
-            $("#personel_RomanLName").html($("#personel_RomanLName").html().replace(new RegExp($("#personel_RomanLName").text().trim(), "g"),$("#PersonalInfo_ChineseGName").text().trim()));
-            $("#personel_Phone").html($("#personel_Phone").html().replace(new RegExp($("#personel_Phone").text().trim(), "g"),$("#PersonalInfo_Phone").text().trim()));
-            $("#personel_Email").html($("#personel_Email").html().replace(new RegExp($("#personel_Email").text().trim(), "g"),$("#PersonalInfo_Email").text().trim()));
-            $("#offer_OnBoardingDate").html($("#offer_OnBoardingDate").html().replace(new RegExp($("#offer_OnBoardingDate").text().trim(), "g"),$("#TentativeOnboardDate").text().trim()));
-        }
+        //welcome email  to candidate confirm
+        $('#dialog-email-candidate').dialog({
+            autoOpen: false,
+            resizable: false,
+            height: 500,
+            width: 450,
+            modal: true,
+            buttons: [
+                {
+                    text: "Send Email",
+                    click: $.noop,
+                    type: "submit",
+                    click: function () {
+                        var offerID = $("#Offer_ID").val().trim();
+                        $(this).dialog("close");
+                        $("div.mask").css("display", "block");
 
-        $("#uploadBtn").click(function(){
-            var file=$("input#fileName").val();
-            if(file==""){
-                alert("Please select a file first!");
-            }else{
-                $("div.mask").css("display", "block");
-                $('#upload_File_Form').submit();
-            }
-            
-        });
-
-        $("#sendRequestBtn").click(function(){
-            var offerID=$("#Offer_ID").val().trim();
-            $("div.mask").css("display", "block");
-            $.post("/Offer/RequestDomain/", { OfferID: offerID}, function (response) {             
-                $("div.mask").css("display", "none");
-                $("#emailITStatus").attr("style","visibility:visible");
-            });
-        });
+                        var from = $("#FromEmail").val();
+                        var to = $("#ToEmail").val();
+                        var cc = $("#CCEmail").val();
+                        var subject = $("#Subject").val();
+                        var data = {
+                            OfferID: offerID,
+                            FromEmail: from,
+                            ToEmail: to,
+                            CcEmail: cc,
+                            Subject: subject
+                        };
+                        data = JSON.stringify(data);
+                        $.ajax({
+                            type: "POST",
+                            data: data,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            url: '@Url.Action("SendWelcomeToCandidate", "Offer")',
+                            success: function (response) {
+                                //$("div.mask").css("display", "none");
+                                var param = response.offer_id;
+                                var url = '@Url.Action("GoToNewestPage", "Offer", new { offerID = "__param__" })';
+                                window.location.href = url.replace('__param__', encodeURIComponent(param));
+                            }
+                    });
+    }
+    },
+    {
+    text: "Cancel",
+    click: function () {
+        $(this).dialog("close");
+    }
+    }
+    ],
+    open: function () {
+        clearEmailConfirmkDialog();
+        var candidateEmail = $("#personel_Email").html().trim();
+        var depMgrEmial = $("#report_ReportLineEmail").html().trim();
+        var candidateName = $("#personel_RomanLName").html().trim() + $("#personel_RomanFName").html().trim();
+        $("input#FromEmail").val("yan.gu@ni.com"); //change with user
+        $("textarea#ToEmail").val(candidateEmail);
+        $("textarea#CCEmail").val(depMgrEmial);
+        $("textarea#Subject").val("Welcome to join NI ! -" + candidateName);
+    }
     });
 
-    function showProgress(){
+    $("#emailCandidateBtn").click(function () {
+        $('#dialog-email-candidate').dialog("open");
+    });
+
+    //welcome email  to line Mgr confirm
+    $('#dialog-email-Mgr').dialog({
+        autoOpen: false,
+        resizable: false,
+        height: 500,
+        width: 450,
+        modal: true,
+        buttons: [
+            {
+                text: "Send Email",
+                click: $.noop,
+                type: "submit",
+                click: function () {
+                    var offerID = $("#Offer_ID").val().trim();
+                    $(this).dialog("close");
+                    $("div.mask").css("display", "block");
+
+                    var from = $("#FromEmail").val();
+                    var to = $("#ToEmail").val();
+                    var cc = $("#CCEmail").val();
+                    var subject = $("#Subject").val();
+                    var data = {
+                        OfferID: offerID,
+                        FromEmail: from,
+                        ToEmail: to,
+                        CcEmail: cc,
+                        Subject: subject
+                    };
+                    data = JSON.stringify(data);
+                    $.ajax({
+                        type: "POST",
+                        data: data,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        url: '@Url.Action("SendWelcomeToLineMgr", "Offer")',
+                        success: function (response) {
+
+                            //$("div#feedback_update_section").html(response);
+                            var param = response.offer_id;
+                            var url = '@Url.Action("GoToNewestPage", "Offer", new { offerID = "__param__" })';
+                                window.location.href = url.replace('__param__', encodeURIComponent(param));
+
+                            }
+                    });
+                   }
+                },
+            {
+                text: "Cancel",
+                click: function () {
+                $(this).dialog("close");
+            }
+            }
+           ],
+    open: function () {
+        clearEmailConfirmkDialog();
+        var lineMgrEmail = $("#report_ReportLineEmail").html().trim();
+        var candidateName = $("#personel_RomanLName").html().trim() + $("#personel_RomanFName").html().trim();
+        $("input#FromEmail").val("yan.gu@ni.com"); //change with user
+        $("textarea#ToEmail").val(lineMgrEmail);
+        $("textarea#CCEmail").val("");
+        $("textarea#Subject").val("Onboarding Process to Line Manager for " + candidateName);
+    }
+    });
+
+
+
+    $("#emailMgrBtn").click(function () {
+        $('#dialog-email-Mgr').dialog("open");
+    });
+
+    //$("#sendRequestBtn").click(function () {
+    //    var offerID = $("#Offer_ID").val().trim();
+    //    $("div.mask").css("display", "block");
+    //    $.post("/Offer/RequestDomain/", { OfferID: offerID }, function (response) {
+    //        $("div.mask").css("display", "none");
+    //        $("#emailITStatus").attr("style", "visibility:visible");
+    //    });
+    //});
+
+    $('#dialog-personal-form-message').dialog({
+        autoOpen: false,
+        resizable: false,
+        height: 850,
+        width: 1350,
+        modal: true,
+        buttons: {
+            ok: function () {
+                var offerID = $("#Offer_ID").val().trim();
+
+                var url = '@Url.Action("GoToNewestPage", "Offer", new { offerID = "__param__" })';
+                window.location.href = url.replace('__param__', encodeURIComponent(offerID));
+                //$(this).dialog("close");
+            }
+        },
+    });
+
+    $("#upload_File_Form").ajaxForm({
+        success: function (data) {
+            $("div.mask").css("display", "none");
+            $("#dialog-personal-form-message").html(data);
+            $("#dialog-personal-form-message").dialog("open");
+            $("#uploadFormStatus").attr("style", "visibility:visible");
+        },
+        error: function (data) {
+            $("div.mask").css("display", "none");
+            alert("File format is not supported!");
+        }
+    });
+
+    $("#uploadBtn").click(function () {
+        var file = $("input#fileName").val();
+        if (file == "") {
+            alert("Please select a file first!");
+        } else {
+            $("div.mask").css("display", "block");
+            $('#upload_File_Form').submit();
+        }
+    });
+
+    $("#syncBtn").click(function () {
+        var domainLogin = $("#address_book_domain").val().trim();
+        if (domainLogin == "") {
+            alert("Please input Domain Login first!");
+        } else {
+            var startDate = $("#start_date").val().trim();
+            var offerID = $("#Offer_ID").val().trim();
+
+            $("div.mask").css("display", "block");
+            var url = '@Url.Action("SyncDomain", "Offer")';
+            $.post(url, { OfferID: offerID, DomainLogin: domainLogin, ContractStartDate: startDate }, function (response) {
+                $("div.mask").css("display", "none");
+                $("#syncDomainStatus").attr("style", "visibility:visible");
+            });
+        }
+
+    });
+
+    function updateDetail() {
+        $("#personel_FName").html($("#personel_FName").html().replace(new RegExp($("#personel_FName").text().trim(), "g"), $("#PersonalInfo_EnglishFName").text().trim()));
+        $("#personel_LName").html($("#personel_LName").html().replace(new RegExp($("#personel_LName").text().trim(), "g"), $("#PersonalInfo_EnglishGName").text().trim()));
+        $("#personel_RomanFName").html($("#personel_RomanFName").html().replace(new RegExp($("#personel_RomanFName").text().trim(), "g"), $("#PersonalInfo_ChineseFName").text().trim()));
+        $("#personel_RomanLName").html($("#personel_RomanLName").html().replace(new RegExp($("#personel_RomanLName").text().trim(), "g"), $("#PersonalInfo_ChineseGName").text().trim()));
+        $("#personel_Phone").html($("#personel_Phone").html().replace(new RegExp($("#personel_Phone").text().trim(), "g"), $("#PersonalInfo_Phone").text().trim()));
+        $("#personel_Email").html($("#personel_Email").html().replace(new RegExp($("#personel_Email").text().trim(), "g"), $("#PersonalInfo_Email").text().trim()));
+        if ($("#TentativeOnboardDate").text().trim() != "") {
+            $("#offer_OnBoardingDate").html($("#offer_OnBoardingDate").html().replace(new RegExp($("#offer_OnBoardingDate").text().trim(), "g"), $("#TentativeOnboardDate").text().trim()));
+        }
+    }
+
+    
+
+
+    });
+    function clearEmailConfirmkDialog() {
+        $("input#FromEmail").val(); //change with user
+        $("textarea#ToEmail").val();
+        $("textarea#CCEmail").val();
+        $("textarea#Subject").val();
+    }
+
+    function showProgress() {
         $("div.mask").css("display", "block");
     }
 
     $(window).load(function () {
-        var status=$("#Salary_bonus").is(":checked");
-
+        var status = $("#Salary_bonus").is(":checked");
         if (status == false) {
             $(".bonus_section").hide();
         }
 
-        $("input.read_only").attr("disabled","disabled");
+        $("input.read_only").attr("disabled", "disabled");
+
+        var recruitmentType = $("#Offer_RecruitType").html().trim();
+        if (recruitmentType == 'Campus') {
+            $(".attr_for_social").show();
+        } else {
+            $(".attr_for_social").hide();
+        }
     });
 </script>
+

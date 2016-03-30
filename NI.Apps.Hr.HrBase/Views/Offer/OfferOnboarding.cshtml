@@ -18,7 +18,7 @@
            onclick="location.href='@Url.Action("Confirm", "Offer", new { offerID=Model.Offer.ID})'"
            style="font-size:18px; line-height:1.4; margin-right:35px;" />
     <input type="button" name="RejectBtn" value=" Reject "
-           onclick="location.href='@Url.Action("Reject", "Offer", new { offerID=Model.Offer.ID})'"
+           onclick="if (confirm('Are you sure?')) { window.location.href = '@Url.Action("Reject", "Offer", new { offerID = Model.Offer.ID })'; }"
            style="font-size:18px; line-height:1.4; margin-right:35px;" />
     <input type="button" value="Revise" onclick="location.href='@Url.Action("Revise", "Offer", new { offerID=Model.Offer.ID})'" style="font-size:18px; line-height:1.4;" />
 </p>
@@ -26,9 +26,17 @@
 <script type="text/javascript">
     $(window).load(function () {
         var status = $("#Salary_bonus").is(":checked");
-
         if (status == false) {
             $(".bonus_section").hide();
         } 
+
+        $("input.read_only").attr("disabled","disabled");
+
+        var recruitmentType=$("#Offer_RecruitType").html().trim();
+        if(recruitmentType=='Campus'){
+            $(".attr_for_social").show();
+        }else{
+            $(".attr_for_social").hide();
+        }
     });
 </script>

@@ -10,6 +10,8 @@ namespace NI.Application.HR.HRBase.Models.OfferActivity
     {
         [DataType(DataType.Currency)]
         public decimal? Salary { get; set; }
+        [DataType(DataType.Currency)]
+        public decimal? ReviewSalary { get; set; }
         public Boolean bonus { get; set; }
         public Boolean SignOn { get; set; }
         [DataType(DataType.Currency)]

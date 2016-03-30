@@ -15,30 +15,31 @@
         <div id="offer_search">
             <table id="offer_table" style="width:90%; border-collapse:collapse;">
                 <tr>
+                    <td class="hc-attr-name" style="width:10%; text-align:right;">Status</td>
+                    <td class="hc-attr-value" style="width:10%; text-align:left;">
+                        @Html.DropDownListFor(model => model.Status, new List<SelectListItem> {
+                                                                                new SelectListItem{Text="Draft",Value="Draft"},
+                                                                                new SelectListItem{Text="Pending Manager Approval",Value="Pending Manager Approval"},
+                                                                                new SelectListItem{Text="Waiting Candidate Feedback",Value="Waiting Candidate Feedback"},
+                                                                                new SelectListItem{Text="Manager Rejected",Value="Manager Rejected"},
+                                                                                new SelectListItem{Text="Pending Candidate Onboarding",Value="Pending Candidate Onboarding"},
+                                                                                new SelectListItem{Text="Onboarded",Value="Onboarded"},
+                                                                                new SelectListItem{Text="Candidate Rejected",Value="Candidate Rejected"}
+                                                                            },
+                                                                            "--Select--",
+                                                                            new { @class = "box_for_create", style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
+                    </td>
                     <td class="hc-attr-name" style="width:10%; text-align:right;">Chinese Name</td>
                     <td class="hc-attr-value" style="width:10%; text-align:left;">
                         @Html.TextBoxFor(model => model.ChineseName, new {@style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
                     <td class="hc-attr-name" style="width:10%; text-align:right;">From Date</td>
                     <td class="hc-attr-value" style="width:10%; text-align:left;">
-                        @Html.TextBoxFor(model => model.FromDate, new {@class="Date", @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
+                        @Html.TextBoxFor(model => model.FromDate, new { @Value = Model.FromDate.ToString("yyyy/MM/dd") , @class = "Date", @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;", @readonly = "true" })
                     </td>
                     <td class="hc-attr-name" style="width:10%; text-align:right;">To Date</td>
                     <td class="hc-attr-value" style="width:10%; text-align:left;">
-                        @Html.TextBoxFor(model => model.ToDate, new { @class = "Date", @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
-                    </td>
-                    <td class="hc-attr-name" style="width:10%; text-align:right;">Status</td>
-                    <td class="hc-attr-value" style="width:10%; text-align:left;">
-                        @Html.DropDownListFor(model => model.Status, new List<SelectListItem> { 
-                                                                                new SelectListItem{Text="Draft",Value="Draft"},
-                                                                                new SelectListItem{Text="Pending Manager Approval",Value="Pending Manager Approval"},
-                                                                                new SelectListItem{Text="Waiting Candidate Feedback",Value="Waiting Candidate Feedback"},
-                                                                                new SelectListItem{Text="Manager Rejected",Value="Manager Rejected"},
-                                                                                new SelectListItem{Text="Pending Welcome Letter",Value="Pending Welcome Letter"},
-                                                                                new SelectListItem{Text="Candidate Rejected",Value="Candidate Rejected"}
-                                                                            },
-                                                                            "--Select--", 
-                                                                            new { @class = "box_for_create", style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
-                    </td>
+                        @Html.TextBoxFor(model => model.ToDate, new { @Value = Model.ToDate.ToString("yyyy/MM/dd"), @class = "Date", @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
+                    </td>              
                 </tr>
             </table>
         </div>
@@ -77,8 +78,8 @@
                             <td>@item.Type</td>
                             <td>@item.Phone</td>
                             <td>@item.Email</td>
-                            <td>@item.OnboardingDate</td>
-                            <td>@item.ProbationDueDate</td>
+                            <td>@String.Format("{0:yyyy/MM/dd}", item.OnboardingDate)</td>
+                            <td>@String.Format("{0:yyyy/MM/dd}", item.ProbationDueDate)</td>
                             <td nowrap>@item.Status</td>
                         </tr>
                     }
@@ -111,8 +112,12 @@
 </div>
 
 <script type="text/javascript">
-    $('.Date').datepicker();
-    $('.Date').datepicker("setDate",new Date());
+    $('.Date').attr('readOnly', 'true');
+    $('.Date').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy/mm/dd"
+    });
 
     var message = '@message';
     if (message)

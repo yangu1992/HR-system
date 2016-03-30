@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "EmployeeSearch";
+    var message = TempData["AlertMessage"] ?? string.Empty;
+}
+
+@model NI.Apps.Hr.HrBase.Models.EmployeeActivity.EmployeeSearchModel
+@using PagedList.Mvc;
+@Styles.Render("~/Content/PagedList.css")
+@Scripts.Render("~/Scripts/departmentAutoComplete.js")
+
+@using (Html.BeginForm("Search", "Employee", FormMethod.Get))
+{
+    <fieldset id="offer_search_field" style="display:block;">
+        <legend style="font-weight:bold;">Search Employee</legend>
+        Chinese Name:@Html.TextBoxFor(model => model.ChineseName, new { @style = "width: 10%; padding:0; font-size:18px; line-height:1.4;" })
+        Department:@Html.TextBoxFor(model => model.Department, new { @style = "width: 10%;"})
+        <input type="submit" name="SearchButton" value="Search" style="font-size:18px; line-height:1.4;" />    
+    </fieldset>
+}
+
+<fieldset style="display:block; margin-top:10px; margin-bottom:0px;">
+    <legend style="font-weight:bold;">Employee List</legend>
+
+    <div class="employeeList" style="height:800px; border:1px solid grey;">
+        <table id="employees_table" border="1" rules="all" style="width:96%; border-collapse:collapse; table-layout:fixed; ">
+            <tr style="height:18px;">
+                <th width="5%">Name</th>
+                <th width="9%">Eng. Name</th>
+                <th width="6%">Dept.</th>
+                <th width="15%">Job Title</th>
+                <th width="4%">Ext.</th>
+                <th width="5%">Cube</th>
+                <th width="12%">Office Email</th>
+                <th width="18%">Address</th>
+                <th width="11%">Home Tel</th>
+                <th width="9%">Mobile</th>
+                <th width="6%">Status</th>
+            </tr>
+            <tbody id="tbody">
+                @if (Model.EmployeeList != null && Model.EmployeeList.Count != 0)
+                {
+                    foreach (var item in Model.EmployeeList)
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(item.Name, "GetDetialInfo", "Employee",
+                                new { EmpID = item.Id },
+                             new { style = "white-space:pre-wrap;text-decoration:none;color:#000066;font-size:12px;" })
+                            </td>
+                            <td>@item.EngName</td>
+                            <td style="white-space:pre-wrap;font-size:15px;">@item.Dep</td>
+                            <td style="white-space:pre-wrap;font-size:15px;">@item.JobTitle</td>
+                            <td style="white-space:pre-wrap;font-size:15px;">@item.Ext</td>
+                            <td style="white-space:pre-wrap;font-size:15px;">@item.Cube</td>
+                            <td style="white-space:pre-wrap;font-size:15px;">@item.OfficeEmail</td>
+                            <td style="white-space:pre-wrap;font-size:15px;">@item.Address</td>
+                            <td style="white-space:pre-wrap;font-size:15px;">@item.HomeTel</td>
+                            <td style="white-space:pre-wrap;font-size:15px;">@item.Mobile</td>
+                            <td style="white-space:pre-wrap;font-size:15px;">@item.Status</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <br/>
+        <div style="width:91%;">
+            @if (Model.EmployeeList != null && Model.EmployeeList.Count != 0)
+            {
+                <span style=" float:left">Page @(Model.EmployeeList.PageCount < Model.EmployeeList.PageNumber ? 0 : Model.EmployeeList.PageNumber) of @Model.EmployeeList.PageCount</span>
+                <span style=" float:right">
+                    @Html.PagedListPager(Model.EmployeeList,
+                      page => Url.Action("Search", "Employee", new RouteValueDictionary(){
+                          {"ChineseName",Model.ChineseName},
+                          {"Department",Model.Department},
+                          {"Page", page}
+                      }
+                ))
+                </span>
+            }
+
+        </div>
+    </div>
+</fieldset>
+
+<script type="text/javascript">
+    var message = '@message';
+    if (message)
+        alert(message);
+
+        var getDepartmentURL = '@Url.Action("GetDepartments", "Employee")';
+   
+</script>
+

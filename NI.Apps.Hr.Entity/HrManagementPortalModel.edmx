@@ -81,6 +81,18 @@
           <Property Name="EducationInfo_CreatedBy" Type="nvarchar" MaxLength="64" />
           <Property Name="EducationInfo_ModifiedAt" Type="datetime" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'HRManagementPortal.dbo.Table_EmailAccount' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Table_EmailAccount">
+          <Key>
+            <PropertyRef Name="EmailAccount_ID" />
+            <PropertyRef Name="EmailAccount_Address" />
+            <PropertyRef Name="EmailAccount_Pwd" />
+          </Key>
+          <Property Name="EmailAccount_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmailAccount_Address" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmailAccount_Pwd" Type="varbinary(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="Table_Employee">
           <Key>
             <PropertyRef Name="Employee_ID" />
@@ -159,6 +171,7 @@
           <Property Name="Offer_Location" Type="nvarchar" MaxLength="64" />
           <Property Name="Offer_OnboardingDate" Type="datetime" />
           <Property Name="Offer_RecruitChannel" Type="nvarchar" MaxLength="64" />
+          <Property Name="Offer_ContractDuration" Type="int" />
           <Property Name="Offer_ProbationDuration" Type="int" />
           <Property Name="Offer_Notes" Type="nvarchar" MaxLength="512" />
           <Property Name="Offer_SignedFile" Type="nvarchar" MaxLength="512" />
@@ -329,12 +342,19 @@ warning 6002: The table/view 'HRManagementPortal.dbo.Table_UserRole' does not ha
           <Property Name="WorkExperienceInfo_ModifiedAt" Type="datetime" />
           <Property Name="WorkExperienceInfo_ModifiedBy" Type="nvarchar" MaxLength="64" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="xlsContainer">
-          <Property Name="Dep_Name" Type="nvarchar" MaxLength="100" />
-        </EntityType>-->
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+        <Function Name="Proc_GetEmailAccountPwd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="returnVal" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="EmailAddress" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Proc_GetRoleName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="returnVal" Type="int" Mode="InOut" />
+          <Parameter Name="DomainLogin" Type="nvarchar" Mode="In" />
+          <Parameter Name="RoleName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Proc_GetUserName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="returnVal" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="DomainLogin" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="Proc_InsertAddressBook" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="OfferID" Type="int" Mode="In" />
           <Parameter Name="SID" Type="int" Mode="In" />
@@ -345,40 +365,10 @@ warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have
           <Parameter Name="DomainLogin" Type="nvarchar" Mode="In" />
           <Parameter Name="ContractStartDate" Type="datetime" Mode="In" />
         </Function>
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="xprcFile" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="txt" Type="ntext" Mode="In" />
-          <Parameter Name="hasTitle" Type="int" Mode="In" />
-          <Parameter Name="isShow" Type="int" Mode="In" />
+        <Function Name="Proc_InsertNewEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="returnVal" Type="int" Mode="InOut" />
+          <Parameter Name="OfferID" Type="int" Mode="In" />
+          <Parameter Name="User" Type="nvarchar" Mode="In" />
         </Function>
         <EntityContainer Name="HRManagementPortalModelStoreContainer">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -400,6 +390,13 @@ warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have
           <EntitySet Name="Table_SalaryInfo" EntityType="Self.Table_SalaryInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Table_Survey" EntityType="Self.Table_Survey" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Table_WorkExperienceInfo" EntityType="Self.Table_WorkExperienceInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table_EmailAccount" EntityType="Self.Table_EmailAccount" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Table_EmailAccount].[EmailAccount_ID] AS [EmailAccount_ID], 
+    [Table_EmailAccount].[EmailAccount_Address] AS [EmailAccount_Address], 
+    [Table_EmailAccount].[EmailAccount_Pwd] AS [EmailAccount_Pwd]
+    FROM [dbo].[Table_EmailAccount] AS [Table_EmailAccount]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Table_TypeRoleAccess" EntityType="Self.Table_TypeRoleAccess" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [Table_TypeRoleAccess].[TypeRoleAccess_ID] AS [TypeRoleAccess_ID], 
@@ -585,6 +582,7 @@ warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have
           <Property Name="Offer_Location" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
           <Property Name="Offer_OnboardingDate" Type="DateTime" Precision="3" />
           <Property Name="Offer_RecruitChannel" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+          <Property Name="Offer_ContractDuration" Type="Int32" />
           <Property Name="Offer_ProbationDuration" Type="Int32" />
           <Property Name="Offer_Notes" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
           <Property Name="Offer_SignedFile" Type="String" MaxLength="512" FixedLength="false" Unicode="true" />
@@ -717,6 +715,16 @@ warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have
           <Property Name="WorkExperienceInfo_ModifiedAt" Type="DateTime" Precision="3" />
           <Property Name="WorkExperienceInfo_ModifiedBy" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="Table_EmailAccount">
+          <Key>
+            <PropertyRef Name="EmailAccount_ID" />
+            <PropertyRef Name="EmailAccount_Address" />
+            <PropertyRef Name="EmailAccount_Pwd" />
+          </Key>
+          <Property Name="EmailAccount_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmailAccount_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmailAccount_Pwd" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+        </EntityType>
         <EntityType Name="Table_TypeRoleAccess">
           <Key>
             <PropertyRef Name="TypeRoleAccess_ID" />
@@ -771,8 +779,22 @@ warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have
           <EntitySet Name="Table_SalaryInfo" EntityType="Self.Table_SalaryInfo" />
           <EntitySet Name="Table_Survey" EntityType="Self.Table_Survey" />
           <EntitySet Name="Table_WorkExperienceInfo" EntityType="Self.Table_WorkExperienceInfo" />
+          <EntitySet Name="Table_EmailAccount" EntityType="Self.Table_EmailAccount" />
           <EntitySet Name="Table_TypeRoleAccess" EntityType="Self.Table_TypeRoleAccess" />
           <EntitySet Name="Table_UserRole" EntityType="Self.Table_UserRole" />
+          <FunctionImport Name="Proc_GetEmailAccountPwd">
+            <Parameter Name="returnVal" Mode="InOut" Type="String" />
+            <Parameter Name="EmailAddress" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_GetRoleName">
+            <Parameter Name="returnVal" Mode="InOut" Type="Int32" />
+            <Parameter Name="DomainLogin" Mode="In" Type="String" />
+            <Parameter Name="RoleName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_GetUserName">
+            <Parameter Name="returnVal" Mode="InOut" Type="String" />
+            <Parameter Name="DomainLogin" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="Proc_InsertAddressBook">
             <Parameter Name="OfferID" Mode="In" Type="Int32" />
             <Parameter Name="SID" Mode="In" Type="Int32" />
@@ -783,53 +805,12 @@ warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have
             <Parameter Name="DomainLogin" Mode="In" Type="String" />
             <Parameter Name="ContractStartDate" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(HRManagementPortalModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(HRManagementPortalModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
-          <FunctionImport Name="xprcFile" ReturnType="Collection(String)">
-            <Parameter Name="txt" Mode="In" Type="String" />
-            <Parameter Name="hasTitle" Mode="In" Type="Int32" />
-            <Parameter Name="isShow" Mode="In" Type="Int32" />
+          <FunctionImport Name="Proc_InsertNewEmployee">
+            <Parameter Name="returnVal" Mode="InOut" Type="Int32" />
+            <Parameter Name="OfferID" Mode="In" Type="Int32" />
+            <Parameter Name="User" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -999,6 +980,7 @@ warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have
                 <ScalarProperty Name="Offer_Location" ColumnName="Offer_Location" />
                 <ScalarProperty Name="Offer_OnboardingDate" ColumnName="Offer_OnboardingDate" />
                 <ScalarProperty Name="Offer_RecruitChannel" ColumnName="Offer_RecruitChannel" />
+                <ScalarProperty Name="Offer_ContractDuration" ColumnName="Offer_ContractDuration" />
                 <ScalarProperty Name="Offer_ProbationDuration" ColumnName="Offer_ProbationDuration" />
                 <ScalarProperty Name="Offer_Notes" ColumnName="Offer_Notes" />
                 <ScalarProperty Name="Offer_SignedFile" ColumnName="Offer_SignedFile" />
@@ -1141,6 +1123,15 @@ warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Table_EmailAccount">
+            <EntityTypeMapping TypeName="HRManagementPortalModel.Table_EmailAccount">
+              <MappingFragment StoreEntitySet="Table_EmailAccount">
+                <ScalarProperty Name="EmailAccount_ID" ColumnName="EmailAccount_ID" />
+                <ScalarProperty Name="EmailAccount_Address" ColumnName="EmailAccount_Address" />
+                <ScalarProperty Name="EmailAccount_Pwd" ColumnName="EmailAccount_Pwd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Table_TypeRoleAccess">
             <EntityTypeMapping TypeName="HRManagementPortalModel.Table_TypeRoleAccess">
               <MappingFragment StoreEntitySet="Table_TypeRoleAccess">
@@ -1170,33 +1161,12 @@ warning 6013: The table/view 'HRManagementPortal.dbo.xlsContainer' does not have
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Proc_GetEmailAccountPwd" FunctionName="HRManagementPortalModel.Store.Proc_GetEmailAccountPwd" />
+          <FunctionImportMapping FunctionImportName="Proc_GetRoleName" FunctionName="HRManagementPortalModel.Store.Proc_GetRoleName" />
+          <FunctionImportMapping FunctionImportName="Proc_GetUserName" FunctionName="HRManagementPortalModel.Store.Proc_GetUserName" />
           <FunctionImportMapping FunctionImportName="Proc_InsertAddressBook" FunctionName="HRManagementPortalModel.Store.Proc_InsertAddressBook" />
           <FunctionImportMapping FunctionImportName="Proc_InsertNewAccount" FunctionName="HRManagementPortalModel.Store.Proc_InsertNewAccount" />
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="HRManagementPortalModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="HRManagementPortalModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="HRManagementPortalModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="HRManagementPortalModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="HRManagementPortalModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="HRManagementPortalModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="HRManagementPortalModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="HRManagementPortalModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="HRManagementPortalModel.Store.sp_upgraddiagrams" />
-          <FunctionImportMapping FunctionImportName="xprcFile" FunctionName="HRManagementPortalModel.Store.xprcFile" />
+          <FunctionImportMapping FunctionImportName="Proc_InsertNewEmployee" FunctionName="HRManagementPortalModel.Store.Proc_InsertNewEmployee" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

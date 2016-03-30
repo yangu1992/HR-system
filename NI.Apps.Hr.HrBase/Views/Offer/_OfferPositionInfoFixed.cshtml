@@ -6,70 +6,69 @@
         <table id="position_info_table" style="width:90%; border-collapse:collapse;">
             <tr>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Recruitment Type:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
+                <td id="Offer_RecruitType" style="width:21%; text-align:left;">
                     @Html.DisplayFor(model => model.Offer.RecruitType)
-                    @Html.HiddenFor(model => model.Offer.RecruitType)
                 </td>
 
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Channel:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.DisplayFor(model => model.Offer.Channel)
-                    @Html.HiddenFor(model => model.Offer.Channel)
                 </td>
             </tr>
             <tr>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Position:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.DisplayFor(model => model.Offer.Postion)
-                    @Html.HiddenFor(model => model.Offer.Postion)
                 </td>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Location:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.DisplayFor(model => model.Offer.Location)
-                    @Html.HiddenFor(model => model.Offer.Location)
                 </td>
             </tr>
             <tr>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Reporting Line:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.DisplayFor(model => model.Report.ReportLine)
-                    @Html.HiddenFor(model => model.Report.ReportLine)
                 </td>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Reporting Line Email:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.DisplayFor(model => model.Report.ReportLineEmail)
-                    @Html.HiddenFor(model => model.Report.ReportLineEmail)
+                <td id="report_ReportLineEmail" class="hc-attr-value" style="width:21%; text-align:left;">
+                    @Html.DisplayTextFor(model => model.Report.ReportLineEmail)
                 </td>
             </tr>
             <tr>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Department Mgr:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.DisplayFor(model => model.Report.DepartmentMgr)
-                    @Html.HiddenFor(model => model.Report.DepartmentMgr)
                 </td>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Department Mgr Email:</td>
-                <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.DisplayFor(model => model.Report.DepartmentMgrEmail)
-                    @Html.HiddenFor(model => model.Report.DepartmentMgrEmail)
+                <td id="report_DepartmentMgrEmail" class="hc-attr-value" style="width:21%; text-align:left;">
+                    @Html.DisplayTextFor(model => model.Report.DepartmentMgrEmail)
                 </td>
             </tr>
             <tr>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">On boarding Date:</td>
                 <td id="offer_OnBoardingDate" class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.DisplayFor(model => model.Offer.OnBoardingDate)
-                    @Html.HiddenFor(model => model.Offer.OnBoardingDate)
                 </td>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Contract/Probation Duration:</td>
+            </tr>
+            <tr>
+                <td class="hc-attr-name" style="width:21%; text-align:right;">Contract Duration:</td>
+                <td id="offer_OnBoardingDate" class="hc-attr-value" style="width:21%; text-align:left;">
+                    @Html.DisplayFor(model => model.Offer.ContractDuration)
+                </td>
+                <td class="hc-attr-name" style="width:21%; text-align:right;">Probation Duration:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.DisplayFor(model => model.Offer.ProbationDuration)
-                    @Html.HiddenFor(model => model.Offer.ProbationDuration)
                 </td>
             </tr>
             <tr>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Salary:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.DisplayFor(model => model.Salary.Salary)
-                    @Html.HiddenFor(model => model.Salary.Salary)
+                </td>
+                <td class="attr_for_social" style="width:21%; text-align:right;">Review Salary:</td>
+                <td class="attr_for_social" style="width:21%; text-align:left;">
+                    @Html.DisplayFor(model => model.Salary.ReviewSalary)
                 </td>
             </tr>
             <tr>

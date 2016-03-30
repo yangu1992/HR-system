@@ -15,5 +15,6 @@ namespace NI.Apps.Hr.Entity.Models
         public string Department { get; set; }
         public string InternalLevel { get; set; }
         public string CreateBtn { get; set; }
+        public bool? isExisted { get; set; }
     }
 }

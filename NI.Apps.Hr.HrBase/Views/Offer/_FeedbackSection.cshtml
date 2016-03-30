@@ -1,0 +1,82 @@
+﻿@model NI.Application.HR.HRBase.Models.OfferActivity.OfferDetailModel
+
+<fieldset>
+    <legend style="font-weight:bold;">Feedback Update</legend>
+    <table>
+        <tr>
+            <td style="border:0;">
+                1. Upload the personal information form:
+                @using (Html.BeginForm("UploadPersonalInfoForm", "Offer",
+                        new { offerID = Model.ID },
+                        FormMethod.Post,
+                        new { id = "upload_File_Form", enctype = "multipart/form-data", style = "display:inline" }))
+                {
+                    <input type="file" id="fileName" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" style="display:inline;">
+                    <input id="uploadBtn" type="button" value="Upload" style="display:inline;">
+                }
+                @if (Model.UploadFormPath != null)
+                {
+                    <img id="uploadFormStatus" src="~/Images/accept.png" alt="Uploaded" />
+                }
+                <img id="uploadFormStatus" src="data:image/png;base64,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" alt="Uploaded" style="visibility:hidden" />
+            </td>
+        </tr>
+        <tr>
+            <td style="border:0;">
+                2. Send Email to IT team: <input id="sendRequestBtn" type="button" value="Send">
+                @if (Model.EmailITCompleted != null)
+                {
+                    <img id="emailITStatus" src="~/Images/accept.png" alt="email IT finished" />
+                }
+                <img id="emailITStatus" src="~/Images/accept.png" alt="email IT finished" style="visibility:hidden" />
+            </td>
+        </tr>
+        <tr>
+            <td style="border:0;">
+                3. Sync with Address book. Please input below value and click on "Sync".
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-left:58px;border:0;">
+                <span>Domain Login: </span><input id="address_book_domain" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-left:17px;border:0;">
+                <span>Contract Start Date: </span><input id="start_date" class="Date" type="text" >
+                <input id="syncBtn" type="button" value="Sync">
+                @if (Model.SyncDomainCompleted != null)
+                {
+                    <img id="syncDomainStatus" src="~/Images/accept.png" alt="sync Domain finished" />
+                }
+                <img id="syncDomainStatus" src="~/Images/accept.png" alt="sync Domain finished" style="visibility:hidden" />
+            </td>
+        </tr>
+        <tr>
+            <td style="border:0;">
+                4. Send Welcome Emails to candidate and Department Manger.
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-left:17px;border:0;">
+                Email To cadidate: <input id="emailCandidateBtn" type="button" value="Send">
+                @if (Model.WelcomeCandidateCompleted != null)
+                {
+                    <img id="welcomeCandidateStatus" src="~/Images/accept.png" alt="welcome email to candidate finished" />
+                }
+                <img id="welcomeCandidateStatus" src="~/Images/accept.png" alt="welcome email to candidate finished" style="visibility:hidden" />
+            </td>
+        </tr>
+        <tr>
+            <td style="padding-left:17px;border:0;">
+                Email To Department Manager: <input id="emailMgrBtn" type="button" value="Send">
+                @if (Model.WelcomeToMgrCompleted != null)
+                {
+                    <img id="welcomeToMgrStatus" src="~/Images/accept.png" alt="welcome to manager finished" />
+                }
+                <img id="welcomeToMgrStatus" src="~/Images/accept.png" alt="welcome to manager finished" style="visibility:hidden" />
+            </td>
+        </tr>
+    </table>
+
+</fieldset>

@@ -10,13 +10,12 @@
 namespace NI.Apps.Hr.Entity
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class sp_helpdiagrams_Result
+    public partial class Table_EmailAccount
     {
-        public string Database { get; set; }
-        public string Name { get; set; }
-        public int ID { get; set; }
-        public string Owner { get; set; }
-        public int OwnerID { get; set; }
+        public int EmailAccount_ID { get; set; }
+        public string EmailAccount_Address { get; set; }
+        public byte[] EmailAccount_Pwd { get; set; }
     }
 }

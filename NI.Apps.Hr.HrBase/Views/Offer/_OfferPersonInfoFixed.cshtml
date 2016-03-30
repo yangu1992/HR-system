@@ -8,36 +8,30 @@
                 <td class="hc-attr-name" style="width:21%; text-align:right;">English First Name:</td>
                 <td id="personel_FName" class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.DisplayFor(model => model.RomanFName)
-                    @Html.HiddenFor(model => model.RomanFName)
                 </td>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">English Last Name:</td>
                 <td id="personel_LName" class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.DisplayFor(model => model.RomanLName)
-                    @Html.HiddenFor(model => model.RomanLName)
                 </td>
             </tr>
             <tr>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Chinese First Name:</td>
                 <td id="personel_RomanFName" class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.DisplayFor(model => model.FName)
-                    @Html.HiddenFor(model => model.FName)
                 </td>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Chinese Last Name:</td>
                 <td id="personel_RomanLName" class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.DisplayFor(model => model.LName)
-                    @Html.HiddenFor(model => model.LName)
                 </td>
             </tr>
             <tr>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Phone:</td>
                 <td id="personel_Phone" class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.DisplayFor(model => model.Phone)
-                    @Html.HiddenFor(model => model.Phone)
                 </td>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Email:</td>
                 <td id="personel_Email" class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.DisplayFor(model => model.Email)
-                    @Html.HiddenFor(model => model.Email)
+                    @Html.DisplayTextFor(model => model.Email)
                 </td>
             </tr>
         </table>

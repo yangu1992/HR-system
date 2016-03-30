@@ -24,6 +24,12 @@ namespace NI.Apps.Hr.Service
         private IFamilyMembersRepository _familyMembersRepository;
         private IChildrenRepository _childrenRepository;
         private IBonusRepository _bonusRepository;
+        private IEmployeeRepository _employeeRepository;
+
+        public IEmployeeRepository EmployeeRepository
+        {
+            get { return _employeeRepository ?? (_employeeRepository = new EmployeeRepository()); }
+        }
 
         public IHeadCountRepository HeadCountRepository
         {
@@ -187,6 +193,15 @@ namespace NI.Apps.Hr.Service
                 reportInfo,
                 salaryInfo,
                 bonusList);
+        }
+
+
+        public void ConfirmOnboard(int offerID)
+        {
+            this.OfferRepository.UpdateStatus(offerID, "Confirm");
+
+            //add the onboarded person info to Table_Employee
+            this.EmployeeRepository.AddNewEmployee(offerID);
         }
     }
 }

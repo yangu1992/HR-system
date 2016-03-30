@@ -8,6 +8,7 @@
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Recruitment Type:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.DropDownListFor(model => model.Offer.RecruitType, new List<SelectListItem> {
+                                                                                new SelectListItem{Text="Intern",Value="Intern"},
                                                                                 new SelectListItem{Text="Campus",Value="Campus"},
                                                                                 new SelectListItem{Text="Social",Value="Social"}
                                                                             },
@@ -19,8 +20,11 @@
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Channel:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.DropDownListFor(model => model.Offer.Channel, new List<SelectListItem> {
-                                                                                new SelectListItem{Text="赶集网",Value="赶集网"},
-                                                                                new SelectListItem{Text="大街网",Value="大街网"}
+                                                                                new SelectListItem{Text="Campus",Value="Campus"},
+                                                                                new SelectListItem{Text="51job",Value="51job"},
+                                                                                new SelectListItem{Text="LinkedIn",Value="LinkedIn"},
+                                                                                new SelectListItem{Text="IRP",Value="IRP"},
+                                                                                new SelectListItem{Text="Head hunter",Value="Head hunter"}
                                                                             },
                                                                             Model.Offer.Channel,
                                                                             new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" }
@@ -30,7 +34,7 @@
             <tr>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Position:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.EditorFor(model => model.Offer.Postion, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
+                    @Html.TextBoxFor(model => model.Offer.Postion, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;", @readonly = "readonly" })
                 </td>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Location:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
@@ -40,7 +44,7 @@
             <tr>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Reporting Line:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.DropDownListFor(model => model.Report.ReportLine, ViewData["Employee"] as SelectList,  new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
+                    @Html.TextBoxFor(model => model.Report.ReportLine, new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
                     @Html.ValidationMessageFor(model => model.Report.ReportLine)
                 </td>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Reporting Line Email:</td>
@@ -51,7 +55,7 @@
             <tr>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Department Mgr:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.DropDownListFor(model => model.Report.DepartmentMgr, ViewData["Employee"] as SelectList, new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
+                    @Html.TextBoxFor(model => model.Report.DepartmentMgr, new { @class = "box_for_create", style = "font-size:18px; line-height:1.4;" })
                     @Html.ValidationMessageFor(model => model.Report.DepartmentMgr)
                 </td>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Department Mgr Email:</td>
@@ -62,17 +66,27 @@
             <tr>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">On boarding Date:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.TextBoxFor(model => model.Offer.OnBoardingDate, new { @class = "Date", @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
+                    @Html.TextBoxFor(model => model.Offer.OnBoardingDate, new { Value = Model.Offer.OnBoardingDate.HasValue ? Model.Offer.OnBoardingDate.Value.ToString("yyyy/MM/dd") : string.Empty, @class = "Date", @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
                 </td>
-                <td class="hc-attr-name" style="width:21%; text-align:right;">Contract/Probation Duration:</td>
+            </tr>
+            <tr>
+                <td class="hc-attr-name" style="width:21%; text-align:right;">Contract Duration:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.EditorFor(model => model.Offer.ProbationDuration, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
+                    @Html.EditorFor(model => model.Offer.ContractDuration, new { htmlAttributes = new { @Value = "3" } })
+                </td>
+                <td class="hc-attr-name" style="width:21%; text-align:right;">Probation Duration:</td>
+                <td class="hc-attr-value" style="width:21%; text-align:left;">
+                    @Html.EditorFor(model => model.Offer.ProbationDuration, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;", @Value = "6" })
                 </td>
             </tr>
             <tr>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Salary:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
                     @Html.EditorFor(model => model.Salary.Salary, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
+                </td>
+                <td class="attr_for_social" style="width:21%; text-align:right;">Review Salary:</td>
+                <td class="attr_for_social" style="width:21%; text-align:left;">
+                    @Html.EditorFor(model => model.Salary.ReviewSalary, new { @style = "width: 90%; padding:0; font-size:18px; line-height:1.4;" })
                 </td>
             </tr>
             <tr>

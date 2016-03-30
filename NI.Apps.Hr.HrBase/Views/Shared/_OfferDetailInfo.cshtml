@@ -48,7 +48,7 @@
                 </td>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Email:</td>
                 <td id="personel_Email" class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.DisplayFor(model => model.Personel.Email)
+                    @Html.DisplayTextFor(model => model.Personel.Email)
                     @Html.HiddenFor(model => model.Personel.Email)
                 </td>
             </tr>
@@ -93,7 +93,7 @@
                 </td>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Reporting Line Email:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.DisplayFor(model => model.Report.ReportLineEmail)
+                    @Html.DisplayTextFor(model => model.Report.ReportLineEmail)
                     @Html.HiddenFor(model => model.Report.ReportLineEmail)
                 </td>
             </tr>
@@ -105,7 +105,7 @@
                 </td>
                 <td class="hc-attr-name" style="width:21%; text-align:right;">Department Mgr Email:</td>
                 <td class="hc-attr-value" style="width:21%; text-align:left;">
-                    @Html.DisplayFor(model => model.Report.DepartmentMgrEmail)
+                    @Html.DisplayTextFor(model => model.Report.DepartmentMgrEmail)
                     @Html.HiddenFor(model => model.Report.DepartmentMgrEmail)
                 </td>
             </tr>

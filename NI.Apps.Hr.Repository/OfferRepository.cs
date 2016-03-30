@@ -71,7 +71,7 @@ namespace NI.Apps.Hr.Repository{
         }
 
         public IEnumerable<Table_Offer> FindValidOffer(int? code) {
-            var validStatus = new string[] { "Draft", "Pending Manager Approval", "Waiting Candidate Feedback", "Pending Welcome Letter", "Pending Candidate Onboarding" };
+            var validStatus = new string[] { "Draft", "Pending Manager Approval", "Waiting Candidate Feedback", "Pending Welcome Letter", "Pending Candidate Onboarding", "Onboarded" };
 
             using (var db = new HrDbContext()) { 
                 var result=(from o in db.Table_Offer
@@ -79,7 +79,7 @@ namespace NI.Apps.Hr.Repository{
                                 on o.Offer_HCID equals h.Headcount_ID
                                 where(code==null || h.Headcount_Code==code)
                                 && validStatus.Contains(o.Offer_Status)
-                                select o).ToList();
+                                select o).OrderByDescending(o=>o.Offer_CreatedAt).ToList();
                 return result;
             }
         }
@@ -97,14 +97,15 @@ namespace NI.Apps.Hr.Repository{
                                       select new Offer()
                                       {
                                           ID=o.Offer_ID,
-                                          Name = p.PersonelInfo_FName + p.PersonelInfo_LName,
+                                          Name = p.PersonelInfo_LName + p.PersonelInfo_FName,
                                           Type = o.Offer_RecruitType,
                                           Phone = p.PersonelInfo_Phone,
                                           Email = p.PersonelInfo_Email,
                                           OnboardingDate = o.Offer_OnboardingDate,
                                           Offer_ProbationDuration = o.Offer_ProbationDuration,
-                                          Status = o.Offer_Status
-                                      }).ToList();
+                                          Status = o.Offer_Status,
+                                          CreatedAt=o.Offer_CreatedAt
+                                      }).OrderByDescending(o=>o.CreatedAt).ToList();
 
                 foreach(var item in result){
                     if(item.OnboardingDate.HasValue){
@@ -133,7 +134,7 @@ namespace NI.Apps.Hr.Repository{
                 var result = (from o in db.Table_Offer
                               join h in db.Table_Headcount on o.Offer_HCID equals h.Headcount_ID
                               join p in db.Table_PersonelInfo on o.Offer_PersonelInfoID equals p.PersonelInfo_ID
-                              where (string.IsNullOrEmpty(Name) || (p.PersonelInfo_FName+p.PersonelInfo_LName)==Name)
+                              where (string.IsNullOrEmpty(Name) || (p.PersonelInfo_LName+p.PersonelInfo_FName).Contains(Name))
                               && (FromDate == null || o.Offer_CreatedAt >= startDate)
                               && (ToDate == null || o.Offer_CreatedAt < endDate)
                               && (string.IsNullOrEmpty(Status) || o.Offer_Status == Status)
@@ -141,14 +142,15 @@ namespace NI.Apps.Hr.Repository{
                               select new Offer()
                               {
                                   ID=o.Offer_ID,
-                                  Name = p.PersonelInfo_FName + p.PersonelInfo_LName,
+                                  Name = p.PersonelInfo_LName + p.PersonelInfo_FName,
                                   Type = o.Offer_RecruitType,
                                   Phone = p.PersonelInfo_Phone,
                                   Email = p.PersonelInfo_Email,
                                   OnboardingDate = o.Offer_OnboardingDate,
                                   Offer_ProbationDuration = o.Offer_ProbationDuration,
-                                  Status = o.Offer_Status
-                              }).ToList();
+                                  Status = o.Offer_Status,
+                                  CreatedAt=o.Offer_CreatedAt
+                              }).OrderByDescending(o => o.CreatedAt).ToList();
 
                 foreach (var item in result)
                 {
@@ -169,8 +171,8 @@ namespace NI.Apps.Hr.Repository{
                                       where o.Offer_ID == entity.Offer_ID
                                       select o).First();
 
-                //offer.Offer_OnboardingDate = entity.Offer_OnboardingDate ?? offer.Offer_OnboardingDate;
-                offer.Offer_SignedFile = "D:\\VS2010\\old-version\\2016-3-3\\Demo1\\NI.Application.HR.HRBase\\App_Data\\3.xls";
+                offer.Offer_OnboardingDate = entity.Offer_OnboardingDate ?? offer.Offer_OnboardingDate;
+                offer.Offer_SignedFile = entity.Offer_SignedFile;
                 offer.Offer_ModifiedAt = DateTime.Now;
                 offer.Offer_ModifiedBy = "NIA Support";
 
@@ -228,11 +230,13 @@ namespace NI.Apps.Hr.Repository{
             {
                 Table_Offer entity = db.Table_Offer.Find(offer.Offer_ID);
                 if (entity != null) {
+                    entity.Offer_Status = offer.Offer_Status;
                     entity.Offer_RecruitType = offer.Offer_RecruitType;
                     entity.Offer_Position = offer.Offer_Position;
                     entity.Offer_Location=offer.Offer_Location;
                     entity.Offer_OnboardingDate=offer.Offer_OnboardingDate;
                     entity.Offer_RecruitChannel=offer.Offer_RecruitChannel;
+                    entity.Offer_ContractDuration = offer.Offer_ContractDuration;
                     entity.Offer_ProbationDuration=offer.Offer_ProbationDuration;
                     entity.Offer_ModifiedAt=DateTime.Now;
                     entity.Offer_ModifiedBy = "NIA Support";       //should be the user name
@@ -263,6 +267,7 @@ namespace NI.Apps.Hr.Repository{
                 Table_SalaryInfo salary=db.Table_SalaryInfo.Find(entity.Offer_SalaryInfoID);
                 if(salary!=null){
                     salary.SalaryInfo_Salary=salaryInfo.SalaryInfo_Salary;
+                    salary.SalaryInfo_ReviewedSalary = salaryInfo.SalaryInfo_ReviewedSalary;
                     salary.SalaryInfo_ModifiedAt=DateTime.Now;
                     salary.SalaryInfo_ModifiedBy="NIA Support";
                 }

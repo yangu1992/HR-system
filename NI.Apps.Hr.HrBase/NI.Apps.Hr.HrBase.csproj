@@ -44,13 +44,23 @@
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.5\lib\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DocX, Version=1.0.0.19, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocX.1.0.0.19\lib\net40\DocX.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Office.Interop.Excel, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Microsoft.Office.Interop.Outlook, Version=12.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -66,9 +76,11 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -80,7 +92,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
@@ -137,15 +148,22 @@
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AuthConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="BusinessRules\Utility.cs" />
+    <Compile Include="Controllers\CultureController.cs" />
     <Compile Include="Controllers\EmailControl.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\ExcelReadController.cs" />
     <Compile Include="Controllers\HeadCountController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HttpParamActionAttribute.cs" />
     <Compile Include="Controllers\OfferController.cs" />
+    <Compile Include="Filters\CheckEmailFromAttribute.cs" />
+    <Compile Include="Filters\CustomAuthorizeAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -188,9 +206,14 @@
     <Content Include="Images\heroAccent.png" />
     <Content Include="Images\leftbg.bmp" />
     <Content Include="Images\NI.png" />
+    <Content Include="Scripts\departmentAutoComplete.js" />
+    <Content Include="Scripts\disableBackButton.js" />
+    <Content Include="Scripts\employeeAutoComplete.js" />
+    <Content Include="Scripts\internalLevelAutoComplete.js" />
     <Content Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Content\Attachments\OfferToCandidate\Personal Information Form.xlsx" />
     <None Include="Scripts\jquery-1.4.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.4.4.js" />
     <Content Include="Scripts\jquery-1.4.4.min.js" />
@@ -206,6 +229,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Scripts\rejectOffer.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\EmailTemplate\DomainRequestEmail.html" />
     <Content Include="Views\EmailTemplate\EmrollmentCheckListEmail.html" />
@@ -217,7 +241,9 @@
     <Content Include="Views\EmailTemplate\SurveyEmail.html" />
     <Content Include="Views\EmailTemplate\WelcomeToCandidateEmail.html" />
     <Content Include="Views\EmailTemplate\WelcomeToLineMgrEmail.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -225,6 +251,14 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Offer\OfferOnboarded.cshtml" />
+    <Content Include="Views\Shared\Welcome.cshtml" />
+    <Content Include="Views\Offer\_EmailConfirmDialog.cshtml" />
+    <Content Include="Views\Offer\_FeedbackSection.cshtml" />
+    <Content Include="Views\Employee\EmployeeSearch.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Employee\EmployeeDetail.cshtml" />
+    <Content Include="Views\Shared\NotAuthorized.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -236,7 +270,6 @@
     <Content Include="Content\Attachments\ApproveToMgr\NI Offer Letter.docx" />
     <None Include="Content\Attachments\OfferToCandidate\3 Benefits Information Package.pdf" />
     <None Include="Content\Attachments\OfferToCandidate\Employment Guideline.pdf" />
-    <None Include="Content\Attachments\OfferToCandidate\Personal Information Form.xlsx" />
     <None Include="Content\Attachments\OfferToCandidate\Shuttle bus info..pdf" />
     <None Include="Content\Attachments\WelcomeToCandidate\2016年入职体检指南.pdf" />
     <None Include="Content\Attachments\WelcomeToCandidate\Employment Guideline 2016.pdf" />
@@ -292,6 +325,9 @@
       <Project>{2D50C1E7-770C-4632-80B3-4D313951183D}</Project>
       <Name>NI.Apps.Hr.Service</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

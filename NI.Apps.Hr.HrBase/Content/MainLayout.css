@@ -119,6 +119,12 @@ input.btn
     text-align:center;
 }
 
+#employees_table tr td
+{  
+    text-align:center;
+}
+
+
 .mask
 {
     height:100%; 
@@ -147,4 +153,12 @@ span.field-validation-error>span {
 
 input.read_only {
     
+}
+
+
+.ui-autocomplete {
+		max-height: 250px;
+		overflow-y: auto;
+		/* prevent horizontal scrollbar */
+		overflow-x: hidden;
 }

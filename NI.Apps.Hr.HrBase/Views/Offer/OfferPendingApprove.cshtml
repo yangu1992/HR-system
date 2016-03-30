@@ -4,61 +4,29 @@
 
 @model NI.Application.HR.HRBase.Models.OfferActivity.OfferCreateModel
 
-@using (Html.BeginForm("ApproveByMgr", "Offer", FormMethod.Post, new { id = "PostForm" }))
-{
+
     @Html.Partial("_OfferBaseInfo", Model.Offer ?? new NI.Application.HR.HRBase.Models.OfferActivity.OfferDetailModel(),
-                       new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Offer" } });
+                       new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Offer" } })
 
     @Html.Partial("_OfferPersonInfoFixed", Model.Personel ?? new NI.Application.HR.HRBase.Models.OfferActivity.PersonelDetailModel(),
                    new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Personel" } })
 
     @Html.Partial("_OfferPositionInfoFixed", Model)
-}
 
 <br />
 <p id="pending_MgrApprove_section" style="width:90%; text-align:center; " class="valid-offer-section">
     <input type="button" id="MgrApproveBtn" name="MgrApproveBtn" value=" Approve " style="font-size:18px; line-height:1.4; margin-right:35px;" />
-    <input type="button" name="RejectBtn" value=" Reject "
-           onclick="location.href='@Url.Action("Reject", "Offer", new { offerID=Model.Offer.ID})'"
+    <input type="button" id="RejectBtn" name="RejectBtn" value=" Reject "
+           onclick="if (confirm('Are you sure?')) { window.location.href = '@Url.Action("Reject", "Offer", new { offerID = Model.Offer.ID })'; }"
            style="font-size:18px; line-height:1.4; margin-right:35px;" />
     <input type="button" value="Revise" onclick="location.href='@Url.Action("Revise", "Offer", new { offerID=Model.Offer.ID})'" style="font-size:18px; line-height:1.4;" />
 </p>
 
 <div id="dialog-confirm" title="Offer Email Check">
-    <table id="dialog_table" style="border:0;">
-        <tr>
-            <td style="vertical-align:top; border:0;"><label for="From">From</label></td>
-            <td style="vertical-align:central; border:0;">
-                @Html.TextBoxFor(model => model.Email.FromEmail)
-            </td>
-        </tr>
-        <tr>
-            <td style="vertical-align:top; border:0;"><label for="To">To</label></td>
-            <td style="vertical-align:central; border:0;">
-                @Html.TextAreaFor(model => model.Email.ToEmail, 2, 20, null)
-            </td>
-        </tr>
-        <tr>
-            <td style="vertical-align:top; border:0;"><label for="CC">CC</label></td>
-            <td style="vertical-align:central; border:0;">
-                @Html.TextAreaFor(model => model.Email.CCEmail, 2, 20, null)
-            </td>
-        </tr>
-        <tr>
-            <td style="vertical-align:top; border:0;"><label for="Subject">Subject </label></td>
-            <td style="vertical-align:central; border:0;">
-                @Html.TextAreaFor(model => model.Email.Subject, 2, 20, null)
-            </td>
-        </tr>
-    </table>
+    @Html.Partial("_EmailConfirmDialog", Model.Email ?? new NI.Application.HR.HRBase.Models.EmailModel())
 </div>
 
-
-
 <script type="text/javascript">
-    $('.Date').datepicker();
-    $('.Date').datepicker("setDate",new Date());
-
     $(function () {
         $('#dialog-confirm').dialog({
             autoOpen: false,
@@ -72,9 +40,34 @@
                     click: $.noop,
                     type: "submit",
                     click: function () {
+                        var offerID = $("#Offer_ID").val().trim();
                         $(this).dialog("close");
                         $("div.mask").css("display", "block");
-                        $('#PostForm').submit();
+
+                        var from = $("#FromEmail").val();
+                        var to = $("#ToEmail").val();
+                        var cc = $("#CCEmail").val();
+                        var subject = $("#Subject").val();
+                        var data = {
+                            OfferID: offerID,
+                            FromEmail: from,
+                            ToEmail: to,
+                            CcEmail: cc,
+                            Subject: subject
+                        };
+                        data = JSON.stringify(data);
+                        $.ajax({
+                            type: "POST",
+                            data: data,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            url: '@Url.Action("ApproveByMgr", "Offer")',
+                            success: function (response) {
+                                var param = response.offer_id;
+                                var url = '@Url.Action("GoToNewestPage", "Offer", new { offerID = "__param__" })';
+                                window.location.href = url.replace('__param__', encodeURIComponent(param));
+                            }
+                        });
                     }
                 },
                 {
@@ -85,10 +78,10 @@
                 }
             ],
             open: function () {
-                $("#Email_FromEmail").val("yan.gu@ni.com")+ ";";
-                $("#Email_ToEmail").val($("#Personel_Email").val());
-                $("#Email_CCEmail").val($("#Report_ReportLineEmail").val() + ";" + $("#Report_DepartmentMgrEmail").val());
-                $("#Email_Subject").val("Offer Letter from National Instruments");
+                $("#FromEmail").val("yan.gu@ni.com") + ";";
+                $("#ToEmail").val($("#Personel_Email").val());
+                $("#CCEmail").val($("#report_ReportLineEmail").html().trim() + ";" + $("#report_DepartmentMgrEmail").html().trim());
+                $("#Subject").val("Offer Letter from National Instruments");
                 $(this).parent().appendTo('#PostForm');
             }
         });
@@ -101,12 +94,19 @@
 
         $(window).load(function () {
             var status = $("#Salary_bonus").is(":checked");
-
             if (status == false) {
                 $(".bonus_section").hide();
             }
 
-            $("input.read_only").attr("disabled","disabled");     
+            $("input.read_only").attr("disabled", "disabled");
+
+            var recruitmentType = $("#Offer_RecruitType").html().trim();
+            if (recruitmentType == 'Campus') {
+                $(".attr_for_social").show();
+            } else {
+                $(".attr_for_social").hide();
+            }
         });
     });
 </script>
+@Scripts.Render("~/Scripts/disableBackButton.js");

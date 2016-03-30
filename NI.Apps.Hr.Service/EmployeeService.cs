@@ -7,6 +7,7 @@ using NI.Apps.Hr.Service.Interface;
 using NI.Apps.Hr.Entity;
 using NI.Apps.Hr.Repository;
 using NI.Apps.Hr.Repository.Interface;
+using NI.Apps.Hr.Entity.Models;
 
 namespace NI.Apps.Hr.Service
 {
@@ -22,6 +23,12 @@ namespace NI.Apps.Hr.Service
         public Table_Employee FindEmployeeByID(int? id)
         {
             return this.EmployeeRepository.FindEmployeeByID(id);
+        }
+
+
+        public IEnumerable<Employee> FindEmployees(string ChineseName, string Department)
+        {
+            return this.EmployeeRepository.FindEmployees(ChineseName,Department);
         }
     }
 }

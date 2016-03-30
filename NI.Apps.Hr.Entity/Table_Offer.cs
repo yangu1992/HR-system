@@ -25,6 +25,7 @@ namespace NI.Apps.Hr.Entity
         public string Offer_Location { get; set; }
         public Nullable<System.DateTime> Offer_OnboardingDate { get; set; }
         public string Offer_RecruitChannel { get; set; }
+        public Nullable<int> Offer_ContractDuration { get; set; }
         public Nullable<int> Offer_ProbationDuration { get; set; }
         public string Offer_Notes { get; set; }
         public string Offer_SignedFile { get; set; }

@@ -26,6 +26,9 @@ namespace NI.Apps.Hr.Repository
                          where b.BonusInfo_SalaryInfoID == salaryID
                          select b).ToList();
 
+                if (result.Count == 0)
+                    return null;
+
                 return result;
             }
         }

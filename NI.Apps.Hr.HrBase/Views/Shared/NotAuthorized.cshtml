@@ -1,0 +1,20 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>NotAuthorized</title>
+</head>
+<body>
+    <div>
+        <h2 style="color:red;">Access is denied.</h2>
+        <h3>You do not have permission to view this directory or page using the credentials that you supplied.</h3>
+        @Html.Label("", ViewData["Name"].ToString())
+    </div>
+</body>
+</html>
+

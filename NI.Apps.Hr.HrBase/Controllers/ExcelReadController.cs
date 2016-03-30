@@ -2,59 +2,52 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.IO;
+using System.IO.Packaging;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Spreadsheet;
 using NI.Application.HR.HRBase.Models.OfferActivity;
-using Microsoft.Office.Interop.Excel;
 using NI.Application.HR.HRBase.Models.OfferActivity.PersonalInfoFormModels;
-using Excel = Microsoft.Office.Interop.Excel;
+
 
 namespace NI.Application.HR.HRBase.Controllers
 {
     public class ExcelReadController
     {
-        public PersonalInfoFormModel getFormModel(HttpPostedFileBase fb, string path)
+        public PersonalInfoFormModel getFormModel(string path)
         {
-            Excel.Application app = new Excel.Application();
-            Excel.Sheets sheets;
-            Excel.Workbook workbook = null;
-
-            object oMissiong = System.Reflection.Missing.Value;
-            workbook = app.Workbooks.Open(path, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong,
-                oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong, oMissiong);
-            sheets = workbook.Worksheets;
-
-            Excel.Worksheet worksheet = (Excel.Worksheet)sheets.get_Item(1);//读取第一张表  
-
-            PersonalInfoModel personalInfo = getPersonalInfo(worksheet);
-            List<EducationBackgroudModel> eduInfo = getEduInfo(worksheet);
-            List<WorkExperienceModel> workExperienceInfo = getWorkExperienceInfo(worksheet);
-            List<FamilyMemberModel> familyMemInfo = getFamilyMemInfo(worksheet);
-            List<ChildrenInfoModel> childsInfo = getChildsInfo(worksheet);
-
-            PersonalInfoFormModel model = new PersonalInfoFormModel
+            using (SpreadsheetDocument document = SpreadsheetDocument.Open(path, false))
             {
-                PersonalInfo=personalInfo,
-                EduInfo=eduInfo,
-                WorkExperienceInfo=workExperienceInfo,
-                FamilyMemInfo=familyMemInfo,
-                ChildsInfo=childsInfo,
-                Department=worksheet.get_Range("C42").Value2,
-                Position=worksheet.get_Range("F42").Value2,
-                TentativeOnboardDate = worksheet.get_Range("I42").Text
-            };
+                // Attempt to add a new WorksheetPart.
+                // The call to AddNewPart generates an exception because the file is read-only.
+                WorkbookPart wbPart = document.WorkbookPart;
+                Sheet worksheet = wbPart.Workbook.Descendants<Sheet>().Where(s => s.Name == "Form").FirstOrDefault();
+                WorksheetPart wsPart = (WorksheetPart)(wbPart.GetPartById(worksheet.Id));
 
-            //release
-            workbook.Close(false, oMissiong, oMissiong);
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
-            workbook = null;
-            app.Workbooks.Close();
-            app.Quit();
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
-            app = null;
+                PersonalInfoModel personalInfo = getPersonalInfo(wbPart, wsPart.Worksheet);
+                List<EducationBackgroudModel> eduInfo = getEduInfo(wbPart, wsPart.Worksheet);
+                List<WorkExperienceModel> workExperienceInfo = getWorkExperienceInfo(wbPart, wsPart.Worksheet);
+                List<FamilyMemberModel> familyMemInfo = getFamilyMemInfo(wbPart, wsPart.Worksheet);
+                List<ChildrenInfoModel> childsInfo = getChildsInfo(wbPart, wsPart.Worksheet);
 
-            return model;
+                PersonalInfoFormModel model = new PersonalInfoFormModel
+                {
+                    PersonalInfo = personalInfo,
+                    EduInfo = eduInfo,
+                    WorkExperienceInfo = workExperienceInfo,
+                    FamilyMemInfo = familyMemInfo,
+                    ChildsInfo = childsInfo,
+                    Department = getCellValue(wbPart, wsPart.Worksheet, "C42"),
+                    Position = getCellValue(wbPart, wsPart.Worksheet, "F42"),
+                    TentativeOnboardDate = getCellValue(wbPart, wsPart.Worksheet, "I42")
+                };
+
+                return model;
+            }
         }
 
-        private List<ChildrenInfoModel> getChildsInfo(Worksheet worksheet)
+
+        private List<ChildrenInfoModel> getChildsInfo(WorkbookPart wbPart, Worksheet worksheet)
         {
             int recordStartRowNo = 38;
             int recordEndRowNo = 40;
@@ -68,13 +61,13 @@ namespace NI.Application.HR.HRBase.Controllers
 
             for (int i = recordStartRowNo; i <= recordEndRowNo; i++)
             {
-                if (worksheet.get_Range(fullNameColNo + i).Value2 != null)
+                if (getCellValue(wbPart, worksheet, fullNameColNo + i) != null)
                 {
                     childsInfo = new ChildrenInfoModel
                     {
-                        FullName = worksheet.get_Range(fullNameColNo + i).Value2,
-                        Gender = worksheet.get_Range(genderColNo + i).Value2,
-                        BirthDate = worksheet.get_Range(birthColNo + i).Text,
+                        FullName = getCellValue(wbPart, worksheet, fullNameColNo + i),
+                        Gender = getCellValue(wbPart, worksheet, genderColNo + i),
+                        BirthDate = getCellValue(wbPart, worksheet, birthColNo + i),
                     };
 
                     model.Add(childsInfo);
@@ -84,7 +77,7 @@ namespace NI.Application.HR.HRBase.Controllers
             return model;
         }
 
-        private List<FamilyMemberModel> getFamilyMemInfo(Worksheet worksheet)
+        private List<FamilyMemberModel> getFamilyMemInfo(WorkbookPart wbPart, Worksheet worksheet)
         {
             int recordStartRowNo = 32;
             int recordEndRowNo = 35;
@@ -100,15 +93,15 @@ namespace NI.Application.HR.HRBase.Controllers
 
             for (int i = recordStartRowNo; i <= recordEndRowNo; i++)
             {
-                if (worksheet.get_Range(fullNameColNo + i).Value2 != null)
+                if (getCellValue(wbPart, worksheet, fullNameColNo + i) != null)
                 {
                     familyMemInfo = new FamilyMemberModel
                     {
-                        FullName = worksheet.get_Range(fullNameColNo + i).Value2,
-                        Relations = worksheet.get_Range(relationColNo + i).Value2,
-                        Employer = worksheet.get_Range(employerColNo + i).Value2,
-                        Department = worksheet.get_Range(depColNo + i).Value2,
-                        Position = worksheet.get_Range(positionColNo + i).Value2
+                        FullName = getCellValue(wbPart, worksheet, fullNameColNo + i),
+                        Relations = getCellValue(wbPart, worksheet, relationColNo + i),
+                        Employer = getCellValue(wbPart, worksheet, employerColNo + i),
+                        Department = getCellValue(wbPart, worksheet, depColNo + i),
+                        Position = getCellValue(wbPart, worksheet, positionColNo + i)
                     };
 
                     model.Add(familyMemInfo);
@@ -118,7 +111,7 @@ namespace NI.Application.HR.HRBase.Controllers
             return model;
         }
 
-        private List<WorkExperienceModel> getWorkExperienceInfo(Worksheet worksheet)
+        private List<WorkExperienceModel> getWorkExperienceInfo(WorkbookPart wbPart, Worksheet worksheet)
         {
             int recordStartRowNo = 22;
             int recordEndRowNo = 28;
@@ -134,15 +127,15 @@ namespace NI.Application.HR.HRBase.Controllers
 
             for (int i = recordStartRowNo; i <= recordEndRowNo; i++)
             {
-                if (worksheet.get_Range(employerColNo + i).Value2 != null)
+                if (getCellValue(wbPart, worksheet, employerColNo + i) != null)
                 {
                     workExperienceInfo = new WorkExperienceModel
                     {
-                        StartDate = worksheet.get_Range(startDateColNo + i).Text,
-                        EndDate = worksheet.get_Range(endDateColNo + i).Text,
-                        Employer = worksheet.get_Range(employerColNo + i).Value2,
-                        Department = worksheet.get_Range(depColNo + i).Value2,
-                        Position = worksheet.get_Range(positionColNo + i).Value2
+                        StartDate = getDate(getCellValue(wbPart, worksheet, startDateColNo + i)),
+                        EndDate = getDate(getCellValue(wbPart, worksheet, endDateColNo + i)),
+                        Employer = getCellValue(wbPart, worksheet, employerColNo + i),
+                        Department = getCellValue(wbPart, worksheet, depColNo + i),
+                        Position = getCellValue(wbPart, worksheet, positionColNo + i)
                     };
 
                     model.Add(workExperienceInfo);
@@ -152,28 +145,33 @@ namespace NI.Application.HR.HRBase.Controllers
             return model;
         }
 
-        private List<EducationBackgroudModel> getEduInfo(Worksheet worksheet)
+        private List<EducationBackgroudModel> getEduInfo(WorkbookPart wbPart, Worksheet worksheet)
         {
             int recordStartRowNo = 13;
-            int recordEndRowNo=17;
+            int recordEndRowNo = 17;
 
-            string startDateColNo="B";
-            string endDateColNo="D";
-            string schoolColNo="E";
-            string majorColNo="G";
-            string degreeColNo="I";
+            string startDateColNo = "B";
+            string endDateColNo = "D";
+            string schoolColNo = "E";
+            string majorColNo = "G";
+            string degreeColNo = "I";
 
             List<EducationBackgroudModel> model = new List<EducationBackgroudModel>();
             EducationBackgroudModel eduInfo;
 
-            for (int i = recordStartRowNo; i<=recordEndRowNo; i++) {
-                if (worksheet.get_Range(schoolColNo + i).Value2 != null) {
-                    eduInfo = new EducationBackgroudModel { 
-                        StartDate=worksheet.get_Range(startDateColNo+i).Text,
-                        EndDate = worksheet.get_Range(endDateColNo + i).Text,
-                        School=worksheet.get_Range(schoolColNo+i).Value2,
-                        Major = worksheet.get_Range(majorColNo+i).Value2,
-                        Degree = worksheet.get_Range(degreeColNo+i).Value2
+            getCellValue(wbPart, worksheet, "E" + "13");
+
+            for (int i = recordStartRowNo; i <= recordEndRowNo; i++)
+            {
+                if (getCellValue(wbPart, worksheet, schoolColNo + i) != null)
+                {
+                    eduInfo = new EducationBackgroudModel
+                    {
+                        StartDate = getDate(getCellValue(wbPart, worksheet, startDateColNo + i)),
+                        EndDate = getDate(getCellValue(wbPart, worksheet, endDateColNo + i)),
+                        School = getCellValue(wbPart, worksheet, schoolColNo + i),
+                        Major = getCellValue(wbPart, worksheet, majorColNo + i),
+                        Degree = getCellValue(wbPart, worksheet, degreeColNo + i)
                     };
 
                     model.Add(eduInfo);
@@ -183,46 +181,60 @@ namespace NI.Application.HR.HRBase.Controllers
             return model;
         }
 
-        private PersonalInfoModel getPersonalInfo(Worksheet worksheet)
+        private string getDate(string s)
         {
-            //Range r = null;
-            //r = worksheet.get_Range("I5");
-            //Console.WriteLine("身份证号"+r.Value2);
-            //r = worksheet.get_Range("I7");
-            //Console.WriteLine("邮政编码" + r.Value2);
-            //r = worksheet.get_Range("C8");
-            //Console.WriteLine("联系电话" + r.Text);
-            //r = worksheet.get_Range("I8");
-            //Console.WriteLine("联系电话" + r.Value2);
-            //r = worksheet.get_Range("B22");
-            //Console.WriteLine("出生日期" + r.Text);
-            //r = worksheet.get_Range("H38");
-            //Console.WriteLine("就职时间" + r.Text);
-            
-            
+            double value = Convert.ToDouble(s);
+            var time = DateTime.FromOADate(value);
+
+            return time.ToShortDateString();
+        }
+
+        private PersonalInfoModel getPersonalInfo(WorkbookPart wbPart, Worksheet worksheet)
+        {
             PersonalInfoModel model = new PersonalInfoModel
             {
-                ChineseFName=worksheet.get_Range("C4").Value2,
-                ChineseGName = worksheet.get_Range("E4").Value2,
-                Gender = worksheet.get_Range("G4").Value2,
-                MaritalStatus = worksheet.get_Range("I4").Value2,
-                EnglishFName = worksheet.get_Range("C5").Value2,
-                EnglishGName = worksheet.get_Range("E5").Value2,
-                BirthDate = worksheet.get_Range("G5").Text,
-                ID = worksheet.get_Range("I5").Text,
-                Nationality = worksheet.get_Range("C6").Value2,
-                Hukou = worksheet.get_Range("E6").Value2,
-                HukouType = worksheet.get_Range("G6").Value2,
-                FileLocation = worksheet.get_Range("I6").Value2,
-                HomeAddress = worksheet.get_Range("C7").Value2,
-                PostCode = worksheet.get_Range("I7").Text,
-                Phone = worksheet.get_Range("C8").Text,
-                Email = worksheet.get_Range("E8").Value2,
-                EmergencyContact = worksheet.get_Range("G8").Value2,
-                EmergencyContactPhone = worksheet.get_Range("I8").Text
+                ChineseFName = getCellValue(wbPart, worksheet, "C4"),
+                ChineseGName = getCellValue(wbPart, worksheet, "E4"),
+                Gender = getCellValue(wbPart, worksheet, "G4"),
+                MaritalStatus = getCellValue(wbPart, worksheet, "I4"),
+                EnglishFName = getCellValue(wbPart, worksheet, "C5"),
+                EnglishGName = getCellValue(wbPart, worksheet, "E5"),
+                BirthDate = getDate(getCellValue(wbPart, worksheet, "G5")),
+                ID = getCellValue(wbPart, worksheet, "I5"),
+                Nationality = getCellValue(wbPart, worksheet, "C6"),
+                Hukou = getCellValue(wbPart, worksheet, "E6"),
+                HukouType = getCellValue(wbPart, worksheet, "G6"),
+                FileLocation = getCellValue(wbPart, worksheet, "I6"),
+                HomeAddress = getCellValue(wbPart, worksheet, "C7"),
+                PostCode = getCellValue(wbPart, worksheet, "I7"),
+                Phone = getCellValue(wbPart, worksheet, "C8"),
+                Email = getCellValue(wbPart, worksheet, "E8"),
+                EmergencyContact = getCellValue(wbPart, worksheet, "G8"),
+                EmergencyContactPhone = getCellValue(wbPart, worksheet, "I8")
             };
 
             return model;
         }
+
+        private string getCellValue(WorkbookPart wbPart, Worksheet worksheet, string location)
+        {
+            Cell cell = worksheet.Descendants<Cell>().Where(c => c.CellReference.Value == location).FirstOrDefault();
+
+            string value = cell.InnerText;
+            if (value == "")
+                return null;
+
+            if (cell.DataType != null)
+            {
+                var stringTable = wbPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+                if (stringTable != null)
+                {
+                    value = stringTable.SharedStringTable.ElementAt(int.Parse(value)).InnerText;
+                }
+            }
+
+            return value;
+        }
+
     }
 }

@@ -1,6 +1,8 @@
 ﻿@{
     ViewBag.Title = "OfferEdit";
 }
+@Scripts.Render("~/Scripts/employeeAutoComplete.js")
+
 @model NI.Application.HR.HRBase.Models.OfferActivity.OfferCreateModel
 
 @using (Html.BeginForm("SaveChanges", "Offer", FormMethod.Post, new { id = "PostForm" }))
@@ -15,7 +17,51 @@
 }
 
 <script type="text/javascript">
+    $('.Date').attr('readOnly', 'true');
+    $('.Date').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yy/mm/dd"
+    });
+
+    var getEmployeeEmailURL = '@Url.Action("GetEmployeesEmails", "Offer")';
+
     $("#SaveChangesBtn").bind('click', function (event) {
         $("#PostForm").submit();
+    });
+
+    $("#Offer_RecruitType").change(function () {
+        var recruitmentType = $("#Offer_RecruitType").val();
+        if (recruitmentType == 'Social') {
+            $(".attr_for_social").show();
+        } else {
+            $(".attr_for_social").hide();
+        }
+
+        if (recruitmentType == 'Campus') {
+            $("#Offer_Channel").val("Campus");
+        }
+    });
+
+
+    $(window).load(function () {
+        //var onboardingDate = $("#Offer_OnBoardingDate").attr("value");
+        //if (onboardingDate == "") {
+        //    $('.Date').datepicker("setDate", new Date());
+        //} else {
+        //    $("#Offer_OnBoardingDate").datepicker("setDate", onboardingDate);
+        //}
+
+        var status = $("#Salary_bonus").is(":checked");
+        if (status == false) {
+            $(".bonus_section").hide();
+        }
+
+        var recruitmentType = $("#Offer_RecruitType").val();
+        if (recruitmentType == 'Campus') {
+            $(".attr_for_social").show();
+        } else {
+            $(".attr_for_social").hide();
+        }
     });
 </script>

@@ -67,114 +67,112 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HrManagementPortalModel.Context.cs">
+    <Compile Include="HRManagementPortalModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HrManagementPortalModel.Context.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="HrManagementPortalModel.cs">
+    <Compile Include="HRManagementPortalModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="HrManagementPortalModel.Designer.cs">
+    <Compile Include="HRManagementPortalModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HrManagementPortalModel.edmx</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\HeadCount.cs" />
     <Compile Include="Models\Offer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="sysdiagram.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_BonusInfo.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_ChildrenInfo.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_CostCenter.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_Department.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_EducationInfo.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Table_EmailAccount.cs">
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_Employee.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_FamilyMembersInfo.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_Headcount.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_InternalLevel.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_Offer.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_OfferCycle.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_PersonelInfo.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_ReportingInfo.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_Resignation.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_Role.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_SalaryInfo.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_Survey.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_TypeRoleAccess.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_UserRole.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Table_WorkExperienceInfo.cs">
-      <DependentUpon>HrManagementPortalModel.tt</DependentUpon>
+      <DependentUpon>HRManagementPortalModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-    <EntityDeploy Include="HrManagementPortalModel.edmx">
+    <EntityDeploy Include="HRManagementPortalModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HrManagementPortalModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>HRManagementPortalModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="HrManagementPortalModel.Context.tt">
+    <None Include="HRManagementPortalModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HrManagementPortalModel.edmx</DependentUpon>
-      <LastGenOutput>HrManagementPortalModel.Context.cs</LastGenOutput>
+      <DependentUpon>HRManagementPortalModel.edmx</DependentUpon>
+      <LastGenOutput>HRManagementPortalModel.Context.cs</LastGenOutput>
     </None>
-    <None Include="HrManagementPortalModel.edmx.diagram">
-      <DependentUpon>HrManagementPortalModel.edmx</DependentUpon>
+    <None Include="HRManagementPortalModel.edmx.diagram">
+      <DependentUpon>HRManagementPortalModel.edmx</DependentUpon>
     </None>
-    <None Include="HrManagementPortalModel.tt">
+    <None Include="HRManagementPortalModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HrManagementPortalModel.edmx</DependentUpon>
-      <LastGenOutput>HrManagementPortalModel.cs</LastGenOutput>
+      <DependentUpon>HRManagementPortalModel.edmx</DependentUpon>
+      <LastGenOutput>HRManagementPortalModel.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
   </ItemGroup>

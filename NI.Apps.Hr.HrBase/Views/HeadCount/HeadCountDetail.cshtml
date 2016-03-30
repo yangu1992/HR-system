@@ -6,6 +6,7 @@
 @using PagedList.Mvc;
 @Styles.Render("~/Content/HeadCount/HeadCountDetail.css")
 @Styles.Render("~/Content/PagedList.css")
+@Scripts.Render("~/Scripts/internalLevelAutoComplete.js")
 
 <fieldset id="headcount_field" style="display:block;">
     <legend style="font-weight:bold;">Headcount_Detail</legend>
@@ -15,6 +16,7 @@
                             new { id = "form1" }))
         {
             @Html.HiddenFor(model => model.headcount.ID)
+            @Html.HiddenFor(model=>model.headcount.isExisted)
             
             <table id="headcount_table" style="width:90%; border-collapse:collapse;">
                 <tr>
@@ -104,10 +106,18 @@
 </fieldset>
 
 <script type="text/javascript">
+    var getInternalLevelURL = '@Url.Action("GetInternalLevels", "HeadCount")';
+
     $("#editBtn").click(function () {
-        var ID=$("#headcount_ID").val().trim();
-        $.get("/HeadCount/Edit/?hcID="+Number(ID), function (response) {
+        var ID = $("#headcount_ID").val().trim();
+        var url = '@Url.Action("Edit", "HeadCount")?hcID=' + Number(ID);
+        $.get(url, function (response) {
             $("#headcount_create").html(response);
         });
+    });
+
+    $(function () {
+        if ($("#headcount_isExisted").val() == 'True')
+            alert("The headcount with this code exists!");
     });
 </script>

@@ -4,4 +4,28 @@
 
 @model NI.Application.HR.HRBase.Models.OfferActivity.OfferCreateModel
 
-@Html.Partial("_OfferDetailInfo", Model);
+@Html.Partial("_OfferBaseInfo", Model.Offer ?? new NI.Application.HR.HRBase.Models.OfferActivity.OfferDetailModel(),
+                       new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Offer" } })
+
+@Html.Partial("_OfferPersonInfoFixed", Model.Personel ?? new NI.Application.HR.HRBase.Models.OfferActivity.PersonelDetailModel(),
+                   new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Personel" } })
+
+@Html.Partial("_OfferPositionInfoFixed", Model)
+
+<script type="text/javascript">
+    $(window).load(function () {
+        var status = $("#Salary_bonus").is(":checked");
+        if (status == false) {
+            $(".bonus_section").hide();
+        }
+
+        $("input.read_only").attr("disabled", "disabled");
+
+        var recruitmentType = $("#Offer_RecruitType").html().trim();
+        if (recruitmentType == 'Campus') {
+            $(".attr_for_social").show();
+        } else {
+            $(".attr_for_social").hide();
+        }
+    });
+</script>

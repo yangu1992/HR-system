@@ -19,6 +19,7 @@ namespace NI.Apps.Hr.Entity.Models
         public DateTime? ProbationDueDate { get; set; }
         public int? Offer_ProbationDuration { get; set; }
         public string Status { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
     }
 

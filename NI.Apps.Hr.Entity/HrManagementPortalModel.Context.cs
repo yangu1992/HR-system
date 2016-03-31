@@ -123,5 +123,14 @@ namespace NI.Apps.Hr.Entity
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Proc_InsertNewEmployee", returnVal, offerIDParameter, userParameter);
         }
+    
+        public virtual int Proc_GetUserEmail(ObjectParameter returnVal, string domainLogin)
+        {
+            var domainLoginParameter = domainLogin != null ?
+                new ObjectParameter("DomainLogin", domainLogin) :
+                new ObjectParameter("DomainLogin", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("Proc_GetUserEmail", returnVal, domainLoginParameter);
+        }
     }
 }

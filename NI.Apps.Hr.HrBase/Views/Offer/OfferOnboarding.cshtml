@@ -2,12 +2,12 @@
     ViewBag.Title = "OfferOnboarding";
 }
 
-@model NI.Application.HR.HRBase.Models.OfferActivity.OfferCreateModel
+@model NI.Apps.Hr.HrBase.Models.OfferActivity.OfferCreateModel
 
-@Html.Partial("_OfferBaseInfoEditable", Model.Offer ?? new NI.Application.HR.HRBase.Models.OfferActivity.OfferDetailModel(),
+@Html.Partial("_OfferBaseInfo", Model.Offer ?? new NI.Apps.Hr.HrBase.Models.OfferActivity.OfferDetailModel(),
                        new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Offer" } })
 
-@Html.Partial("_OfferPersonInfoFixed", Model.Personel ?? new NI.Application.HR.HRBase.Models.OfferActivity.PersonelDetailModel(),
+@Html.Partial("_OfferPersonInfoFixed", Model.Personel ?? new NI.Apps.Hr.HrBase.Models.OfferActivity.PersonelDetailModel(),
                    new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Personel" } })
 
 @Html.Partial("_OfferPositionInfoFixed", Model)
@@ -34,9 +34,9 @@
 
         var recruitmentType=$("#Offer_RecruitType").html().trim();
         if(recruitmentType=='Campus'){
-            $(".attr_for_social").show();
+            $(".attr_for_campus").show();
         }else{
-            $(".attr_for_social").hide();
+            $(".attr_for_campus").hide();
         }
     });
 </script>

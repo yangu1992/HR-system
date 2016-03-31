@@ -2,9 +2,9 @@
     ViewBag.Title = "OfferOnboarded";
 }
 
-@model NI.Application.HR.HRBase.Models.OfferActivity.OfferCreateModel
+@model NI.Apps.Hr.HrBase.Models.OfferActivity.OfferCreateModel
 
-@Html.Partial("_OfferBaseInfoEditable", Model.Offer ?? new NI.Application.HR.HRBase.Models.OfferActivity.OfferDetailModel(),
+@Html.Partial("_OfferBaseInfoEditable", Model.Offer ?? new NI.Apps.Hr.HrBase.Models.OfferActivity.OfferDetailModel(),
                        new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Offer" } })
 
 <h2>OfferOnboarded</h2>

@@ -54,9 +54,35 @@ namespace NI.Apps.Hr.HrBase.BusinessRules
 
             using (var db = new HrDbContext())
             {
-                ObjectParameter p = new ObjectParameter("returnVal", typeof(int));
+                ObjectParameter p = new ObjectParameter("returnVal", typeof(string));
                 db.Proc_GetUserName(p,user);
                 string result = (p.Value==DBNull.Value)?string.Empty:p.Value.ToString();
+
+                return result;
+            }
+        }
+
+        internal static dynamic getCurrentUserEmail(string domainLogin)
+        {
+            string user = domainLogin.ToLower();
+            if (user.StartsWith("ni"))
+            {
+                user = user.Substring(3);
+            }
+            else if (user.StartsWith("apac"))
+            {
+                user = user.Substring(5);
+            }
+            else
+            {
+                //start with apac
+            }
+
+            using (var db = new HrDbContext())
+            {
+                ObjectParameter p = new ObjectParameter("returnVal", typeof(string));
+                db.Proc_GetUserEmail(p, user);
+                string result = (p.Value == DBNull.Value) ? string.Empty : p.Value.ToString();
 
                 return result;
             }

@@ -2,12 +2,12 @@
     ViewBag.Title = "OfferWaitingFeedback";
 }
 
-@model NI.Application.HR.HRBase.Models.OfferActivity.OfferCreateModel
+@model NI.Apps.Hr.HrBase.Models.OfferActivity.OfferCreateModel
 
-@Html.Partial("_OfferBaseInfo", Model.Offer ?? new NI.Application.HR.HRBase.Models.OfferActivity.OfferDetailModel(),
+@Html.Partial("_OfferBaseInfo", Model.Offer ?? new NI.Apps.Hr.HrBase.Models.OfferActivity.OfferDetailModel(),
                        new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Offer" } })
 
-@Html.Partial("_OfferPersonInfoFixed", Model.Personel ?? new NI.Application.HR.HRBase.Models.OfferActivity.PersonelDetailModel(),
+@Html.Partial("_OfferPersonInfoFixed", Model.Personel ?? new NI.Apps.Hr.HrBase.Models.OfferActivity.PersonelDetailModel(),
                    new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Personel" } })
 
 @Html.Partial("_OfferPositionInfoFixed", Model)
@@ -29,15 +29,15 @@
 
 
 <div id="dialog-email-IT" title="Email Check">
-    @Html.Partial("_EmailConfirmDialog", Model.Email ?? new NI.Application.HR.HRBase.Models.EmailModel())
+    @Html.Partial("_EmailConfirmDialog", Model.Email ?? new NI.Apps.Hr.HrBase.Models.EmailModel())
 </div>
 
 <div id="dialog-email-candidate" title="Email Check">
-    @Html.Partial("_EmailConfirmDialog", Model.Email ?? new NI.Application.HR.HRBase.Models.EmailModel())
+    @Html.Partial("_EmailConfirmDialog", Model.Email ?? new NI.Apps.Hr.HrBase.Models.EmailModel())
 </div>
 
 <div id="dialog-email-Mgr" title="Email Check">
-    @Html.Partial("_EmailConfirmDialog", Model.Email ?? new NI.Application.HR.HRBase.Models.EmailModel())
+    @Html.Partial("_EmailConfirmDialog", Model.Email ?? new NI.Apps.Hr.HrBase.Models.EmailModel())
 </div>
 
 
@@ -105,7 +105,7 @@
             open: function () {
                 clearEmailConfirmkDialog();
                 var onboarddate = $("#offer_OnBoardingDate").html().trim();
-                $("input#FromEmail").val("yan.gu@ni.com"); //change with user
+                $("input#FromEmail").val('@(ViewBag.UserEmail)'); //change with user
                 $("textarea#ToEmail").val("<IT Penang>");
                 $("textarea#CCEmail").val("Huiyan.guo@ni.com, Yan.huang@ni.com");
                 $("textarea#Subject").val("new comer on " + onboarddate);
@@ -159,184 +159,168 @@
                                 var url = '@Url.Action("GoToNewestPage", "Offer", new { offerID = "__param__" })';
                                 window.location.href = url.replace('__param__', encodeURIComponent(param));
                             }
-                    });
-    }
-    },
+                        });
+                    }
+                },
     {
-    text: "Cancel",
-    click: function () {
-        $(this).dialog("close");
+        text: "Cancel",
+        click: function () {
+            $(this).dialog("close");
+        }
     }
-    }
-    ],
-    open: function () {
-        clearEmailConfirmkDialog();
-        var candidateEmail = $("#personel_Email").html().trim();
-        var depMgrEmial = $("#report_ReportLineEmail").html().trim();
-        var candidateName = $("#personel_RomanLName").html().trim() + $("#personel_RomanFName").html().trim();
-        $("input#FromEmail").val("yan.gu@ni.com"); //change with user
-        $("textarea#ToEmail").val(candidateEmail);
-        $("textarea#CCEmail").val(depMgrEmial);
-        $("textarea#Subject").val("Welcome to join NI ! -" + candidateName);
-    }
-    });
+            ],
+            open: function () {
+                clearEmailConfirmkDialog();
+                var candidateEmail = $("#personel_Email").html().trim();
+                var depMgrEmial = $("#report_ReportLineEmail").html().trim();
+                var candidateName = $("#personel_RomanLName").html().trim() + $("#personel_RomanFName").html().trim();
+                $("input#FromEmail").val('@(ViewBag.UserEmail)'); //change with user
+                $("textarea#ToEmail").val(candidateEmail);
+                $("textarea#CCEmail").val(depMgrEmial);
+                $("textarea#Subject").val("Welcome to join NI ! -" + candidateName);
+            }
+        });
 
-    $("#emailCandidateBtn").click(function () {
-        $('#dialog-email-candidate').dialog("open");
-    });
+        $("#emailCandidateBtn").click(function () {
+            $('#dialog-email-candidate').dialog("open");
+        });
 
-    //welcome email  to line Mgr confirm
-    $('#dialog-email-Mgr').dialog({
-        autoOpen: false,
-        resizable: false,
-        height: 500,
-        width: 450,
-        modal: true,
-        buttons: [
-            {
-                text: "Send Email",
-                click: $.noop,
-                type: "submit",
-                click: function () {
-                    var offerID = $("#Offer_ID").val().trim();
-                    $(this).dialog("close");
-                    $("div.mask").css("display", "block");
+        //welcome email  to line Mgr confirm
+        $('#dialog-email-Mgr').dialog({
+            autoOpen: false,
+            resizable: false,
+            height: 500,
+            width: 450,
+            modal: true,
+            buttons: [
+                {
+                    text: "Send Email",
+                    click: $.noop,
+                    type: "submit",
+                    click: function () {
+                        var offerID = $("#Offer_ID").val().trim();
+                        $(this).dialog("close");
+                        $("div.mask").css("display", "block");
 
-                    var from = $("#FromEmail").val();
-                    var to = $("#ToEmail").val();
-                    var cc = $("#CCEmail").val();
-                    var subject = $("#Subject").val();
-                    var data = {
-                        OfferID: offerID,
-                        FromEmail: from,
-                        ToEmail: to,
-                        CcEmail: cc,
-                        Subject: subject
-                    };
-                    data = JSON.stringify(data);
-                    $.ajax({
-                        type: "POST",
-                        data: data,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        url: '@Url.Action("SendWelcomeToLineMgr", "Offer")',
-                        success: function (response) {
+                        var from = $("#FromEmail").val();
+                        var to = $("#ToEmail").val();
+                        var cc = $("#CCEmail").val();
+                        var subject = $("#Subject").val();
+                        var data = {
+                            OfferID: offerID,
+                            FromEmail: from,
+                            ToEmail: to,
+                            CcEmail: cc,
+                            Subject: subject
+                        };
+                        data = JSON.stringify(data);
+                        $.ajax({
+                            type: "POST",
+                            data: data,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            url: '@Url.Action("SendWelcomeToLineMgr", "Offer")',
+                            success: function (response) {
 
-                            //$("div#feedback_update_section").html(response);
-                            var param = response.offer_id;
-                            var url = '@Url.Action("GoToNewestPage", "Offer", new { offerID = "__param__" })';
+                                //$("div#feedback_update_section").html(response);
+                                var param = response.offer_id;
+                                var url = '@Url.Action("GoToNewestPage", "Offer", new { offerID = "__param__" })';
                                 window.location.href = url.replace('__param__', encodeURIComponent(param));
 
                             }
-                    });
-                   }
+                        });
+                    }
                 },
-            {
-                text: "Cancel",
-                click: function () {
-                $(this).dialog("close");
+                {
+                    text: "Cancel",
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            ],
+            open: function () {
+                clearEmailConfirmkDialog();
+                var lineMgrEmail = $("#report_ReportLineEmail").html().trim();
+                var candidateName = $("#personel_RomanLName").html().trim() + $("#personel_RomanFName").html().trim();
+                $("input#FromEmail").val('@(ViewBag.UserEmail)'); //change with user
+                $("textarea#ToEmail").val(lineMgrEmail);
+                $("textarea#CCEmail").val("");
+                $("textarea#Subject").val("Onboarding Process to Line Manager for " + candidateName);
             }
+        });
+
+
+
+        $("#emailMgrBtn").click(function () {
+            $('#dialog-email-Mgr').dialog("open");
+        });
+
+        //$("#sendRequestBtn").click(function () {
+        //    var offerID = $("#Offer_ID").val().trim();
+        //    $("div.mask").css("display", "block");
+        //    $.post("/Offer/RequestDomain/", { OfferID: offerID }, function (response) {
+        //        $("div.mask").css("display", "none");
+        //        $("#emailITStatus").attr("style", "visibility:visible");
+        //    });
+        //});
+
+        $('#dialog-personal-form-message').dialog({
+            autoOpen: false,
+            resizable: false,
+            height: 850,
+            width: 1350,
+            modal: true,
+            buttons: {
+                ok: function () {
+                    var offerID = $("#Offer_ID").val().trim();
+
+                    var url = '@Url.Action("GoToNewestPage", "Offer", new { offerID = "__param__" })';
+                    window.location.href = url.replace('__param__', encodeURIComponent(offerID));
+                    //$(this).dialog("close");
+                }
+            },
+        });
+
+        $("#upload_File_Form").ajaxForm({
+            success: function (data) {
+                $("div.mask").css("display", "none");
+                $("#dialog-personal-form-message").html(data);
+                $("#dialog-personal-form-message").dialog("open");
+                $("#uploadFormStatus").attr("style", "visibility:visible");
+            },
+            error: function (data) {
+                $("div.mask").css("display", "none");
+                alert("File format is not supported!");
             }
-           ],
-    open: function () {
-        clearEmailConfirmkDialog();
-        var lineMgrEmail = $("#report_ReportLineEmail").html().trim();
-        var candidateName = $("#personel_RomanLName").html().trim() + $("#personel_RomanFName").html().trim();
-        $("input#FromEmail").val("yan.gu@ni.com"); //change with user
-        $("textarea#ToEmail").val(lineMgrEmail);
-        $("textarea#CCEmail").val("");
-        $("textarea#Subject").val("Onboarding Process to Line Manager for " + candidateName);
-    }
-    });
+        });
 
+        $("#uploadBtn").click(function () {
+            var file = $("input#fileName").val();
+            if (file == "") {
+                alert("Please select a file first!");
+            } else {
+                $("div.mask").css("display", "block");
+                $('#upload_File_Form').submit();
+            }
+        });
 
-
-    $("#emailMgrBtn").click(function () {
-        $('#dialog-email-Mgr').dialog("open");
-    });
-
-    //$("#sendRequestBtn").click(function () {
-    //    var offerID = $("#Offer_ID").val().trim();
-    //    $("div.mask").css("display", "block");
-    //    $.post("/Offer/RequestDomain/", { OfferID: offerID }, function (response) {
-    //        $("div.mask").css("display", "none");
-    //        $("#emailITStatus").attr("style", "visibility:visible");
-    //    });
-    //});
-
-    $('#dialog-personal-form-message').dialog({
-        autoOpen: false,
-        resizable: false,
-        height: 850,
-        width: 1350,
-        modal: true,
-        buttons: {
-            ok: function () {
+        $("#syncBtn").click(function () {
+            var domainLogin = $("#address_book_domain").val().trim();
+            if (domainLogin == "") {
+                alert("Please input Domain Login first!");
+            } else {
+                var startDate = $("#start_date").val().trim();
                 var offerID = $("#Offer_ID").val().trim();
 
-                var url = '@Url.Action("GoToNewestPage", "Offer", new { offerID = "__param__" })';
-                window.location.href = url.replace('__param__', encodeURIComponent(offerID));
-                //$(this).dialog("close");
+                $("div.mask").css("display", "block");
+                var url = '@Url.Action("SyncDomain", "Offer")';
+                $.post(url, { OfferID: offerID, DomainLogin: domainLogin, ContractStartDate: startDate }, function (response) {
+                    $("div.mask").css("display", "none");
+                    $("#syncDomainStatus").attr("style", "visibility:visible");
+                });
             }
-        },
-    });
 
-    $("#upload_File_Form").ajaxForm({
-        success: function (data) {
-            $("div.mask").css("display", "none");
-            $("#dialog-personal-form-message").html(data);
-            $("#dialog-personal-form-message").dialog("open");
-            $("#uploadFormStatus").attr("style", "visibility:visible");
-        },
-        error: function (data) {
-            $("div.mask").css("display", "none");
-            alert("File format is not supported!");
-        }
-    });
-
-    $("#uploadBtn").click(function () {
-        var file = $("input#fileName").val();
-        if (file == "") {
-            alert("Please select a file first!");
-        } else {
-            $("div.mask").css("display", "block");
-            $('#upload_File_Form').submit();
-        }
-    });
-
-    $("#syncBtn").click(function () {
-        var domainLogin = $("#address_book_domain").val().trim();
-        if (domainLogin == "") {
-            alert("Please input Domain Login first!");
-        } else {
-            var startDate = $("#start_date").val().trim();
-            var offerID = $("#Offer_ID").val().trim();
-
-            $("div.mask").css("display", "block");
-            var url = '@Url.Action("SyncDomain", "Offer")';
-            $.post(url, { OfferID: offerID, DomainLogin: domainLogin, ContractStartDate: startDate }, function (response) {
-                $("div.mask").css("display", "none");
-                $("#syncDomainStatus").attr("style", "visibility:visible");
-            });
-        }
-
-    });
-
-    function updateDetail() {
-        $("#personel_FName").html($("#personel_FName").html().replace(new RegExp($("#personel_FName").text().trim(), "g"), $("#PersonalInfo_EnglishFName").text().trim()));
-        $("#personel_LName").html($("#personel_LName").html().replace(new RegExp($("#personel_LName").text().trim(), "g"), $("#PersonalInfo_EnglishGName").text().trim()));
-        $("#personel_RomanFName").html($("#personel_RomanFName").html().replace(new RegExp($("#personel_RomanFName").text().trim(), "g"), $("#PersonalInfo_ChineseFName").text().trim()));
-        $("#personel_RomanLName").html($("#personel_RomanLName").html().replace(new RegExp($("#personel_RomanLName").text().trim(), "g"), $("#PersonalInfo_ChineseGName").text().trim()));
-        $("#personel_Phone").html($("#personel_Phone").html().replace(new RegExp($("#personel_Phone").text().trim(), "g"), $("#PersonalInfo_Phone").text().trim()));
-        $("#personel_Email").html($("#personel_Email").html().replace(new RegExp($("#personel_Email").text().trim(), "g"), $("#PersonalInfo_Email").text().trim()));
-        if ($("#TentativeOnboardDate").text().trim() != "") {
-            $("#offer_OnBoardingDate").html($("#offer_OnBoardingDate").html().replace(new RegExp($("#offer_OnBoardingDate").text().trim(), "g"), $("#TentativeOnboardDate").text().trim()));
-        }
-    }
-
-    
-
-
+        });
     });
     function clearEmailConfirmkDialog() {
         $("input#FromEmail").val(); //change with user
@@ -359,9 +343,9 @@
 
         var recruitmentType = $("#Offer_RecruitType").html().trim();
         if (recruitmentType == 'Campus') {
-            $(".attr_for_social").show();
+            $(".attr_for_campus").show();
         } else {
-            $(".attr_for_social").hide();
+            $(".attr_for_campus").hide();
         }
     });
 </script>

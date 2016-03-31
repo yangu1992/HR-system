@@ -90,6 +90,7 @@ namespace NI.Apps.Hr.HrBase.Controllers
         public ActionResult Create(int? HeadcountCode)
         {
             ViewBag.User = Utility.getCurrentUserName(Utility.CurrentUser);
+            ViewBag.UserEmail = Utility.getCurrentUserEmail(Utility.CurrentUser);
 
             OfferCreateModel model = new OfferCreateModel();          
 
@@ -173,6 +174,7 @@ namespace NI.Apps.Hr.HrBase.Controllers
 
         public ActionResult GoToNewestPage(int OfferID) {
             ViewBag.User = Utility.getCurrentUserName(Utility.CurrentUser);
+            ViewBag.UserEmail = Utility.getCurrentUserEmail(Utility.CurrentUser);
             //recreat model
             OfferCreateModel model = getCurrentModelData(OfferID);
             TempData["model"] = model;

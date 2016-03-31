@@ -2,13 +2,13 @@
     ViewBag.Title = "OfferPendingApprove";
 }
 
-@model NI.Application.HR.HRBase.Models.OfferActivity.OfferCreateModel
+@model NI.Apps.Hr.HrBase.Models.OfferActivity.OfferCreateModel
 
 
-    @Html.Partial("_OfferBaseInfo", Model.Offer ?? new NI.Application.HR.HRBase.Models.OfferActivity.OfferDetailModel(),
+    @Html.Partial("_OfferBaseInfo", Model.Offer ?? new NI.Apps.Hr.HrBase.Models.OfferActivity.OfferDetailModel(),
                        new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Offer" } })
 
-    @Html.Partial("_OfferPersonInfoFixed", Model.Personel ?? new NI.Application.HR.HRBase.Models.OfferActivity.PersonelDetailModel(),
+    @Html.Partial("_OfferPersonInfoFixed", Model.Personel ?? new NI.Apps.Hr.HrBase.Models.OfferActivity.PersonelDetailModel(),
                    new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Personel" } })
 
     @Html.Partial("_OfferPositionInfoFixed", Model)
@@ -23,7 +23,7 @@
 </p>
 
 <div id="dialog-confirm" title="Offer Email Check">
-    @Html.Partial("_EmailConfirmDialog", Model.Email ?? new NI.Application.HR.HRBase.Models.EmailModel())
+    @Html.Partial("_EmailConfirmDialog", Model.Email ?? new NI.Apps.Hr.HrBase.Models.EmailModel())
 </div>
 
 <script type="text/javascript">
@@ -78,7 +78,7 @@
                 }
             ],
             open: function () {
-                $("#FromEmail").val("yan.gu@ni.com") + ";";
+                $("#FromEmail").val('@(ViewBag.UserEmail)') + ";";
                 $("#ToEmail").val($("#Personel_Email").val());
                 $("#CCEmail").val($("#report_ReportLineEmail").html().trim() + ";" + $("#report_DepartmentMgrEmail").html().trim());
                 $("#Subject").val("Offer Letter from National Instruments");
@@ -102,9 +102,9 @@
 
             var recruitmentType = $("#Offer_RecruitType").html().trim();
             if (recruitmentType == 'Campus') {
-                $(".attr_for_social").show();
+                $(".attr_for_campus").show();
             } else {
-                $(".attr_for_social").hide();
+                $(".attr_for_campus").hide();
             }
         });
     });

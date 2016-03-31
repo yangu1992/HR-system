@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="HRManagementPortalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="HRManagementPortalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -351,6 +351,10 @@ warning 6002: The table/view 'HRManagementPortal.dbo.Table_UserRole' does not ha
           <Parameter Name="DomainLogin" Type="nvarchar" Mode="In" />
           <Parameter Name="RoleName" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="Proc_GetUserEmail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="returnVal" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="DomainLogin" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="Proc_GetUserName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="returnVal" Type="nvarchar" Mode="InOut" />
           <Parameter Name="DomainLogin" Type="nvarchar" Mode="In" />
@@ -423,8 +427,7 @@ warning 6002: The table/view 'HRManagementPortal.dbo.Table_UserRole' does not ha
     FROM [dbo].[Table_UserRole] AS [Table_UserRole]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="HRManagementPortalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -810,6 +813,10 @@ warning 6002: The table/view 'HRManagementPortal.dbo.Table_UserRole' does not ha
             <Parameter Name="OfferID" Mode="In" Type="Int32" />
             <Parameter Name="User" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="Proc_GetUserEmail">
+            <Parameter Name="returnVal" Mode="InOut" Type="String" />
+            <Parameter Name="DomainLogin" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -1167,6 +1174,7 @@ warning 6002: The table/view 'HRManagementPortal.dbo.Table_UserRole' does not ha
           <FunctionImportMapping FunctionImportName="Proc_InsertAddressBook" FunctionName="HRManagementPortalModel.Store.Proc_InsertAddressBook" />
           <FunctionImportMapping FunctionImportName="Proc_InsertNewAccount" FunctionName="HRManagementPortalModel.Store.Proc_InsertNewAccount" />
           <FunctionImportMapping FunctionImportName="Proc_InsertNewEmployee" FunctionName="HRManagementPortalModel.Store.Proc_InsertNewEmployee" />
+          <FunctionImportMapping FunctionImportName="Proc_GetUserEmail" FunctionName="HRManagementPortalModel.Store.Proc_GetUserEmail" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

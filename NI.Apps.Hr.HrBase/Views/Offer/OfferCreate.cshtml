@@ -4,14 +4,14 @@
 }
 @Scripts.Render("~/Scripts/employeeAutoComplete.js")
 
-@model NI.Application.HR.HRBase.Models.OfferActivity.OfferCreateModel
+@model NI.Apps.Hr.HrBase.Models.OfferActivity.OfferCreateModel
 
 @using (Html.BeginForm("Create", "Offer", FormMethod.Post, new {id = "PostForm" }))
 {
-    @Html.Partial("_OfferBaseInfo", Model.Offer ?? new NI.Application.HR.HRBase.Models.OfferActivity.OfferDetailModel(),
+    @Html.Partial("_OfferBaseInfo", Model.Offer ?? new NI.Apps.Hr.HrBase.Models.OfferActivity.OfferDetailModel(),
                        new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Offer" } });
     
-    @Html.Partial("_OfferPersonInfoEditable", Model.Personel ?? new NI.Application.HR.HRBase.Models.OfferActivity.PersonelDetailModel(),
+    @Html.Partial("_OfferPersonInfoEditable", Model.Personel ?? new NI.Apps.Hr.HrBase.Models.OfferActivity.PersonelDetailModel(),
                    new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Personel" }})
     
     @Html.Partial("_OfferPositionInfoEditable",Model)
@@ -104,7 +104,7 @@
                 }
             ],
             open: function () {
-                $("#Email_FromEmail").val("yan.gu@ni.com") + ";";
+                $("#Email_FromEmail").val('@(ViewBag.UserEmail)') + ";";
                 $("#Email_ToEmail").val($("#Report_ReportLineEmail").val() + ";" + $("#Report_DepartmentMgrEmail").val());
                 $("#Email_Subject").val("Approval to Offer - " + $("#Personel_LName").val() + $("#Personel_FName").val() + " for " + $("#Offer_Postion").val());
                 $(this).parent().appendTo('#PostForm');
@@ -154,14 +154,11 @@
         $("#Offer_RecruitType").change(function () {
             var recruitmentType = $("#Offer_RecruitType").val();
 
-            if (recruitmentType == 'Social') {
-                $(".attr_for_social").show();
-            } else {
-                $(".attr_for_social").hide();
-            }
-
             if (recruitmentType == 'Campus') {
+                $(".attr_for_campus").show();
                 $("#Offer_Channel").val("Campus");
+            } else {
+                $(".attr_for_campus").hide();
             }
         });
 
@@ -184,9 +181,9 @@
 
             var recruitmentType = $("#Offer_RecruitType").val();
             if (recruitmentType == 'Campus') {
-                $(".attr_for_social").show();
+                $(".attr_for_campus").show();
             } else {
-                $(".attr_for_social").hide();
+                $(".attr_for_campus").hide();
             }
 
 

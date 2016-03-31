@@ -3,14 +3,14 @@
 }
 @Scripts.Render("~/Scripts/employeeAutoComplete.js")
 
-@model NI.Application.HR.HRBase.Models.OfferActivity.OfferCreateModel
+@model NI.Apps.Hr.HrBase.Models.OfferActivity.OfferCreateModel
 
 @using (Html.BeginForm("SaveChanges", "Offer", FormMethod.Post, new { id = "PostForm" }))
 {
-    @Html.Partial("_OfferBaseInfoEditable", Model.Offer ?? new NI.Application.HR.HRBase.Models.OfferActivity.OfferDetailModel(),
+    @Html.Partial("_OfferBaseInfoEditable", Model.Offer ?? new NI.Apps.Hr.HrBase.Models.OfferActivity.OfferDetailModel(),
                        new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Offer" } });
 
-    @Html.Partial("_OfferPersonInfoEditable", Model.Personel ?? new NI.Application.HR.HRBase.Models.OfferActivity.PersonelDetailModel(),
+    @Html.Partial("_OfferPersonInfoEditable", Model.Personel ?? new NI.Apps.Hr.HrBase.Models.OfferActivity.PersonelDetailModel(),
                    new ViewDataDictionary { TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "Personel" }})
 
     @Html.Partial("_OfferPositionInfoEditable",Model)
@@ -32,26 +32,16 @@
 
     $("#Offer_RecruitType").change(function () {
         var recruitmentType = $("#Offer_RecruitType").val();
-        if (recruitmentType == 'Social') {
-            $(".attr_for_social").show();
-        } else {
-            $(".attr_for_social").hide();
-        }
-
         if (recruitmentType == 'Campus') {
+            $(".attr_for_campus").show();
             $("#Offer_Channel").val("Campus");
+        } else {
+            $(".attr_for_campus").hide();
         }
     });
 
 
     $(window).load(function () {
-        //var onboardingDate = $("#Offer_OnBoardingDate").attr("value");
-        //if (onboardingDate == "") {
-        //    $('.Date').datepicker("setDate", new Date());
-        //} else {
-        //    $("#Offer_OnBoardingDate").datepicker("setDate", onboardingDate);
-        //}
-
         var status = $("#Salary_bonus").is(":checked");
         if (status == false) {
             $(".bonus_section").hide();
@@ -59,9 +49,9 @@
 
         var recruitmentType = $("#Offer_RecruitType").val();
         if (recruitmentType == 'Campus') {
-            $(".attr_for_social").show();
+            $(".attr_for_campus").show();
         } else {
-            $(".attr_for_social").hide();
+            $(".attr_for_campus").hide();
         }
     });
 </script>
